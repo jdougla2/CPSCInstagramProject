@@ -1,4 +1,6 @@
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 /*
@@ -10,15 +12,23 @@ import java.util.ArrayList;
  *
  * @author Armando
  */
-public class Posts {
+import java.util.Date;
+public class post {
 
     private String caption;
     private String link;
-    private ArrayList comments;
-    private ArrayList tags;
-    private ArrayList hashtags;
-    private long date;
+    private ArrayList<String> comments = new ArrayList<String>();
+    private ArrayList<String> tags = new ArrayList<String>();
+    private ArrayList<String> hashtags = new ArrayList<String>();
+    DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+    private Date date = new Date();
     private int likes;
+    
+    public post(String caption, ArrayList<String> comments, ArrayList<String> tags, ArrayList<String> hashtags){
+        this.caption = caption;
+        this.comments = comments;
+        this.hashtags = hashtags;
+    }
 
     public String getCaption() {
         return caption;
@@ -32,8 +42,8 @@ public class Posts {
         return comments;
     }
 
-    public long getDate() {
-        return date;
+    public String getDate() {
+        return dateFormat.format(date).substring(11);
     }
 
     public int getLikes() {
