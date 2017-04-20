@@ -15,6 +15,7 @@ public class GuestFrame extends javax.swing.JFrame {
      */
     public GuestFrame() {
         initComponents();
+        this.setTitle("EagleGram");
     }
 
     /**
@@ -28,20 +29,20 @@ public class GuestFrame extends javax.swing.JFrame {
 
         TopMenu = new javax.swing.JPanel();
         SignInButton = new javax.swing.JButton();
-        SignOutButton = new javax.swing.JButton();
         EagleGramLabel = new javax.swing.JLabel();
         SignUpButton = new javax.swing.JButton();
         BottomMenu = new javax.swing.JPanel();
-        jButton2 = new javax.swing.JButton();
+        SearchMenuButton = new javax.swing.JButton();
         NewPostButton = new javax.swing.JButton();
         NotificationsButton = new javax.swing.JButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        GuestSearchPanel = new javax.swing.JPanel();
-        SearchParameter = new javax.swing.JComboBox();
-        UserInput = new javax.swing.JTextField();
-        SearchButton = new javax.swing.JButton();
         HomeButton = new javax.swing.JButton();
         ProfileButton = new javax.swing.JButton();
+        SearchPanel = new javax.swing.JPanel();
+        SearchButton = new javax.swing.JButton();
+        UserInput = new javax.swing.JTextField();
+        SearchParameter = new javax.swing.JComboBox();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        SearchOutput = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -49,13 +50,6 @@ public class GuestFrame extends javax.swing.JFrame {
         SignInButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 SignInButtonActionPerformed(evt);
-            }
-        });
-
-        SignOutButton.setText("Sign Out");
-        SignOutButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                SignOutButtonActionPerformed(evt);
             }
         });
 
@@ -73,13 +67,11 @@ public class GuestFrame extends javax.swing.JFrame {
         TopMenuLayout.setHorizontalGroup(
             TopMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(TopMenuLayout.createSequentialGroup()
-                .addComponent(SignInButton)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(SignUpButton)
-                .addGap(84, 84, 84)
+                .addComponent(SignInButton, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(124, 124, 124)
                 .addComponent(EagleGramLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(SignOutButton, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(SignUpButton, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         TopMenuLayout.setVerticalGroup(
             TopMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -87,12 +79,16 @@ public class GuestFrame extends javax.swing.JFrame {
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addGroup(TopMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(SignInButton)
-                    .addComponent(SignOutButton)
                     .addComponent(EagleGramLabel)
                     .addComponent(SignUpButton)))
         );
 
-        jButton2.setText("Search");
+        SearchMenuButton.setText("Search");
+        SearchMenuButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                SearchMenuButtonActionPerformed(evt);
+            }
+        });
 
         NewPostButton.setText("New Post");
         NewPostButton.setEnabled(false);
@@ -105,7 +101,7 @@ public class GuestFrame extends javax.swing.JFrame {
         BottomMenuLayout.setHorizontalGroup(
             BottomMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(BottomMenuLayout.createSequentialGroup()
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(SearchMenuButton, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(NewPostButton, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -116,17 +112,16 @@ public class GuestFrame extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, BottomMenuLayout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addGroup(BottomMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton2)
+                    .addComponent(SearchMenuButton)
                     .addComponent(NewPostButton)
                     .addComponent(NotificationsButton)))
         );
 
-        SearchParameter.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "People", "Hash Tags"}));
-        SearchParameter.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                SearchParameterActionPerformed(evt);
-            }
-        });
+        HomeButton.setText("Home");
+        HomeButton.setEnabled(false);
+
+        ProfileButton.setText("Profile");
+        ProfileButton.setEnabled(false);
 
         SearchButton.setText("Search");
         SearchButton.addActionListener(new java.awt.event.ActionListener() {
@@ -135,57 +130,57 @@ public class GuestFrame extends javax.swing.JFrame {
             }
         });
 
-        javax.swing.GroupLayout GuestSearchPanelLayout = new javax.swing.GroupLayout(GuestSearchPanel);
-        GuestSearchPanel.setLayout(GuestSearchPanelLayout);
-        GuestSearchPanelLayout.setHorizontalGroup(
-            GuestSearchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(GuestSearchPanelLayout.createSequentialGroup()
-                .addContainerGap()
+        SearchParameter.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "People", "Hash Tags"}));
+
+        javax.swing.GroupLayout SearchPanelLayout = new javax.swing.GroupLayout(SearchPanel);
+        SearchPanel.setLayout(SearchPanelLayout);
+        SearchPanelLayout.setHorizontalGroup(
+            SearchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(SearchPanelLayout.createSequentialGroup()
+                .addGap(6, 6, 6)
                 .addComponent(SearchParameter, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(UserInput, javax.swing.GroupLayout.PREFERRED_SIZE, 301, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(SearchButton)
-                .addContainerGap(26, Short.MAX_VALUE))
+                .addComponent(SearchButton, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
-        GuestSearchPanelLayout.setVerticalGroup(
-            GuestSearchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(GuestSearchPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(GuestSearchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(SearchParameter, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(UserInput, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(SearchButton))
-                .addContainerGap(409, Short.MAX_VALUE))
+        SearchPanelLayout.setVerticalGroup(
+            SearchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(SearchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addComponent(SearchParameter, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(UserInput, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(SearchButton))
         );
 
-        jScrollPane1.setViewportView(GuestSearchPanel);
-
-        HomeButton.setText("Home");
-        HomeButton.setEnabled(false);
-
-        ProfileButton.setText("Profile");
-        ProfileButton.setEnabled(false);
+        SearchOutput.setColumns(20);
+        SearchOutput.setRows(5);
+        jScrollPane1.setViewportView(SearchOutput);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(TopMenu, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(SearchPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(HomeButton, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(BottomMenu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(ProfileButton, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addComponent(jScrollPane1)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(HomeButton, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(BottomMenu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(ProfileButton, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(TopMenu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 442, Short.MAX_VALUE)
+                .addComponent(SearchPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 413, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(BottomMenu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -197,34 +192,31 @@ public class GuestFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void SignInButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SignInButtonActionPerformed
-        // TODO add your handling code here:
         Login z= new Login();
         z.setVisible(true);
         super.dispose();
     }//GEN-LAST:event_SignInButtonActionPerformed
 
-    private void SignOutButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SignOutButtonActionPerformed
-        // TODO add your handling code here:
-        super.dispose();
-    }//GEN-LAST:event_SignOutButtonActionPerformed
-
     private void SignUpButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SignUpButtonActionPerformed
-        // TODO add your handling code here:
         SignUpFrame y= new SignUpFrame();
         y.setVisible(true);
         super.dispose();
     }//GEN-LAST:event_SignUpButtonActionPerformed
 
     private void SearchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SearchButtonActionPerformed
-        // TODO add your handling code here:
+        SearchOutput.removeAll();
+        SearchOutput.repaint();
         Input= UserInput.getText();
+        Parameter= SearchParameter.getSelectedItem().toString();
         System.out.println(Input +" "+ Parameter);
+        //add search output
     }//GEN-LAST:event_SearchButtonActionPerformed
 
-    private void SearchParameterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SearchParameterActionPerformed
+    private void SearchMenuButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SearchMenuButtonActionPerformed
         // TODO add your handling code here:
-        Parameter= SearchParameter.getName();
-    }//GEN-LAST:event_SearchParameterActionPerformed
+        SearchOutput.removeAll();
+        SearchOutput.repaint();
+    }//GEN-LAST:event_SearchMenuButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -264,19 +256,19 @@ public class GuestFrame extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel BottomMenu;
     private javax.swing.JLabel EagleGramLabel;
-    private javax.swing.JPanel GuestSearchPanel;
     private javax.swing.JButton HomeButton;
     private javax.swing.JButton NewPostButton;
     private javax.swing.JButton NotificationsButton;
     private javax.swing.JButton ProfileButton;
     private javax.swing.JButton SearchButton;
+    private javax.swing.JButton SearchMenuButton;
+    private javax.swing.JTextArea SearchOutput;
+    private javax.swing.JPanel SearchPanel;
     private javax.swing.JComboBox SearchParameter;
     private javax.swing.JButton SignInButton;
-    private javax.swing.JButton SignOutButton;
     private javax.swing.JButton SignUpButton;
     private javax.swing.JPanel TopMenu;
     private javax.swing.JTextField UserInput;
-    private javax.swing.JButton jButton2;
     private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
     private String Parameter;
