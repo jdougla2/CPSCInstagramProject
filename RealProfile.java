@@ -6,13 +6,16 @@
 package instagramproject;
 
 import java.util.ArrayList;
-import java.util.Observer;
-import java.util.Observable;
+import javax.swing.event.*;
 
 /**
  *
  * @author jacko
  */
+interface PostListener {
+    String someonePosted();
+}
+
 public class RealProfile{
     private String username;
     private String password;
@@ -22,6 +25,10 @@ public class RealProfile{
     private boolean isPrivate = false;
     private String profilePic;
     private ArrayList<String> notifications = new ArrayList<String>();
+    private ArrayList<PostListener> listeners = new ArrayList<PostListener>();
+    private ArrayList<RealProfile> followers = new ArrayList<RealProfile>();
+    private ArrayList<RealProfile> following = new ArrayList<RealProfile>();
+    private Responder responds = new Responder();
     
     public RealProfile(String username, String password, String firstName, String lastName){
         this.username = username;
@@ -42,12 +49,24 @@ public class RealProfile{
         return firstName + " " + lastName;
     }
     
-    public ArrayList getPosts(){
+    public ArrayList<post> getPosts(){
         return posts;
     }
     
     public ArrayList getNotifications(){
         return notifications;
+    }
+    
+    public Responder getResponder(){
+        return responds;
+    }
+            
+    public ArrayList<RealProfile> getFollowing(){
+        return following;
+    }
+    
+    public ArrayList<RealProfile> getFollowers(){
+        return followers;
     }
     
     public void addNotifications(String newNotification){
@@ -56,12 +75,14 @@ public class RealProfile{
     
     public void addPost(String caption, String imageLink, ArrayList comments, ArrayList hashtags, ArrayList mentions){
         posts.add(new post(caption, comments, hashtags, mentions, imageLink));
-        //To implement: Observer support.
+        
+        for (PostListener listener : listeners) {
+            listener.someonePosted();
+        }
     }
     
     public void changePrivacy(boolean newPrivacy){
         isPrivate = newPrivacy;
-        
     }
     
     public void setPassword(String newPassword) {
@@ -70,5 +91,14 @@ public class RealProfile{
     
     public void setProfilePic(String newImageLink){
         profilePic = newImageLink;
+    }
+    public void addFollower(PostListener listener){
+        listeners.add(listener);
+    }
+}
+
+class Responder implements PostListener{
+    public String someonePosted(){
+        return "Someone posted";
     }
 }
