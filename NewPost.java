@@ -9,12 +9,12 @@ package Panels;
  *
  * @author Jose
  */
-public class Profile extends javax.swing.JPanel {
+public class NewPost extends javax.swing.JPanel {
 
     /**
-     * Creates new form Profile
+     * Creates new form NewPost
      */
-    public Profile() {
+    public NewPost() {
         initComponents();
     }
 

@@ -1,3 +1,5 @@
+package instagramproject;
+
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -20,11 +22,11 @@ public class post {
     private ArrayList<String> comments = new ArrayList<String>();
     private ArrayList<String> tags = new ArrayList<String>();
     private ArrayList<String> hashtags = new ArrayList<String>();
-    DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+    DateFormat dateFormat = new SimpleDateFormat("MMddyyyy HH:mm:ss");
     private Date date = new Date();
     private int likes;
     
-    public post(String caption, ArrayList<String> comments, ArrayList<String> tags, ArrayList<String> hashtags){
+    public post(String caption, ArrayList<String> comments, ArrayList<String> tags, ArrayList<String> hashtags, String imageLink){
         this.caption = caption;
         this.comments = comments;
         this.hashtags = hashtags;
@@ -42,12 +44,16 @@ public class post {
         return comments;
     }
 
-    public String getDate() {
-        return dateFormat.format(date).substring(11);
+    public Date getDate() {
+        return date;
     }
 
     public int getLikes() {
         return likes;
+    }
+    
+    public ArrayList<String> getHashtags() {
+        return hashtags;
     }
 
     public void addComment(String c) {
