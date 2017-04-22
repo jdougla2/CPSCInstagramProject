@@ -1,3 +1,6 @@
+
+import java.awt.Toolkit;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -13,9 +16,12 @@ public class GuestFrame extends javax.swing.JFrame {
     /**
      * Creates new form GuestFrame
      */
+    int width= (Toolkit.getDefaultToolkit().getScreenSize().width / 2) - 262;
+    int height= (Toolkit.getDefaultToolkit().getScreenSize().height / 2) - 250;
     public GuestFrame() {
         initComponents();
         this.setTitle("EagleGram");
+        this.setLocation(width, height);
     }
 
     /**

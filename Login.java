@@ -1,3 +1,6 @@
+
+import java.awt.Toolkit;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -13,9 +16,12 @@ public class Login extends javax.swing.JFrame {
     /**
      * Creates new form Login
      */
+    int width= (Toolkit.getDefaultToolkit().getScreenSize().width / 2) - 150;
+    int height= (Toolkit.getDefaultToolkit().getScreenSize().height / 2) - 150;
     public Login() {
         initComponents();
         this.setTitle("EagleGram");
+        this.setLocation(width, height);
     }
 
     /**
@@ -38,7 +44,7 @@ public class Login extends javax.swing.JFrame {
         EagleGramLabel = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(300, 300));
+        setMaximumSize(new java.awt.Dimension(300, 300));
 
         UserLabel.setText("User Name: ");
 

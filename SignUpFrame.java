@@ -1,3 +1,6 @@
+
+import java.awt.Toolkit;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -13,9 +16,12 @@ public class SignUpFrame extends javax.swing.JFrame {
     /**
      * Creates new form SignUpFrame
      */
+    int width= (Toolkit.getDefaultToolkit().getScreenSize().width / 2) - 150;
+    int height= (Toolkit.getDefaultToolkit().getScreenSize().height / 2) - 150;
     public SignUpFrame() {
         initComponents();
         this.setTitle("EagleGram");
+        this.setLocation(width, height);
     }
 
     /**
