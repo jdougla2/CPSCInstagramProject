@@ -10,7 +10,7 @@ import javax.swing.event.*;
 
 /**
  *
- * @author jacko
+ * @author jack
  */
 interface PostListener {
     String someonePosted();
@@ -29,6 +29,7 @@ public class RealProfile{
     private ArrayList<RealProfile> followers = new ArrayList<RealProfile>();
     private ArrayList<RealProfile> following = new ArrayList<RealProfile>();
     private Responder responds = new Responder();
+    private ArrayList<DirectMessage> dms = new ArrayList<DirectMessage>();
     
     public RealProfile(String username, String password, String firstName, String lastName){
         this.username = username;
@@ -79,6 +80,10 @@ public class RealProfile{
         for (PostListener listener : listeners) {
             listener.someonePosted();
         }
+    }
+    
+    public void addDM(DirectMessage dm){
+        dms.add(dm);
     }
     
     public void changePrivacy(boolean newPrivacy){

@@ -19,7 +19,7 @@ import javax.swing.event.*;
 
 /**
  *
- * @author jacko
+ * @author jack
  */
 class ComparatorByDate {
     public static Comparator<post> ComparatorByDate
@@ -42,6 +42,10 @@ class ComparatorByDate {
     };
 }
 
+/* TO DO:
+    Implement imageIO. .awt.image something.
+    Implement dm-ing.
+*/
 public class CurrentProfile{
     private RealProfile loggedIn;
     private ArrayList<post> feed = new ArrayList<post>();
@@ -69,6 +73,17 @@ public class CurrentProfile{
         else{
             this.logIn("guest", "guest");
         }
+    }
+    
+    public boolean signUp(String username, String password, String firstName, String lastName){
+        for(int i = 0; i < allProfiles.size(); i++){
+            if(!allProfiles.get(i).getUsername().equals(username)){
+                allProfiles.add(new RealProfile(username, password, firstName, lastName));
+                this.logIn(username, password);
+                return true;
+            }
+        }
+        return false;
     }
     
     public boolean logIn(String username, String password){
@@ -109,12 +124,12 @@ public class CurrentProfile{
         }
     }
     
-    public void Follow(RealProfile toFollow){
+    public void follow(RealProfile toFollow){
         toFollow.addFollower(loggedIn.getResponder());
         toFollow.getFollowers().add(toFollow);
     }
     
-    public ArrayList<RealProfile> ProfileSearch(String username){
+    public ArrayList<RealProfile> profileSearch(String username){
         ArrayList<RealProfile> results = new ArrayList<RealProfile>();
         for(int i = 0; i < allProfiles.size(); i++){
             if(allProfiles.get(i).getUsername().equals(username))
@@ -123,11 +138,34 @@ public class CurrentProfile{
         return results;
     }
     
-    public void PlaceComment(RealProfile profile, String comment){
+    public void newPost(String caption, String imageLink, ArrayList comments, ArrayList hashtags, ArrayList mentions){
+        loggedIn.getPosts().add(new post(caption, comments, hashtags, mentions, imageLink));
         
+        for(int i = 0; i < loggedIn.getFollowers().size(); i++){
+            loggedIn.getFollowers().get(i).addNotifications(loggedIn.getUsername() + " created a new post.");
+        }
     }
     
-    public ArrayList<post> HashtagSearh(String hashtag){
+    public void placeComment(RealProfile profile, int postNum, String comment){
+        for(int i = 0; i < allProfiles.size(); i++){
+            if(allProfiles.get(i).getUsername().equals(profile.getName())){
+                allProfiles.get(i).getPosts().get(postNum).addComment(comment);
+                profile.addNotifications(loggedIn.getUsername() + " has added a comment to your post.");
+                return;
+            }
+        }
+    }
+    
+    public void messageUser(String message, String image, String sender, String reciever){
+        for(int i = 0; i < allProfiles.size(); i++){
+            if(allProfiles.get(i).getUsername().equals(reciever)){
+                allProfiles.get(i).addDM(new DirectMessage(message, image, loggedIn));
+                allProfiles.get(i).addNotifications(loggedIn.getName() + " has sent you a DM!");
+            }
+        }
+    }
+    
+    public ArrayList<post> hashtagSearch(String hashtag){
         ArrayList<post> results = new ArrayList<post>();
         for(int i = 0; i < allProfiles.size(); i++){
             for(int j = 0; j < allProfiles.get(i).getPosts().size(); j++){
