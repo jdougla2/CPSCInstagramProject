@@ -5,6 +5,7 @@
  */
 package instagramproject;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -22,18 +23,19 @@ import javax.swing.event.*;
  * @author jack
  */
 class ComparatorByDate {
+
     public static Comparator<post> ComparatorByDate
-                          = new Comparator<post>() {
+            = new Comparator<post>() {
 
         public int compare(post post1, post post2) {
             Date date1;
             Date date2;
             SimpleDateFormat originalFormat = new SimpleDateFormat("MMddyyyy HH:mm:ss");
-            try{
+            try {
                 date1 = post1.getDate();
                 date2 = post2.getDate();
                 return date1.compareTo(date2);
-            } catch(Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
             }
 
@@ -45,15 +47,41 @@ class ComparatorByDate {
 /* TO DO:
     Implement imageIO. .awt.image something.
     Implement dm-ing.
-*/
-public class CurrentProfile{
+ */
+public class CurrentProfile {
+
     private RealProfile loggedIn;
     private ArrayList<post> feed = new ArrayList<post>();
     private ArrayList<RealProfile> allProfiles = new ArrayList<RealProfile>();
+
+    public CurrentProfile() {
+
+        if (allProfiles.isEmpty()) {
+            loggedIn = new RealProfile("guest", "guest", "guest", "guest");
+            this.output();
+            this.input();
+        } else {
+            this.logIn("guest", "guest");
+        }
+    }
     
-    public CurrentProfile(){
+    public void output() {
         try {
-            FileInputStream fileIn = new FileInputStream(System.getProperty("user.dir") + "\\allprofiles.ser");
+         FileOutputStream fileOut = 
+         new FileOutputStream("C:\\Users\\jacko\\Documents\\NetBeansProjects\\InstagramProject\\src\\allprofiles.ser");
+         ObjectOutputStream out = new ObjectOutputStream(fileOut);
+         out.writeObject(allProfiles);
+         out.close();
+         fileOut.close();
+         System.out.printf("Serialized data is saved in /tmp/employee.ser");
+      }catch(IOException i) {
+         i.printStackTrace();
+      }
+    }
+
+    public void input() {
+        try {
+            FileInputStream fileIn = new FileInputStream("C:\\Users\\jacko\\Documents\\NetBeansProjects\\InstagramProject\\src\\allprofiles.ser");
             ObjectInputStream in = new ObjectInputStream(fileIn);
             allProfiles = (ArrayList<RealProfile>) in.readObject();
             in.close();
@@ -66,18 +94,11 @@ public class CurrentProfile{
             c.printStackTrace();
             return;
         }
-        
-        if(allProfiles.isEmpty()){
-            loggedIn = new RealProfile("guest", "guest", "guest", "guest");
-        }
-        else{
-            this.logIn("guest", "guest");
-        }
     }
-    
-    public boolean signUp(String username, String password, String firstName, String lastName){
-        for(int i = 0; i < allProfiles.size(); i++){
-            if(!allProfiles.get(i).getUsername().equals(username)){
+
+    public boolean signUp(String username, String password, String firstName, String lastName) {
+        for (int i = 0; i < allProfiles.size(); i++) {
+            if (!allProfiles.get(i).getUsername().equals(username)) {
                 allProfiles.add(new RealProfile(username, password, firstName, lastName));
                 this.logIn(username, password);
                 return true;
@@ -85,37 +106,28 @@ public class CurrentProfile{
         }
         return false;
     }
-    
-    public boolean logIn(String username, String password){
-        for(int i = 0; i < allProfiles.size(); i++){
-            if(allProfiles.get(i).getUsername().equals(username) && 
-                    allProfiles.get(i).getPassword().equals(password)){
+
+    public boolean logIn(String username, String password) {
+        for (int i = 0; i < allProfiles.size(); i++) {
+            if (allProfiles.get(i).getUsername().equals(username)
+                    && allProfiles.get(i).getPassword().equals(password)) {
                 loggedIn = allProfiles.get(i);
                 return true;
             }
         }
         return false;
     }
-    
-    public void logOut(){
-        try {
-            FileOutputStream fileOut
-                    = new FileOutputStream(System.getProperty("user.dir") + "\\allprofiles.ser");
-            ObjectOutputStream out = new ObjectOutputStream(fileOut);
-            out.writeObject(allProfiles);
-            out.close();
-            fileOut.close();
-        } catch (IOException i) {
-            i.printStackTrace();
-        }
+
+    public void close() {
+        this.output();
         loggedIn = null;
     }
-    
-    public void updateFeed(){
-        if(loggedIn.getUsername().equals("guest")){    
-            for(int i = 0; i < loggedIn.getFollowing().size(); i++){
-                for(int j = 0; j < loggedIn.getFollowing().get(i).getPosts().size();
-                        j++){
+
+    public void updateFeed() {
+        if (!loggedIn.getUsername().equals("guest")) {
+            for (int i = 0; i < loggedIn.getFollowing().size(); i++) {
+                for (int j = 0; j < loggedIn.getFollowing().get(i).getPosts().size();
+                        j++) {
                     feed.add(loggedIn.getFollowing().get(i).getPosts().get(j));
                 }
             }
@@ -123,60 +135,72 @@ public class CurrentProfile{
             Collections.sort(feed, ComparatorByDate.ComparatorByDate);
         }
     }
-    
-    public void follow(RealProfile toFollow){
-        toFollow.addFollower(loggedIn.getResponder());
-        toFollow.getFollowers().add(toFollow);
+
+    public void follow(String toFollow) {
+        for (int i = 0; i < allProfiles.size(); i++) {
+            if (allProfiles.get(i).getUsername().equals(toFollow)) {
+                allProfiles.get(i).addFollower(loggedIn.getResponder());
+                loggedIn.getFollowers().add(allProfiles.get(i));
+            }
+        }
     }
-    
-    public ArrayList<RealProfile> profileSearch(String username){
+
+    public ArrayList<RealProfile> profileSearch(String username) {
         ArrayList<RealProfile> results = new ArrayList<RealProfile>();
-        for(int i = 0; i < allProfiles.size(); i++){
-            if(allProfiles.get(i).getUsername().equals(username))
+        for (int i = 0; i < allProfiles.size(); i++) {
+            if (allProfiles.get(i).getUsername().equals(username)) {
                 results.add(allProfiles.get(i));
+            }
         }
         return results;
     }
-    
-    public void newPost(String caption, String imageLink, ArrayList comments, ArrayList hashtags, ArrayList mentions){
-        loggedIn.getPosts().add(new post(caption, comments, hashtags, mentions, imageLink));
-        
-        for(int i = 0; i < loggedIn.getFollowers().size(); i++){
+
+    public void newPost(String caption, String imageLink, ArrayList comments, ArrayList hashtags, ArrayList mentions) {
+        loggedIn.addPost(caption, imageLink, comments, mentions, hashtags);
+
+        for (int i = 0; i < loggedIn.getFollowers().size(); i++) {
             loggedIn.getFollowers().get(i).addNotifications(loggedIn.getUsername() + " created a new post.");
         }
     }
-    
-    public void placeComment(RealProfile profile, int postNum, String comment){
-        for(int i = 0; i < allProfiles.size(); i++){
-            if(allProfiles.get(i).getUsername().equals(profile.getName())){
+
+    public void placeComment(RealProfile profile, int postNum, String comment) {
+        for (int i = 0; i < allProfiles.size(); i++) {
+            if (allProfiles.get(i).getUsername().equals(profile.getName())) {
                 allProfiles.get(i).getPosts().get(postNum).addComment(comment);
                 profile.addNotifications(loggedIn.getUsername() + " has added a comment to your post.");
                 return;
             }
         }
     }
-    
-    public void messageUser(String message, String image, String sender, String reciever){
-        for(int i = 0; i < allProfiles.size(); i++){
-            if(allProfiles.get(i).getUsername().equals(reciever)){
+
+    public void messageUser(String message, String image, String sender, String reciever) {
+        for (int i = 0; i < allProfiles.size(); i++) {
+            if (allProfiles.get(i).getUsername().equals(reciever)) {
                 allProfiles.get(i).addDM(new DirectMessage(message, image, loggedIn));
                 allProfiles.get(i).addNotifications(loggedIn.getName() + " has sent you a DM!");
             }
         }
     }
-    
-    public ArrayList<post> hashtagSearch(String hashtag){
+
+    public ArrayList<post> hashtagSearch(String hashtag) {
         ArrayList<post> results = new ArrayList<post>();
-        for(int i = 0; i < allProfiles.size(); i++){
-            for(int j = 0; j < allProfiles.get(i).getPosts().size(); j++){
-                for(int k = 0; k < allProfiles.get(i).getPosts().get(j).getHashtags().size(); k++){    //Oh god what have we created...
-                    if(allProfiles.get(i).getPosts().get(j).getHashtags().get(k).equals(hashtag)){
+        for (int i = 0; i < allProfiles.size(); i++) {
+            for (int j = 0; j < allProfiles.get(i).getPosts().size(); j++) {
+                for (int k = 0; k < allProfiles.get(i).getPosts().get(j).getHashtags().size(); k++) {    //Oh god what have we created...
+                    if (allProfiles.get(i).getPosts().get(j).getHashtags().get(k).equals(hashtag)) {
                         results.add(allProfiles.get(i).getPosts().get(j));
                     }
-                }    
+                }
             }
         }
         return results;
     }
-}
 
+    public void addProfile(String username, String password, String firstName, String lastName) {
+        for (int i = 0; i < allProfiles.size(); i++) {
+            if (!allProfiles.get(i).getUsername().equals(username)) {
+                allProfiles.add(new RealProfile(username, password, firstName, lastName));
+            }
+        }
+    }
+}
