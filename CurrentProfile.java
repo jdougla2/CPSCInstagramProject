@@ -53,10 +53,10 @@ public class CurrentProfile {
 
     private RealProfile loggedIn;
     private ArrayList<post> feed = new ArrayList<post>();
-    private ArrayList<RealProfile> allProfiles = new ArrayList<RealProfile>();
+    private ArrayList<RealProfile> allProfiles = null;
 
     public CurrentProfile() {
-
+        this.input();
         if (allProfiles.isEmpty()) {
             loggedIn = new RealProfile("guest", "guest", "guest", "guest");
             allProfiles.add(loggedIn);
@@ -66,19 +66,20 @@ public class CurrentProfile {
             this.logIn("guest", "guest");
         }
     }
-    
+
     public void output() {
         try {
-         FileOutputStream fileOut = 
-         new FileOutputStream(System.getProperty("user.dir") + "\\allprofiles.ser");;
-         ObjectOutputStream out = new ObjectOutputStream(fileOut);
-         out.writeObject(allProfiles);
-         out.close();
-         fileOut.close();
-         System.out.printf("Serialized data is saved in /src/allprofiles.ser");
-      }catch(IOException i) {
-         i.printStackTrace();
-      }
+            FileOutputStream fileOut
+                    = new FileOutputStream(System.getProperty("user.dir") + "\\allprofiles.ser");;
+            ObjectOutputStream out = new ObjectOutputStream(fileOut);
+            out.writeObject(allProfiles);
+            out.close();
+            fileOut.close();
+            System.out.printf("Data file updated");
+            System.out.println();
+        } catch (IOException i) {
+            i.printStackTrace();
+        }
     }
 
     public void input() {
@@ -103,6 +104,7 @@ public class CurrentProfile {
             if (!allProfiles.get(i).getUsername().equals(username)) {
                 allProfiles.add(new RealProfile(username, password, firstName, lastName));
                 this.logIn(username, password);
+                this.output();
                 return true;
             }
         }
@@ -114,6 +116,7 @@ public class CurrentProfile {
             if (allProfiles.get(i).getUsername().equals(username)
                     && allProfiles.get(i).getPassword().equals(password)) {
                 loggedIn = allProfiles.get(i);
+                this.output();
                 return true;
             }
         }
@@ -204,10 +207,14 @@ public class CurrentProfile {
             }
         }
     }
-    
-    public void printAllProfiles(){
-        for(int i = 0; i < allProfiles.size(); i++){
+
+    public void printAllProfiles() {
+        for (int i = 0; i < allProfiles.size(); i++) {
             System.out.println(allProfiles.get(i).getUsername());
         }
+    }
+    
+    public RealProfile getLoggedIn() {
+        return loggedIn;
     }
 }
