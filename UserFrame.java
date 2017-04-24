@@ -6,7 +6,6 @@ import javax.imageio.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.swing.*;
-
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -68,14 +67,16 @@ public class UserFrame extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         LayoutPanel = new javax.swing.JPanel();
         HomePanel = new javax.swing.JPanel();
-        jLabel5 = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
+        jScrollPane9 = new javax.swing.JScrollPane();
+        HomeOutputEditorPane = new javax.swing.JEditorPane();
         SearchPanel = new javax.swing.JPanel();
         SearchParameterPanel = new javax.swing.JPanel();
         SearchParameter = new javax.swing.JComboBox();
         UserInput = new javax.swing.JTextField();
         SearchButton1 = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
-        SearchOutput = new javax.swing.JTextArea();
+        SearchOutputArea = new javax.swing.JTextArea();
         NewPostPanel = new javax.swing.JPanel();
         UploadPictureButton = new javax.swing.JButton();
         UploadedPictureLabel = new javax.swing.JLabel();
@@ -91,7 +92,9 @@ public class UserFrame extends javax.swing.JFrame {
         CreateNewPostButton = new javax.swing.JButton();
         NewPostOutputLabel = new javax.swing.JLabel();
         NotifcationsPanel = new javax.swing.JPanel();
-        jLabel3 = new javax.swing.JLabel();
+        jScrollPane7 = new javax.swing.JScrollPane();
+        NotificationOutputEditorPane = new javax.swing.JEditorPane();
+        jButton2 = new javax.swing.JButton();
         ProfilePanel = new javax.swing.JPanel();
         StaticProfilePanel = new javax.swing.JPanel();
         ProfilePictureLabel = new javax.swing.JLabel();
@@ -110,6 +113,9 @@ public class UserFrame extends javax.swing.JFrame {
         SentButton = new javax.swing.JButton();
         DMLayoutPanel = new javax.swing.JPanel();
         InboxPanel = new javax.swing.JPanel();
+        jScrollPane8 = new javax.swing.JScrollPane();
+        DMInboxOutputTextPane = new javax.swing.JTextPane();
+        jButton3 = new javax.swing.JButton();
         SentPanel = new javax.swing.JPanel();
         NewMessagePanel = new javax.swing.JPanel();
         ContactUsernameLabel = new javax.swing.JLabel();
@@ -255,23 +261,36 @@ public class UserFrame extends javax.swing.JFrame {
         HomePanel.setMinimumSize(new java.awt.Dimension(536, 466));
         HomePanel.setPreferredSize(new java.awt.Dimension(536, 466));
 
-        jLabel5.setText("Home");
+        jButton1.setText("jButton1");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        jScrollPane9.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        jScrollPane9.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
+
+        HomeOutputEditorPane.setEditable(false);
+        jScrollPane9.setViewportView(HomeOutputEditorPane);
 
         javax.swing.GroupLayout HomePanelLayout = new javax.swing.GroupLayout(HomePanel);
         HomePanel.setLayout(HomePanelLayout);
         HomePanelLayout.setHorizontalGroup(
             HomePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(HomePanelLayout.createSequentialGroup()
-                .addGap(223, 223, 223)
-                .addComponent(jLabel5)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap()
+                .addComponent(jButton1)
+                .addContainerGap(453, Short.MAX_VALUE))
+            .addComponent(jScrollPane9)
         );
         HomePanelLayout.setVerticalGroup(
             HomePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(HomePanelLayout.createSequentialGroup()
-                .addGap(192, 192, 192)
-                .addComponent(jLabel5)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, HomePanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jButton1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane9, javax.swing.GroupLayout.DEFAULT_SIZE, 426, Short.MAX_VALUE))
         );
 
         LayoutPanel.add(HomePanel, "card6");
@@ -307,9 +326,10 @@ public class UserFrame extends javax.swing.JFrame {
                 .addComponent(SearchButton1))
         );
 
-        SearchOutput.setColumns(20);
-        SearchOutput.setRows(5);
-        jScrollPane2.setViewportView(SearchOutput);
+        SearchOutputArea.setEditable(false);
+        SearchOutputArea.setColumns(20);
+        SearchOutputArea.setRows(5);
+        jScrollPane2.setViewportView(SearchOutputArea);
 
         javax.swing.GroupLayout SearchPanelLayout = new javax.swing.GroupLayout(SearchPanel);
         SearchPanel.setLayout(SearchPanelLayout);
@@ -344,13 +364,13 @@ public class UserFrame extends javax.swing.JFrame {
         CommentField.setRows(5);
         jScrollPane4.setViewportView(CommentField);
 
-        CommentLabel.setText("Enter your comment: ");
+        CommentLabel.setText("Enter your Comment:");
 
         TagedPeopleField.setColumns(20);
         TagedPeopleField.setRows(5);
         jScrollPane5.setViewportView(TagedPeopleField);
 
-        TagedPeopleLabel.setText("Enter People Taged: ");
+        TagedPeopleLabel.setText("Tag People:");
 
         HashTagsLabel.setText("Enter HashTags(if any):");
 
@@ -369,34 +389,30 @@ public class UserFrame extends javax.swing.JFrame {
         NewPostPanel.setLayout(NewPostPanelLayout);
         NewPostPanelLayout.setHorizontalGroup(
             NewPostPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, NewPostPanelLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(CreateNewPostButton)
-                .addGap(200, 200, 200))
             .addGroup(NewPostPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(NewPostPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(NewPostOutputLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(NewPostPanelLayout.createSequentialGroup()
                         .addGroup(NewPostPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(NewPostPanelLayout.createSequentialGroup()
+                                .addComponent(HashTagsLabel)
+                                .addGap(21, 21, 21)
+                                .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(CreateNewPostButton)
                             .addGroup(NewPostPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addGroup(NewPostPanelLayout.createSequentialGroup()
-                                    .addComponent(TagedPeopleLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGap(18, 18, 18)
-                                    .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, NewPostPanelLayout.createSequentialGroup()
                                     .addComponent(CommentLabel)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(NewPostPanelLayout.createSequentialGroup()
-                                .addComponent(HashTagsLabel)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(18, 18, 18)
+                                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(NewPostPanelLayout.createSequentialGroup()
+                                    .addComponent(TagedPeopleLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(35, 35, 35)
+                                    .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 93, Short.MAX_VALUE)
                         .addGroup(NewPostPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(UploadPictureButton)
-                            .addComponent(UploadedPictureLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 92, Short.MAX_VALUE))
-                    .addComponent(NewPostOutputLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(UploadPictureButton, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(UploadedPictureLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap())
         );
         NewPostPanelLayout.setVerticalGroup(
@@ -418,7 +434,7 @@ public class UserFrame extends javax.swing.JFrame {
                             .addComponent(HashTagsLabel)))
                     .addGroup(NewPostPanelLayout.createSequentialGroup()
                         .addComponent(UploadPictureButton)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGap(18, 18, 18)
                         .addComponent(UploadedPictureLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
                 .addComponent(CreateNewPostButton)
@@ -432,23 +448,33 @@ public class UserFrame extends javax.swing.JFrame {
         NotifcationsPanel.setMaximumSize(new java.awt.Dimension(536, 466));
         NotifcationsPanel.setMinimumSize(new java.awt.Dimension(536, 466));
 
-        jLabel3.setText("Notifcations");
+        NotificationOutputEditorPane.setEditable(false);
+        jScrollPane7.setViewportView(NotificationOutputEditorPane);
+
+        jButton2.setText("jButton2");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout NotifcationsPanelLayout = new javax.swing.GroupLayout(NotifcationsPanel);
         NotifcationsPanel.setLayout(NotifcationsPanelLayout);
         NotifcationsPanelLayout.setHorizontalGroup(
             NotifcationsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane7)
             .addGroup(NotifcationsPanelLayout.createSequentialGroup()
-                .addGap(244, 244, 244)
-                .addComponent(jLabel3)
-                .addContainerGap(235, Short.MAX_VALUE))
+                .addGap(206, 206, 206)
+                .addComponent(jButton2)
+                .addContainerGap(257, Short.MAX_VALUE))
         );
         NotifcationsPanelLayout.setVerticalGroup(
             NotifcationsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(NotifcationsPanelLayout.createSequentialGroup()
-                .addGap(164, 164, 164)
-                .addComponent(jLabel3)
-                .addContainerGap(288, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, NotifcationsPanelLayout.createSequentialGroup()
+                .addGap(0, 7, Short.MAX_VALUE)
+                .addComponent(jButton2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 430, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         LayoutPanel.add(NotifcationsPanel, "card4");
@@ -605,16 +631,36 @@ public class UserFrame extends javax.swing.JFrame {
 
         DMLayoutPanel.setLayout(new java.awt.CardLayout());
 
+        //jScrollPane8.setViewport(InboxPanel);
+        jScrollPane8.setViewportView(DMInboxOutputTextPane);
+
+        jButton3.setText("jButton3");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout InboxPanelLayout = new javax.swing.GroupLayout(InboxPanel);
         InboxPanel.setLayout(InboxPanelLayout);
         InboxPanelLayout.setHorizontalGroup(
             InboxPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addComponent(jScrollPane8)
+            .addGroup(InboxPanelLayout.createSequentialGroup()
+                .addGap(200, 200, 200)
+                .addComponent(jButton3)
+                .addContainerGap(263, Short.MAX_VALUE))
         );
         InboxPanelLayout.setVerticalGroup(
             InboxPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, InboxPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jButton3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 11, Short.MAX_VALUE)
+                .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, 392, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
+
+        jScrollPane8.getViewport().add(DMInboxOutputTextPane);
 
         DMLayoutPanel.add(InboxPanel, "card4");
 
@@ -622,11 +668,11 @@ public class UserFrame extends javax.swing.JFrame {
         SentPanel.setLayout(SentPanelLayout);
         SentPanelLayout.setHorizontalGroup(
             SentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGap(0, 536, Short.MAX_VALUE)
         );
         SentPanelLayout.setVerticalGroup(
             SentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGap(0, 437, Short.MAX_VALUE)
         );
 
         DMLayoutPanel.add(SentPanel, "card2");
@@ -712,20 +758,19 @@ public class UserFrame extends javax.swing.JFrame {
         DMPanelLayout.setHorizontalGroup(
             DMPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(DMMenuPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(DMLayoutPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(DMLayoutPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         DMPanelLayout.setVerticalGroup(
             DMPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(DMPanelLayout.createSequentialGroup()
                 .addComponent(DMMenuPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(DMLayoutPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 435, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(DMLayoutPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 437, Short.MAX_VALUE))
         );
 
         LayoutPanel.add(DMPanel, "card7");
 
         SettingsPanel.setMaximumSize(new java.awt.Dimension(536, 466));
-        SettingsPanel.setMinimumSize(new java.awt.Dimension(536, 466));
 
         ChangeFirstnameLabel.setText("Change First Name: ");
 
@@ -878,7 +923,7 @@ public class UserFrame extends javax.swing.JFrame {
         SettingsPanelLayout.setVerticalGroup(
             SettingsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(SettingsPanelLayout.createSequentialGroup()
-                .addContainerGap()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(SettingsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(SignOutButton)
                     .addGroup(SettingsPanelLayout.createSequentialGroup()
@@ -929,8 +974,7 @@ public class UserFrame extends javax.swing.JFrame {
                         .addGroup(SettingsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(ChangeProfilePhotoButton)
                             .addComponent(ChangeProfilePictureLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(CommitPhotoChangeButton))))
-                .addContainerGap(59, Short.MAX_VALUE))
+                            .addComponent(CommitPhotoChangeButton)))))
         );
 
         LayoutPanel.add(SettingsPanel, "card8");
@@ -1088,8 +1132,8 @@ public class UserFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_ChangeFirstnameButtonActionPerformed
 
     private void SearchButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SearchButton1ActionPerformed
-        SearchOutput.removeAll();
-        SearchOutput.repaint();
+        SearchOutputArea.removeAll();
+        SearchOutputArea.repaint();
         SearchInput= UserInput.getText();
         Parameter= SearchParameter.getSelectedItem().toString();
         System.out.println(SearchInput +" "+ Parameter);
@@ -1175,10 +1219,300 @@ public class UserFrame extends javax.swing.JFrame {
     private void CreateNewPostButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CreateNewPostButtonActionPerformed
         // TODO add your handling code here:
         Date date = new Date();
-        SimpleDateFormat format = new SimpleDateFormat("MM-dd-yyyy HH:mm");
+        SimpleDateFormat format = new SimpleDateFormat("MM-dd HH:mm");
         String time = format.format(date);
     }//GEN-LAST:event_CreateNewPostButtonActionPerformed
-   
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        //System.getProperty("user.dir")+"\\ProfilePicture.png"
+        HomeOutputEditorPane.removeAll();
+        
+        int p=1;
+        int y1=0;
+        int y2=20;
+        int i=0;
+    while (i< 10){    
+        JLabel date= new JLabel();
+        date.setSize(100, 21);
+        date.setText("MM-dd HH:mm");
+        
+        JLabel username= new JLabel();
+        username.setSize(100,21);
+        username.setText("username");
+        
+        JLabel picture= new JLabel();
+        picture.setSize(120, 120);
+        try {
+            ImageIcon ii=new ImageIcon(scaleImage(120, 120, ImageIO.read(new File(System.getProperty("user.dir")+"\\ProfilePicture.png"))));
+            picture.setIcon(ii);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        
+        JTextArea caption= new JTextArea();
+        caption.setText("caption here...");
+        caption.setLineWrap(true);
+        caption.setEditable(false);
+        caption.setSize(100, 100);
+        JScrollPane CaptionScroll = new JScrollPane (caption, 
+   JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        CaptionScroll.setSize(100,100);
+        
+        JTextArea comments= new JTextArea();
+        comments.setText("comments here...");
+        comments.setLineWrap(true);
+        comments.setSize(100, 100);
+        JScrollPane CommentScroll = new JScrollPane (comments, 
+   JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        CommentScroll.setSize(100,100);
+        
+        JButton CommentButton= new JButton();
+        CommentButton.setText("Submit");
+        CommentButton.setSize(100, 21);
+        CommentButton.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                //do stufff
+            }
+        });
+        
+        likes=0;
+        final JLabel likeLabel= new JLabel();
+        likeLabel.setText("LIKES: "+ Integer.toString(likes));
+        likeLabel.setSize(100,21);
+        
+        final JButton LikeButton= new JButton();
+        LikeButton.setText("Like");
+        LikeButton.setSize(100, 21);
+        LikeButton.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                if (liked == false) {
+                    likes++;
+                    likeLabel.setText("LIKES: "+ Integer.toString(likes));
+                    LikeButton.setText("UnLike");
+                    liked=true;
+                }
+                else{
+                    likes--;
+                    likeLabel.setText("LIKES: "+ Integer.toString(likes));
+                    LikeButton.setText("Like");
+                    liked=false;
+                }
+            }
+        });
+        
+        
+        HomeOutputEditorPane.add(username, p).setLocation(125, y1);
+        p++;
+        HomeOutputEditorPane.add(CaptionScroll,p).setLocation(120, y2);
+        p++;
+        HomeOutputEditorPane.add(CommentButton,p).setLocation(230,y1);
+        p++;
+        HomeOutputEditorPane.add(CommentScroll, p).setLocation(230, y2);
+        p++;
+        HomeOutputEditorPane.add(LikeButton,p).setLocation(340, y1);
+        p++;
+        HomeOutputEditorPane.add(likeLabel,p).setLocation(340, y2);
+        p++;
+        HomeOutputEditorPane.add(date,p).setLocation(445, y1);
+        p++;
+        HomeOutputEditorPane.add(picture, p).setLocation(0, y1);
+        p++;
+        HomeOutputEditorPane.repaint();
+        i++;
+        y1=y1+130;
+        y2=y2+130;
+    }
+
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        NotificationOutputEditorPane.setLayout(new GridLayout(10,1, 10, 10));
+        JLabel date= new JLabel();
+        date.setSize(100, 21);
+        date.setText("date posted");
+        
+        JLabel username= new JLabel();
+        username.setSize(100,21);
+        username.setText("username");
+        
+        JLabel picture= new JLabel();
+        picture.setSize(120, 120);
+        try {
+            ImageIcon ii=new ImageIcon(scaleImage(120, 120, ImageIO.read(new File(System.getProperty("user.dir")+"\\ProfilePicture.png"))));
+            picture.setIcon(ii);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        
+        JTextArea caption= new JTextArea();
+        caption.setText("caption here...");
+        caption.setLineWrap(true);
+        caption.setEditable(false);
+        caption.setSize(100, 100);
+        JScrollPane CaptionScroll = new JScrollPane (caption, 
+   JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        CaptionScroll.setSize(100,100);
+        
+        JTextArea comments= new JTextArea();
+        comments.setText("comments here...");
+        comments.setLineWrap(true);
+        comments.setSize(100, 100);
+        JScrollPane CommentScroll = new JScrollPane (comments, 
+   JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        CommentScroll.setSize(100,100);
+        
+        JButton CommentButton= new JButton();
+        CommentButton.setText("Submit");
+        CommentButton.setSize(100, 21);
+        CommentButton.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                //do stufff
+            }
+        });
+        
+        likes=0;
+        final JLabel likeLabel= new JLabel();
+        likeLabel.setText("LIKES: "+ Integer.toString(likes));
+        likeLabel.setSize(100,21);
+        
+        final JButton LikeButton= new JButton();
+        LikeButton.setText("Like");
+        LikeButton.setSize(100, 21);
+        LikeButton.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                if (liked == false) {
+                    likes++;
+                    likeLabel.setText("LIKES: "+ Integer.toString(likes));
+                    LikeButton.setText("UnLike");
+                    liked=true;
+                }
+                else{
+                    likes--;
+                    likeLabel.setText("LIKES: "+ Integer.toString(likes));
+                    LikeButton.setText("Like");
+                    liked=false;
+                }
+            }
+        });
+        
+        
+        NotificationOutputEditorPane.add(username, 0).setLocation(125, 0);
+        NotificationOutputEditorPane.add(CaptionScroll,1).setLocation(120, 20);
+        NotificationOutputEditorPane.add(CommentButton,2).setLocation(230,0);
+        NotificationOutputEditorPane.add(CommentScroll, 3).setLocation(230, 20);
+        NotificationOutputEditorPane.add(LikeButton,4).setLocation(340, 0);
+        NotificationOutputEditorPane.add(likeLabel,5).setLocation(340, 20);
+        NotificationOutputEditorPane.add(date,6).setLocation(450, 0);
+        NotificationOutputEditorPane.add(picture, 7).setLocation(0, 0);
+        NotificationOutputEditorPane.repaint();
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+        int p=0;
+        int y1=0;
+        int y2=20;
+        int i=0;
+    while (i< 10){    
+        JLabel date= new JLabel();
+        date.setSize(100, 21);
+        date.setText("date posted");
+        
+        JLabel username= new JLabel();
+        username.setSize(100,21);
+        username.setText("username");
+        
+        JLabel picture= new JLabel();
+        picture.setSize(120, 120);
+        try {
+            ImageIcon ii=new ImageIcon(scaleImage(120, 120, ImageIO.read(new File(System.getProperty("user.dir")+"\\ProfilePicture.png"))));
+            picture.setIcon(ii);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        
+        JTextArea caption= new JTextArea();
+        caption.setText("caption here...");
+        caption.setLineWrap(true);
+        caption.setEditable(false);
+        caption.setSize(100, 100);
+        JScrollPane CaptionScroll = new JScrollPane (caption, 
+   JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        CaptionScroll.setSize(100,100);
+        
+        JTextArea comments= new JTextArea();
+        comments.setText("comments here...");
+        comments.setLineWrap(true);
+        comments.setSize(100, 100);
+        JScrollPane CommentScroll = new JScrollPane (comments, 
+   JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        CommentScroll.setSize(100,100);
+        
+        JButton commentButton= new JButton();
+        commentButton.setText("Submit");
+        commentButton.setSize(100, 21);
+        commentButton.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                //do stufff
+            }
+        });
+        
+        likes=0;
+        final JLabel likeLabel= new JLabel();
+        likeLabel.setText("LIKES: "+ Integer.toString(likes));
+        likeLabel.setSize(100,21);
+        
+        final JButton likeButton= new JButton();
+        likeButton.setText("Like");
+        likeButton.setSize(100, 21);
+        likeButton.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                if (liked == false) {
+                    likes++;
+                    likeLabel.setText("LIKES: "+ Integer.toString(likes));
+                    likeButton.setText("UnLike");
+                    liked=true;
+                }
+                else{
+                    likes--;
+                    likeLabel.setText("LIKES: "+ Integer.toString(likes));
+                    likeButton.setText("Like");
+                    liked=false;
+                }
+            }
+        });
+        
+        DMInboxOutputTextPane.add(username, p).setLocation(125, y1);
+        p++;
+        DMInboxOutputTextPane.add(CaptionScroll,p).setLocation(120, y2);
+        p++;
+        DMInboxOutputTextPane.add(commentButton,p).setLocation(230,y1);
+        p++;
+        DMInboxOutputTextPane.add(CommentScroll, p).setLocation(230, y2);
+        p++;
+        DMInboxOutputTextPane.add(likeButton,p).setLocation(340, y1);
+        p++;
+        DMInboxOutputTextPane.add(likeLabel,p).setLocation(340, y2);
+        p++;
+        DMInboxOutputTextPane.add(date,p).setLocation(450, y1);
+        p++;
+        DMInboxOutputTextPane.add(picture, p).setLocation(0, y1);
+        p++;
+        DMInboxOutputTextPane.repaint();
+        i++;
+        y1=y1+130;
+        y2=y2+130;
+    }
+    }//GEN-LAST:event_jButton3ActionPerformed
+
     /**
      * Scales size of image to correct size
      * @param w width of size needed
@@ -1271,6 +1605,7 @@ public class UserFrame extends javax.swing.JFrame {
     private javax.swing.JPasswordField CurrentPasswordField;
     private javax.swing.JLabel CurrentPasswordLabel;
     private javax.swing.JButton DMButton;
+    private javax.swing.JTextPane DMInboxOutputTextPane;
     private javax.swing.JPanel DMLayoutPanel;
     private javax.swing.JPanel DMMenuPanel;
     private javax.swing.JPanel DMPanel;
@@ -1282,6 +1617,7 @@ public class UserFrame extends javax.swing.JFrame {
     private javax.swing.JLabel HashTagsLabel;
     private javax.swing.JTextArea HashtagsField;
     private javax.swing.JButton HomeButton;
+    private javax.swing.JEditorPane HomeOutputEditorPane;
     private javax.swing.JPanel HomePanel;
     private javax.swing.JButton InboxButton;
     private javax.swing.JPanel InboxPanel;
@@ -1301,6 +1637,7 @@ public class UserFrame extends javax.swing.JFrame {
     private javax.swing.JButton NewpostButton;
     private javax.swing.JButton NotifcationsButton;
     private javax.swing.JPanel NotifcationsPanel;
+    private javax.swing.JEditorPane NotificationOutputEditorPane;
     private javax.swing.JLabel NumberFollowersLabel;
     private javax.swing.JLabel NumberFollowingLabel;
     private javax.swing.JLabel PasswordOutputLabel;
@@ -1313,7 +1650,7 @@ public class UserFrame extends javax.swing.JFrame {
     private javax.swing.JLabel ProfilePictureLabel;
     private javax.swing.JButton SearchButton;
     private javax.swing.JButton SearchButton1;
-    private javax.swing.JTextArea SearchOutput;
+    private javax.swing.JTextArea SearchOutputArea;
     private javax.swing.JPanel SearchPanel;
     private javax.swing.JComboBox SearchParameter;
     private javax.swing.JPanel SearchParameterPanel;
@@ -1333,14 +1670,18 @@ public class UserFrame extends javax.swing.JFrame {
     private javax.swing.JPanel UserPostPanel;
     private javax.swing.JScrollPane UserPostScrollPane;
     private javax.swing.JLabel UsernameLabel;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel5;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JScrollPane jScrollPane6;
+    private javax.swing.JScrollPane jScrollPane7;
+    private javax.swing.JScrollPane jScrollPane8;
+    private javax.swing.JScrollPane jScrollPane9;
     // End of variables declaration//GEN-END:variables
     private String NewFirstname;
     private String NewLastname;
@@ -1351,4 +1692,6 @@ public class UserFrame extends javax.swing.JFrame {
     private String SearchInput;
     private String Parameter;
     private ImageIcon ii;
+    private int likes;
+    private boolean liked;
 }
