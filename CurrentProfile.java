@@ -11,6 +11,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -58,6 +59,7 @@ public class CurrentProfile {
 
         if (allProfiles.isEmpty()) {
             loggedIn = new RealProfile("guest", "guest", "guest", "guest");
+            allProfiles.add(loggedIn);
             this.output();
             this.input();
         } else {
@@ -68,12 +70,12 @@ public class CurrentProfile {
     public void output() {
         try {
          FileOutputStream fileOut = 
-         new FileOutputStream("C:\\Users\\jacko\\Documents\\NetBeansProjects\\InstagramProject\\src\\allprofiles.ser");
+         new FileOutputStream(System.getProperty("user.dir") + "\\allprofiles.ser");;
          ObjectOutputStream out = new ObjectOutputStream(fileOut);
          out.writeObject(allProfiles);
          out.close();
          fileOut.close();
-         System.out.printf("Serialized data is saved in /tmp/employee.ser");
+         System.out.printf("Serialized data is saved in /src/allprofiles.ser");
       }catch(IOException i) {
          i.printStackTrace();
       }
@@ -81,7 +83,7 @@ public class CurrentProfile {
 
     public void input() {
         try {
-            FileInputStream fileIn = new FileInputStream("C:\\Users\\jacko\\Documents\\NetBeansProjects\\InstagramProject\\src\\allprofiles.ser");
+            FileInputStream fileIn = new FileInputStream(System.getProperty("user.dir") + "\\allprofiles.ser");
             ObjectInputStream in = new ObjectInputStream(fileIn);
             allProfiles = (ArrayList<RealProfile>) in.readObject();
             in.close();
@@ -139,7 +141,6 @@ public class CurrentProfile {
     public void follow(String toFollow) {
         for (int i = 0; i < allProfiles.size(); i++) {
             if (allProfiles.get(i).getUsername().equals(toFollow)) {
-                allProfiles.get(i).addFollower(loggedIn.getResponder());
                 loggedIn.getFollowers().add(allProfiles.get(i));
             }
         }
@@ -155,7 +156,7 @@ public class CurrentProfile {
         return results;
     }
 
-    public void newPost(String caption, String imageLink, ArrayList comments, ArrayList hashtags, ArrayList mentions) {
+    public void newPost(String caption, URL imageLink, ArrayList comments, ArrayList hashtags, ArrayList mentions) {
         loggedIn.addPost(caption, imageLink, comments, mentions, hashtags);
 
         for (int i = 0; i < loggedIn.getFollowers().size(); i++) {
@@ -201,6 +202,12 @@ public class CurrentProfile {
             if (!allProfiles.get(i).getUsername().equals(username)) {
                 allProfiles.add(new RealProfile(username, password, firstName, lastName));
             }
+        }
+    }
+    
+    public void printAllProfiles(){
+        for(int i = 0; i < allProfiles.size(); i++){
+            System.out.println(allProfiles.get(i).getUsername());
         }
     }
 }

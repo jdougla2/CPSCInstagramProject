@@ -5,6 +5,8 @@
  */
 package instagramproject;
 
+import java.io.Serializable;
+import java.net.URL;
 import java.util.ArrayList;
 import javax.swing.event.*;
 
@@ -16,7 +18,7 @@ interface PostListener {
     String someonePosted();
 }
 
-public class RealProfile{
+public class RealProfile implements Serializable{
     private String username;
     private String password;
     private String firstName;
@@ -28,7 +30,6 @@ public class RealProfile{
     private ArrayList<PostListener> listeners = new ArrayList<PostListener>();
     private ArrayList<RealProfile> followers = new ArrayList<RealProfile>();
     private ArrayList<RealProfile> following = new ArrayList<RealProfile>();
-    private Responder responds = new Responder();
     private ArrayList<DirectMessage> dms = new ArrayList<DirectMessage>();
     
     public RealProfile(String username, String password, String firstName, String lastName){
@@ -57,10 +58,6 @@ public class RealProfile{
     public ArrayList getNotifications(){
         return notifications;
     }
-    
-    public Responder getResponder(){
-        return responds;
-    }
             
     public ArrayList<RealProfile> getFollowing(){
         return following;
@@ -74,7 +71,7 @@ public class RealProfile{
         notifications.add(newNotification);
     }
     
-    public void addPost(String caption, String imageLink, ArrayList comments, ArrayList hashtags, ArrayList mentions){
+    public void addPost(String caption, URL imageLink, ArrayList comments, ArrayList hashtags, ArrayList mentions){
         posts.add(new post(caption, comments, hashtags, mentions, imageLink));
         
         for (PostListener listener : listeners) {
@@ -102,8 +99,4 @@ public class RealProfile{
     }
 }
 
-class Responder implements PostListener{
-    public String someonePosted(){
-        return "Someone posted";
-    }
-}
+
