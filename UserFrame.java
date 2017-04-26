@@ -1,3 +1,4 @@
+
 import java.awt.event.*;
 import java.awt.*;
 import java.awt.image.*;
@@ -6,6 +7,7 @@ import javax.imageio.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.swing.*;
+import javax.swing.border.Border;
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -21,28 +23,27 @@ public class UserFrame extends javax.swing.JFrame {
     /**
      * Creates new form UserFrame
      */
-    int width= (Toolkit.getDefaultToolkit().getScreenSize().width / 2) - 269;
-    int height= (Toolkit.getDefaultToolkit().getScreenSize().height / 2) - 263;
+    int width = (Toolkit.getDefaultToolkit().getScreenSize().width / 2) - 269;
+    int height = (Toolkit.getDefaultToolkit().getScreenSize().height / 2) - 263;
+
     public UserFrame() {
         initComponents();
         this.setTitle("EagleGram");
         this.setLocation(width, height);
         this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         addWindowListener(new WindowAdapter() {
-        @Override
-        public void windowClosing(WindowEvent we)
-        { 
-        String ObjButtons[] = {"Yes","No"};
-        int PromptResult = JOptionPane.showOptionDialog(null,
-                "Are you sure you want to exit?","Warning Message",
-                JOptionPane.DEFAULT_OPTION,JOptionPane.WARNING_MESSAGE,null,
-                ObjButtons,ObjButtons[1]);
-        if(PromptResult==JOptionPane.YES_OPTION)
-        {
-            System.exit(0);
-        }
-        }
-});
+            @Override
+            public void windowClosing(WindowEvent we) {
+                String ObjButtons[] = {"Yes", "No"};
+                int PromptResult = JOptionPane.showOptionDialog(null,
+                        "Are you sure you want to exit?", "Warning Message",
+                        JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null,
+                        ObjButtons, ObjButtons[1]);
+                if (PromptResult == JOptionPane.YES_OPTION) {
+                    System.exit(0);
+                }
+            }
+        });
     }
 
     /**
@@ -58,7 +59,7 @@ public class UserFrame extends javax.swing.JFrame {
         HomeButton = new javax.swing.JButton();
         SearchButton = new javax.swing.JButton();
         NewpostButton = new javax.swing.JButton();
-        NotifcationsButton = new javax.swing.JButton();
+        NotificationsButton = new javax.swing.JButton();
         ProfileButton = new javax.swing.JButton();
         TopMenu = new javax.swing.JPanel();
         DMButton = new javax.swing.JButton();
@@ -67,34 +68,32 @@ public class UserFrame extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         LayoutPanel = new javax.swing.JPanel();
         HomePanel = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
-        jScrollPane9 = new javax.swing.JScrollPane();
-        HomeOutputEditorPane = new javax.swing.JEditorPane();
+        jScrollPane8 = new javax.swing.JScrollPane();
+        homePanel = new javax.swing.JPanel();
         SearchPanel = new javax.swing.JPanel();
         SearchParameterPanel = new javax.swing.JPanel();
         SearchParameter = new javax.swing.JComboBox();
-        UserInput = new javax.swing.JTextField();
+        userInput = new javax.swing.JTextField();
         SearchButton1 = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
-        SearchOutputArea = new javax.swing.JTextArea();
+        searchOutputPanel = new javax.swing.JPanel();
         NewPostPanel = new javax.swing.JPanel();
         UploadPictureButton = new javax.swing.JButton();
-        UploadedPictureLabel = new javax.swing.JLabel();
+        uploadedPictureLabel = new javax.swing.JLabel();
         jScrollPane4 = new javax.swing.JScrollPane();
-        CommentField = new javax.swing.JTextArea();
+        captionField = new javax.swing.JTextArea();
         CommentLabel = new javax.swing.JLabel();
         jScrollPane5 = new javax.swing.JScrollPane();
-        TagedPeopleField = new javax.swing.JTextArea();
+        tagedPeopleField = new javax.swing.JTextArea();
         TagedPeopleLabel = new javax.swing.JLabel();
         HashTagsLabel = new javax.swing.JLabel();
         jScrollPane6 = new javax.swing.JScrollPane();
-        HashtagsField = new javax.swing.JTextArea();
+        hashTagsField = new javax.swing.JTextArea();
         CreateNewPostButton = new javax.swing.JButton();
-        NewPostOutputLabel = new javax.swing.JLabel();
-        NotifcationsPanel = new javax.swing.JPanel();
-        jScrollPane7 = new javax.swing.JScrollPane();
-        NotificationOutputEditorPane = new javax.swing.JEditorPane();
-        jButton2 = new javax.swing.JButton();
+        newPostOutputLabel = new javax.swing.JLabel();
+        NotificationsPanel = new javax.swing.JPanel();
+        jScrollPane9 = new javax.swing.JScrollPane();
+        notificationsPanel = new javax.swing.JPanel();
         ProfilePanel = new javax.swing.JPanel();
         StaticProfilePanel = new javax.swing.JPanel();
         ProfilePictureLabel = new javax.swing.JLabel();
@@ -113,15 +112,16 @@ public class UserFrame extends javax.swing.JFrame {
         SentButton = new javax.swing.JButton();
         DMLayoutPanel = new javax.swing.JPanel();
         InboxPanel = new javax.swing.JPanel();
-        jScrollPane8 = new javax.swing.JScrollPane();
-        DMInboxOutputTextPane = new javax.swing.JTextPane();
-        jButton3 = new javax.swing.JButton();
+        jScrollPane10 = new javax.swing.JScrollPane();
+        inboxPanel = new javax.swing.JPanel();
         SentPanel = new javax.swing.JPanel();
+        jScrollPane7 = new javax.swing.JScrollPane();
+        sentsPanel = new javax.swing.JPanel();
         NewMessagePanel = new javax.swing.JPanel();
         ContactUsernameLabel = new javax.swing.JLabel();
-        ContactUsernameField = new javax.swing.JTextField();
+        contactUsernameField = new javax.swing.JTextField();
         jScrollPane3 = new javax.swing.JScrollPane();
-        MessageField = new javax.swing.JTextArea();
+        messageField = new javax.swing.JTextArea();
         MessageLabel = new javax.swing.JLabel();
         SendButton = new javax.swing.JButton();
         MessageOutputLabel = new javax.swing.JLabel();
@@ -138,7 +138,7 @@ public class UserFrame extends javax.swing.JFrame {
         CurrentPasswordLabel = new javax.swing.JLabel();
         PrivateAccoutLabel = new javax.swing.JLabel();
         PrivateAccountCheckBox = new javax.swing.JCheckBox();
-        PrivateAccoutButton = new javax.swing.JButton();
+        PrivateAccountButton = new javax.swing.JButton();
         CurrentPasswordField = new javax.swing.JPasswordField();
         NewPasswordField1 = new javax.swing.JPasswordField();
         NewPasswordField2 = new javax.swing.JPasswordField();
@@ -151,8 +151,9 @@ public class UserFrame extends javax.swing.JFrame {
         ChangeLastnameOutputLabel = new javax.swing.JLabel();
         PasswordOutputLabel = new javax.swing.JLabel();
         ChangeProfilePhotoButton = new javax.swing.JButton();
-        ChangeProfilePictureLabel = new javax.swing.JLabel();
+        changeProfilePictureLabel = new javax.swing.JLabel();
         CommitPhotoChangeButton = new javax.swing.JButton();
+        changeProfilePictureOutputLabel = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -177,10 +178,10 @@ public class UserFrame extends javax.swing.JFrame {
             }
         });
 
-        NotifcationsButton.setText("Notifcations");
-        NotifcationsButton.addActionListener(new java.awt.event.ActionListener() {
+        NotificationsButton.setText("Notifcations");
+        NotificationsButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                NotifcationsButtonActionPerformed(evt);
+                NotificationsButtonActionPerformed(evt);
             }
         });
 
@@ -202,7 +203,7 @@ public class UserFrame extends javax.swing.JFrame {
                 .addGap(10, 10, 10)
                 .addComponent(NewpostButton, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(NotifcationsButton, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(NotificationsButton, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(ProfileButton, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -214,9 +215,15 @@ public class UserFrame extends javax.swing.JFrame {
                     .addComponent(HomeButton)
                     .addComponent(SearchButton)
                     .addComponent(NewpostButton)
-                    .addComponent(NotifcationsButton)
+                    .addComponent(NotificationsButton)
                     .addComponent(ProfileButton)))
         );
+
+        HomeButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        SearchButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        NewpostButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        NotificationsButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        ProfileButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 
         DMButton.setText("DM");
         DMButton.addActionListener(new java.awt.event.ActionListener() {
@@ -253,6 +260,9 @@ public class UserFrame extends javax.swing.JFrame {
                 .addComponent(EalgeGramLabel))
         );
 
+        DMButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        SettingsButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+
         LayoutPanel.setMaximumSize(new java.awt.Dimension(536, 466));
         LayoutPanel.setPreferredSize(new java.awt.Dimension(536, 466));
         LayoutPanel.setLayout(new java.awt.CardLayout());
@@ -261,36 +271,29 @@ public class UserFrame extends javax.swing.JFrame {
         HomePanel.setMinimumSize(new java.awt.Dimension(536, 466));
         HomePanel.setPreferredSize(new java.awt.Dimension(536, 466));
 
-        jButton1.setText("jButton1");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
+        javax.swing.GroupLayout homePanelLayout = new javax.swing.GroupLayout(homePanel);
+        homePanel.setLayout(homePanelLayout);
+        homePanelLayout.setHorizontalGroup(
+            homePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 534, Short.MAX_VALUE)
+        );
+        homePanelLayout.setVerticalGroup(
+            homePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 464, Short.MAX_VALUE)
+        );
 
-        jScrollPane9.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-        jScrollPane9.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
-
-        HomeOutputEditorPane.setEditable(false);
-        jScrollPane9.setViewportView(HomeOutputEditorPane);
+        jScrollPane8.setViewportView(homePanel);
+        homePanel.setLayout(new BoxLayout(homePanel, BoxLayout.Y_AXIS));
 
         javax.swing.GroupLayout HomePanelLayout = new javax.swing.GroupLayout(HomePanel);
         HomePanel.setLayout(HomePanelLayout);
         HomePanelLayout.setHorizontalGroup(
             HomePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(HomePanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jButton1)
-                .addContainerGap(453, Short.MAX_VALUE))
-            .addComponent(jScrollPane9)
+            .addComponent(jScrollPane8)
         );
         HomePanelLayout.setVerticalGroup(
             HomePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, HomePanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jButton1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane9, javax.swing.GroupLayout.DEFAULT_SIZE, 426, Short.MAX_VALUE))
+            .addComponent(jScrollPane8, javax.swing.GroupLayout.Alignment.TRAILING)
         );
 
         LayoutPanel.add(HomePanel, "card6");
@@ -314,32 +317,40 @@ public class UserFrame extends javax.swing.JFrame {
             .addGroup(SearchParameterPanelLayout.createSequentialGroup()
                 .addComponent(SearchParameter, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(UserInput, javax.swing.GroupLayout.PREFERRED_SIZE, 313, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(SearchButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 99, Short.MAX_VALUE))
+                .addComponent(userInput, javax.swing.GroupLayout.PREFERRED_SIZE, 313, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
+                .addComponent(SearchButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 105, Short.MAX_VALUE))
         );
         SearchParameterPanelLayout.setVerticalGroup(
             SearchParameterPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(SearchParameterPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                 .addComponent(SearchParameter, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addComponent(UserInput, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(userInput, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addComponent(SearchButton1))
         );
 
-        SearchOutputArea.setEditable(false);
-        SearchOutputArea.setColumns(20);
-        SearchOutputArea.setRows(5);
-        jScrollPane2.setViewportView(SearchOutputArea);
+        SearchButton1.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+
+        javax.swing.GroupLayout searchOutputPanelLayout = new javax.swing.GroupLayout(searchOutputPanel);
+        searchOutputPanel.setLayout(searchOutputPanelLayout);
+        searchOutputPanelLayout.setHorizontalGroup(
+            searchOutputPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+        searchOutputPanelLayout.setVerticalGroup(
+            searchOutputPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+
+        jScrollPane2.setViewportView(searchOutputPanel);
+        searchOutputPanel.setLayout(new BoxLayout(searchOutputPanel, BoxLayout.Y_AXIS));
 
         javax.swing.GroupLayout SearchPanelLayout = new javax.swing.GroupLayout(SearchPanel);
         SearchPanel.setLayout(SearchPanelLayout);
         SearchPanelLayout.setHorizontalGroup(
             SearchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(SearchPanelLayout.createSequentialGroup()
-                .addGroup(SearchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(jScrollPane2)
-                    .addComponent(SearchParameterPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(SearchParameterPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jScrollPane2)
         );
         SearchPanelLayout.setVerticalGroup(
             SearchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -360,23 +371,23 @@ public class UserFrame extends javax.swing.JFrame {
             }
         });
 
-        CommentField.setColumns(20);
-        CommentField.setRows(5);
-        jScrollPane4.setViewportView(CommentField);
+        captionField.setColumns(20);
+        captionField.setRows(5);
+        jScrollPane4.setViewportView(captionField);
 
         CommentLabel.setText("Enter your Comment:");
 
-        TagedPeopleField.setColumns(20);
-        TagedPeopleField.setRows(5);
-        jScrollPane5.setViewportView(TagedPeopleField);
+        tagedPeopleField.setColumns(20);
+        tagedPeopleField.setRows(5);
+        jScrollPane5.setViewportView(tagedPeopleField);
 
         TagedPeopleLabel.setText("Tag People:");
 
         HashTagsLabel.setText("Enter HashTags(if any):");
 
-        HashtagsField.setColumns(20);
-        HashtagsField.setRows(5);
-        jScrollPane6.setViewportView(HashtagsField);
+        hashTagsField.setColumns(20);
+        hashTagsField.setRows(5);
+        jScrollPane6.setViewportView(hashTagsField);
 
         CreateNewPostButton.setText("Create New Post");
         CreateNewPostButton.addActionListener(new java.awt.event.ActionListener() {
@@ -385,6 +396,8 @@ public class UserFrame extends javax.swing.JFrame {
             }
         });
 
+        newPostOutputLabel.setPreferredSize(new java.awt.Dimension(516, 21));
+
         javax.swing.GroupLayout NewPostPanelLayout = new javax.swing.GroupLayout(NewPostPanel);
         NewPostPanel.setLayout(NewPostPanelLayout);
         NewPostPanelLayout.setHorizontalGroup(
@@ -392,27 +405,29 @@ public class UserFrame extends javax.swing.JFrame {
             .addGroup(NewPostPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(NewPostPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(NewPostOutputLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(newPostOutputLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(NewPostPanelLayout.createSequentialGroup()
                         .addGroup(NewPostPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(NewPostPanelLayout.createSequentialGroup()
+                                .addComponent(TagedPeopleLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(NewPostPanelLayout.createSequentialGroup()
+                                .addComponent(CommentLabel)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(NewPostPanelLayout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addComponent(CreateNewPostButton)
+                                .addGap(28, 28, 28))
+                            .addGroup(NewPostPanelLayout.createSequentialGroup()
                                 .addComponent(HashTagsLabel)
-                                .addGap(21, 21, 21)
-                                .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(CreateNewPostButton)
-                            .addGroup(NewPostPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, NewPostPanelLayout.createSequentialGroup()
-                                    .addComponent(CommentLabel)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(NewPostPanelLayout.createSequentialGroup()
-                                    .addComponent(TagedPeopleLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGap(35, 35, 35)
-                                    .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 93, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(NewPostPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(UploadPictureButton, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(UploadedPictureLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(uploadedPictureLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(UploadPictureButton))))
                 .addContainerGap())
         );
         NewPostPanelLayout.setVerticalGroup(
@@ -422,62 +437,61 @@ public class UserFrame extends javax.swing.JFrame {
                 .addGroup(NewPostPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(NewPostPanelLayout.createSequentialGroup()
                         .addGroup(NewPostPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(TagedPeopleLabel)
-                            .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(6, 6, 6)
-                        .addGroup(NewPostPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(CommentLabel))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(NewPostPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(HashTagsLabel)))
+                            .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(TagedPeopleLabel))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(NewPostPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(HashTagsLabel)
+                            .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(NewPostPanelLayout.createSequentialGroup()
                         .addComponent(UploadPictureButton)
                         .addGap(18, 18, 18)
-                        .addComponent(UploadedPictureLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(uploadedPictureLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
                 .addComponent(CreateNewPostButton)
-                .addGap(18, 18, 18)
-                .addComponent(NewPostOutputLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 85, Short.MAX_VALUE)
-                .addContainerGap())
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(newPostOutputLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(77, 77, 77))
         );
+
+        UploadPictureButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        CreateNewPostButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 
         LayoutPanel.add(NewPostPanel, "card2");
 
-        NotifcationsPanel.setMaximumSize(new java.awt.Dimension(536, 466));
-        NotifcationsPanel.setMinimumSize(new java.awt.Dimension(536, 466));
+        NotificationsPanel.setMaximumSize(new java.awt.Dimension(536, 466));
+        NotificationsPanel.setMinimumSize(new java.awt.Dimension(536, 466));
 
-        NotificationOutputEditorPane.setEditable(false);
-        jScrollPane7.setViewportView(NotificationOutputEditorPane);
-
-        jButton2.setText("jButton2");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout NotifcationsPanelLayout = new javax.swing.GroupLayout(NotifcationsPanel);
-        NotifcationsPanel.setLayout(NotifcationsPanelLayout);
-        NotifcationsPanelLayout.setHorizontalGroup(
-            NotifcationsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane7)
-            .addGroup(NotifcationsPanelLayout.createSequentialGroup()
-                .addGap(206, 206, 206)
-                .addComponent(jButton2)
-                .addContainerGap(257, Short.MAX_VALUE))
+        javax.swing.GroupLayout notificationsPanelLayout = new javax.swing.GroupLayout(notificationsPanel);
+        notificationsPanel.setLayout(notificationsPanelLayout);
+        notificationsPanelLayout.setHorizontalGroup(
+            notificationsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 534, Short.MAX_VALUE)
         );
-        NotifcationsPanelLayout.setVerticalGroup(
-            NotifcationsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, NotifcationsPanelLayout.createSequentialGroup()
-                .addGap(0, 7, Short.MAX_VALUE)
-                .addComponent(jButton2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 430, javax.swing.GroupLayout.PREFERRED_SIZE))
+        notificationsPanelLayout.setVerticalGroup(
+            notificationsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 464, Short.MAX_VALUE)
         );
 
-        LayoutPanel.add(NotifcationsPanel, "card4");
+        jScrollPane9.setViewportView(notificationsPanel);
+        notificationsPanel.setLayout(new BoxLayout(notificationsPanel, BoxLayout.Y_AXIS));
+
+        javax.swing.GroupLayout NotificationsPanelLayout = new javax.swing.GroupLayout(NotificationsPanel);
+        NotificationsPanel.setLayout(NotificationsPanelLayout);
+        NotificationsPanelLayout.setHorizontalGroup(
+            NotificationsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane9)
+        );
+        NotificationsPanelLayout.setVerticalGroup(
+            NotificationsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane9)
+        );
+
+        LayoutPanel.add(NotificationsPanel, "card4");
 
         ProfilePanel.setMaximumSize(new java.awt.Dimension(536, 466));
         ProfilePanel.setMinimumSize(new java.awt.Dimension(536, 466));
@@ -556,6 +570,8 @@ public class UserFrame extends javax.swing.JFrame {
                 .addComponent(ProfilePictureLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        FollowButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+
         javax.swing.GroupLayout UserPostPanelLayout = new javax.swing.GroupLayout(UserPostPanel);
         UserPostPanel.setLayout(UserPostPanelLayout);
         UserPostPanelLayout.setHorizontalGroup(
@@ -568,6 +584,7 @@ public class UserFrame extends javax.swing.JFrame {
         );
 
         UserPostScrollPane.setViewportView(UserPostPanel);
+        UserPostPanel.setLayout(new BoxLayout(UserPostPanel, BoxLayout.Y_AXIS));
 
         javax.swing.GroupLayout ProfilePanelLayout = new javax.swing.GroupLayout(ProfilePanel);
         ProfilePanel.setLayout(ProfilePanelLayout);
@@ -629,50 +646,62 @@ public class UserFrame extends javax.swing.JFrame {
                 .addComponent(SentButton))
         );
 
+        NewMessageButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        InboxButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        SentButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+
         DMLayoutPanel.setLayout(new java.awt.CardLayout());
 
-        //jScrollPane8.setViewport(InboxPanel);
-        jScrollPane8.setViewportView(DMInboxOutputTextPane);
+        javax.swing.GroupLayout inboxPanelLayout = new javax.swing.GroupLayout(inboxPanel);
+        inboxPanel.setLayout(inboxPanelLayout);
+        inboxPanelLayout.setHorizontalGroup(
+            inboxPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 534, Short.MAX_VALUE)
+        );
+        inboxPanelLayout.setVerticalGroup(
+            inboxPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 464, Short.MAX_VALUE)
+        );
 
-        jButton3.setText("jButton3");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
-            }
-        });
+        jScrollPane10.setViewportView(inboxPanel);
+        inboxPanel.setLayout(new BoxLayout(inboxPanel, BoxLayout.Y_AXIS));
 
         javax.swing.GroupLayout InboxPanelLayout = new javax.swing.GroupLayout(InboxPanel);
         InboxPanel.setLayout(InboxPanelLayout);
         InboxPanelLayout.setHorizontalGroup(
             InboxPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane8)
-            .addGroup(InboxPanelLayout.createSequentialGroup()
-                .addGap(200, 200, 200)
-                .addComponent(jButton3)
-                .addContainerGap(263, Short.MAX_VALUE))
+            .addComponent(jScrollPane10)
         );
         InboxPanelLayout.setVerticalGroup(
             InboxPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, InboxPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jButton3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 11, Short.MAX_VALUE)
-                .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, 392, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addComponent(jScrollPane10, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 437, Short.MAX_VALUE)
         );
 
-        jScrollPane8.getViewport().add(DMInboxOutputTextPane);
-
         DMLayoutPanel.add(InboxPanel, "card4");
+
+        javax.swing.GroupLayout sentsPanelLayout = new javax.swing.GroupLayout(sentsPanel);
+        sentsPanel.setLayout(sentsPanelLayout);
+        sentsPanelLayout.setHorizontalGroup(
+            sentsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 534, Short.MAX_VALUE)
+        );
+        sentsPanelLayout.setVerticalGroup(
+            sentsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 464, Short.MAX_VALUE)
+        );
+
+        jScrollPane7.setViewportView(sentsPanel);
+        sentsPanel.setLayout(new BoxLayout(sentsPanel, BoxLayout.Y_AXIS));
 
         javax.swing.GroupLayout SentPanelLayout = new javax.swing.GroupLayout(SentPanel);
         SentPanel.setLayout(SentPanelLayout);
         SentPanelLayout.setHorizontalGroup(
             SentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 536, Short.MAX_VALUE)
+            .addComponent(jScrollPane7)
         );
         SentPanelLayout.setVerticalGroup(
             SentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 437, Short.MAX_VALUE)
+            .addComponent(jScrollPane7, javax.swing.GroupLayout.DEFAULT_SIZE, 437, Short.MAX_VALUE)
         );
 
         DMLayoutPanel.add(SentPanel, "card2");
@@ -682,13 +711,18 @@ public class UserFrame extends javax.swing.JFrame {
 
         ContactUsernameLabel.setText("Enter Username of person you want to contact: ");
 
-        MessageField.setColumns(20);
-        MessageField.setRows(5);
-        jScrollPane3.setViewportView(MessageField);
+        messageField.setColumns(20);
+        messageField.setRows(5);
+        jScrollPane3.setViewportView(messageField);
 
         MessageLabel.setText("Enter Message to be sent: ");
 
         SendButton.setText("Send");
+        SendButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                SendButtonActionPerformed(evt);
+            }
+        });
 
         DMPhotoButton.setText("Select Photo");
         DMPhotoButton.addActionListener(new java.awt.event.ActionListener() {
@@ -720,7 +754,7 @@ public class UserFrame extends javax.swing.JFrame {
                                     .addGroup(NewMessagePanelLayout.createSequentialGroup()
                                         .addComponent(ContactUsernameLabel)
                                         .addGap(50, 50, 50)
-                                        .addComponent(ContactUsernameField, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addComponent(contactUsernameField, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addGroup(NewMessagePanelLayout.createSequentialGroup()
                                         .addComponent(MessageLabel)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -735,7 +769,7 @@ public class UserFrame extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(NewMessagePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(ContactUsernameLabel)
-                    .addComponent(ContactUsernameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(contactUsernameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(NewMessagePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -750,6 +784,9 @@ public class UserFrame extends javax.swing.JFrame {
                 .addComponent(MessageOutputLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(97, Short.MAX_VALUE))
         );
+
+        SendButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        DMPhotoButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 
         DMLayoutPanel.add(NewMessagePanel, "card3");
 
@@ -798,10 +835,10 @@ public class UserFrame extends javax.swing.JFrame {
 
         PrivateAccountCheckBox.setText("(Only your followers will be able to view your profile)");
 
-        PrivateAccoutButton.setText("Commit");
-        PrivateAccoutButton.addActionListener(new java.awt.event.ActionListener() {
+        PrivateAccountButton.setText("Commit");
+        PrivateAccountButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                PrivateAccoutButtonActionPerformed(evt);
+                PrivateAccountButtonActionPerformed(evt);
             }
         });
 
@@ -842,8 +879,8 @@ public class UserFrame extends javax.swing.JFrame {
             }
         });
 
-        ChangeProfilePictureLabel.setMaximumSize(new java.awt.Dimension(77, 77));
-        ChangeProfilePictureLabel.setPreferredSize(new java.awt.Dimension(77, 77));
+        changeProfilePictureLabel.setMaximumSize(new java.awt.Dimension(77, 77));
+        changeProfilePictureLabel.setPreferredSize(new java.awt.Dimension(77, 77));
 
         CommitPhotoChangeButton.setText("Commit");
         CommitPhotoChangeButton.addActionListener(new java.awt.event.ActionListener() {
@@ -851,6 +888,8 @@ public class UserFrame extends javax.swing.JFrame {
                 CommitPhotoChangeButtonActionPerformed(evt);
             }
         });
+
+        changeProfilePictureOutputLabel.setPreferredSize(new java.awt.Dimension(139, 21));
 
         javax.swing.GroupLayout SettingsPanelLayout = new javax.swing.GroupLayout(SettingsPanel);
         SettingsPanel.setLayout(SettingsPanelLayout);
@@ -874,7 +913,8 @@ public class UserFrame extends javax.swing.JFrame {
                                 .addGap(27, 27, 27)
                                 .addGroup(SettingsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addComponent(ChangeProfilePhotoButton)
-                                    .addComponent(ChangePasswordButton))
+                                    .addComponent(ChangePasswordButton)
+                                    .addComponent(changeProfilePictureOutputLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(29, 29, 29)))
                         .addGroup(SettingsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(SettingsPanelLayout.createSequentialGroup()
@@ -885,7 +925,7 @@ public class UserFrame extends javax.swing.JFrame {
                                 .addGap(18, 18, 18)
                                 .addComponent(PasswordOutputLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                             .addGroup(SettingsPanelLayout.createSequentialGroup()
-                                .addComponent(ChangeProfilePictureLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(changeProfilePictureLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addGroup(SettingsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(SettingsPanelLayout.createSequentialGroup()
@@ -917,13 +957,13 @@ public class UserFrame extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(PrivateAccountCheckBox)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(PrivateAccoutButton)))
+                        .addComponent(PrivateAccountButton)))
                 .addContainerGap())
         );
         SettingsPanelLayout.setVerticalGroup(
             SettingsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(SettingsPanelLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(70, Short.MAX_VALUE)
                 .addGroup(SettingsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(SignOutButton)
                     .addGroup(SettingsPanelLayout.createSequentialGroup()
@@ -944,7 +984,7 @@ public class UserFrame extends javax.swing.JFrame {
                         .addGroup(SettingsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(PrivateAccoutLabel)
                             .addComponent(PrivateAccountCheckBox)
-                            .addComponent(PrivateAccoutButton))
+                            .addComponent(PrivateAccountButton))
                         .addGroup(SettingsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(SettingsPanelLayout.createSequentialGroup()
                                 .addGap(1, 1, 1)
@@ -972,10 +1012,21 @@ public class UserFrame extends javax.swing.JFrame {
                                 .addComponent(PasswordOutputLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(22, 22, 22)
                         .addGroup(SettingsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(ChangeProfilePhotoButton)
-                            .addComponent(ChangeProfilePictureLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(SettingsPanelLayout.createSequentialGroup()
+                                .addComponent(ChangeProfilePhotoButton)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(changeProfilePictureOutputLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(changeProfilePictureLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(CommitPhotoChangeButton)))))
         );
+
+        ChangeFirstnameButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        ChangeLastnameButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        PrivateAccountButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        ChangePasswordButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        SignOutButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        ChangeProfilePhotoButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        CommitPhotoChangeButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 
         LayoutPanel.add(SettingsPanel, "card8");
 
@@ -1006,6 +1057,14 @@ public class UserFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
         LayoutPanel.removeAll();
         LayoutPanel.add(HomePanel);
+        homePanel.removeAll();
+
+        /*
+         for (number of post from followers)
+         homePanel.add(new FeedPanel(uploadedPictureLabel.getIcon(), caption, time, likes));
+         homePanel.revalidate();
+         homePanel.repaint();
+         */
         LayoutPanel.repaint();
         LayoutPanel.revalidate();
     }//GEN-LAST:event_HomeButtonActionPerformed
@@ -1014,6 +1073,8 @@ public class UserFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
         LayoutPanel.removeAll();
         LayoutPanel.add(SearchPanel);
+        userInput.setText("");
+        searchOutputPanel.removeAll();
         LayoutPanel.repaint();
         LayoutPanel.revalidate();
     }//GEN-LAST:event_SearchButtonActionPerformed
@@ -1022,22 +1083,50 @@ public class UserFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
         LayoutPanel.removeAll();
         LayoutPanel.add(NewPostPanel);
+
+        captionField.setText("");
+        tagedPeopleField.setText("");
+        hashTagsField.setText("");
+        uploadedPictureLabel.setIcon(null);
+        newPostOutputLabel.setText("");
+
         LayoutPanel.repaint();
         LayoutPanel.revalidate();
     }//GEN-LAST:event_NewpostButtonActionPerformed
 
-    private void NotifcationsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NotifcationsButtonActionPerformed
+    private void NotificationsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NotificationsButtonActionPerformed
         // TODO add your handling code here:
         LayoutPanel.removeAll();
-        LayoutPanel.add(NotifcationsPanel);
+        LayoutPanel.add(NotificationsPanel);
+        notificationsPanel.removeAll();
+
+        /*for(number of notifications)
+         notificationsPanel.add(new UserPanel(username, notification, date));
+         notificationsPanel.revalidate();
+         notificationsPanel.repaint();*/
         LayoutPanel.repaint();
         LayoutPanel.revalidate();
-    }//GEN-LAST:event_NotifcationsButtonActionPerformed
+    }//GEN-LAST:event_NotificationsButtonActionPerformed
 
     private void ProfileButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ProfileButtonActionPerformed
         // TODO add your handling code here:
         LayoutPanel.removeAll();
         LayoutPanel.add(ProfilePanel);
+
+        /*
+         ProfilePictureLabel.setIcon(users picture);
+         NumberFollowersLabel.setText("how ever many");
+         NumberFollowingLabel.setText("how ever many");
+         FirstnameLabel.setText("to first name");
+         LastnameLabel.setText("to last name");
+         UsernameLabel.setText("to username");
+         FollowButton.setEnabled(false);
+        
+         for(number of post)
+         UserPostPanel.add(new UserPanel(picturePath, caption, time, likes));
+         UserPostPanel.revalidate();
+         UserPostPanel.repaint();
+         */
         LayoutPanel.repaint();
         LayoutPanel.revalidate();
     }//GEN-LAST:event_ProfileButtonActionPerformed
@@ -1051,8 +1140,10 @@ public class UserFrame extends javax.swing.JFrame {
         PasswordOutputLabel.setText("");
         ChangeFirstnameOutputLabel.setText("");
         ChangeLastnameOutputLabel.setText("");
+        changeProfilePictureLabel.setIcon(null);
+        changeProfilePictureOutputLabel.setText("");
         PrivateAccoutOutputLabel.setText("");
-        
+
         //change to user state
         PrivateAccountCheckBox.setSelected(false);
     }//GEN-LAST:event_SettingsButtonActionPerformed
@@ -1067,83 +1158,85 @@ public class UserFrame extends javax.swing.JFrame {
 
     private void SignOutButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SignOutButtonActionPerformed
         // TODO add your handling code here:
-        Login x= new Login();
+        Login x = new Login();
         x.setVisible(true);
         super.dispose();
     }//GEN-LAST:event_SignOutButtonActionPerformed
 
     private void ChangePasswordButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ChangePasswordButtonActionPerformed
         // TODO add your handling code here:
-        CurrentPassword= CurrentPasswordField.getText();
-        NewPassword1= NewPasswordField1.getText();
-        NewPassword2= NewPasswordField2.getText();
+        CurrentPassword = CurrentPasswordField.getText();
+        NewPassword1 = NewPasswordField1.getText();
+        NewPassword2 = NewPasswordField2.getText();
         CurrentPasswordField.setText("");
         NewPasswordField1.setText("");
         NewPasswordField2.setText("");
         //change user password
-        if (CurrentPassword.equals("") || NewPassword1.equals(""))
-        {
+        if (CurrentPassword.equals("") || NewPassword1.equals("")) {
             PasswordOutputLabel.setText("Field not complete");
-        }
-        else{
-            if (NewPassword1.equals(NewPassword2))
-            {
+        } else {
+            if (NewPassword1.equals(NewPassword2)) {
                 PasswordOutputLabel.setText("Password has been changed");
-            }
-            else
-            {
+            } else {
                 PasswordOutputLabel.setText("<HTML>ERROR: New Passwords "
-                    + "<br>do not match<HTML>");
+                        + "<br>do not match<HTML>");
             }
         }
     }//GEN-LAST:event_ChangePasswordButtonActionPerformed
 
-    private void PrivateAccoutButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PrivateAccoutButtonActionPerformed
+    private void PrivateAccountButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PrivateAccountButtonActionPerformed
         // TODO add your handling code here:
-        PrivateAccount= PrivateAccountCheckBox.isSelected();
+        PrivateAccount = PrivateAccountCheckBox.isSelected();
         //change private Account status
-        PrivateAccoutOutputLabel.setText("Changing First name to: "+PrivateAccount);
-    }//GEN-LAST:event_PrivateAccoutButtonActionPerformed
+        PrivateAccoutOutputLabel.setText("Changing First name to: " + PrivateAccount);
+    }//GEN-LAST:event_PrivateAccountButtonActionPerformed
 
     private void ChangeLastnameButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ChangeLastnameButtonActionPerformed
         // TODO add your handling code here:
-        NewLastname= ChangeLastnameField.getText();
+        NewLastname = ChangeLastnameField.getText();
         ChangeLastnameField.setText("");
         //change user lastname
-        if (NewLastname.equals("")){
+        if (NewLastname.equals("")) {
             ChangeLastnameOutputLabel.setText("Field not Complete");
-        }
-        else{
-            ChangeLastnameOutputLabel.setText("Changing Last name to: "+NewLastname);
+        } else {
+            ChangeLastnameOutputLabel.setText("Changing Last name to: " + NewLastname);
         }
     }//GEN-LAST:event_ChangeLastnameButtonActionPerformed
 
     private void ChangeFirstnameButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ChangeFirstnameButtonActionPerformed
         // TODO add your handling code here:
-        NewFirstname= ChangeFirstnameField.getText();
+        NewFirstname = ChangeFirstnameField.getText();
         ChangeFirstnameField.setText("");
         //change user firstname
-        if (NewFirstname.equals("")){
+        if (NewFirstname.equals("")) {
             ChangeFirstnameOutputLabel.setText("Field not Complete");
-        }
-        else{
-            ChangeFirstnameOutputLabel.setText("Changing First name to: "+NewFirstname);
+        } else {
+            ChangeFirstnameOutputLabel.setText("Changing First name to: " + NewFirstname);
         }
     }//GEN-LAST:event_ChangeFirstnameButtonActionPerformed
 
     private void SearchButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SearchButton1ActionPerformed
-        SearchOutputArea.removeAll();
-        SearchOutputArea.repaint();
-        SearchInput= UserInput.getText();
-        Parameter= SearchParameter.getSelectedItem().toString();
-        System.out.println(SearchInput +" "+ Parameter);
+        searchOutputPanel.removeAll();
+        searchOutputPanel.repaint();
+        SearchInput = userInput.getText();
+        Parameter = SearchParameter.getSelectedItem().toString();
         //add search output
+
+        Icon ii = null;
+        /*for(number of results)
+         searchOutputPanel.add(new SearchOutputPanel(Parameter, "username", ii, "date"));
+         searchOutputPanel.revalidate();
+         searchOutputPanel.repaint();*/
     }//GEN-LAST:event_SearchButton1ActionPerformed
 
     private void InboxButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_InboxButtonActionPerformed
         // TODO add your handling code here:
         DMLayoutPanel.removeAll();
         DMLayoutPanel.add(InboxPanel);
+        /*
+         for(number of messages)
+         inboxPanel.add(new InboxSentsPanel(username, picturePath, message, date));
+         */
         DMLayoutPanel.repaint();
         DMLayoutPanel.revalidate();
     }//GEN-LAST:event_InboxButtonActionPerformed
@@ -1152,6 +1245,10 @@ public class UserFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
         DMLayoutPanel.removeAll();
         DMLayoutPanel.add(SentPanel);
+        /*
+         for (number of sent messages)
+         sentsPanel.add(new InboxSentsPanel(username, picturePath, message, date));
+         */
         DMLayoutPanel.repaint();
         DMLayoutPanel.revalidate();
     }//GEN-LAST:event_SentButtonActionPerformed
@@ -1162,364 +1259,125 @@ public class UserFrame extends javax.swing.JFrame {
         DMLayoutPanel.add(NewMessagePanel);
         DMLayoutPanel.repaint();
         DMLayoutPanel.revalidate();
+
+        contactUsernameField.setText("");
+        messageField.setText("");
+        DMPhotoLabel.setIcon(null);
+        MessageOutputLabel.setText("");
+
     }//GEN-LAST:event_NewMessageButtonActionPerformed
 
     private void UploadPictureButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UploadPictureButtonActionPerformed
         // TODO add your handling code here:
-        String ImagePath = UploadPhoto(UploadedPictureLabel, 120, 120);
-        if (ImagePath != null){
+        String ImagePath = UploadPhoto(uploadedPictureLabel, 120, 120);
+        if (ImagePath != null) {
             //do stuff
-        }
-        else{
+        } else {
             //error message
-            NewPostOutputLabel.setText("Picture was not found");
+            newPostOutputLabel.setText("Picture was not found");
         }
     }//GEN-LAST:event_UploadPictureButtonActionPerformed
 
     private void FollowButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_FollowButtonActionPerformed
         //do things that follow button will do...
-        
+
+
     }//GEN-LAST:event_FollowButtonActionPerformed
 
     private void DMPhotoButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DMPhotoButtonActionPerformed
         // TODO add your handling code here:
         String ImagePath = UploadPhoto(DMPhotoLabel, 120, 120);
-        if (ImagePath != null){
+        if (ImagePath != null) {
             //do stuff
-        }
-        else{
+        } else {
             //error message
             MessageOutputLabel.setText("Picture was not found");
         }
     }//GEN-LAST:event_DMPhotoButtonActionPerformed
-    String path;
+
     private void ChangeProfilePhotoButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ChangeProfilePhotoButtonActionPerformed
         // TODO add your handling code here:
-        String ImagePath = UploadPhoto(ChangeProfilePictureLabel, 77, 77 );
-        path= ImagePath;
-        if (ImagePath != null){
+        String ImagePath = UploadPhoto(changeProfilePictureLabel, 77, 77);
+        if (ImagePath != null) {
             //do stuff
-        }
-        else{
-            //error message
-            //MessageOutputLabel.setText("Picture was not found");
         }
     }//GEN-LAST:event_ChangeProfilePhotoButtonActionPerformed
 
     private void CommitPhotoChangeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CommitPhotoChangeButtonActionPerformed
         // TODO add your handling code here:
-        try {
-            ImageIcon ii=new ImageIcon(scaleImage(77, 77, ImageIO.read(new File(path))));
-            ProfilePictureLabel.setIcon(ii);
-        } catch (Exception ex) {
-            ex.printStackTrace();
+        if (changeProfilePictureLabel.getIcon() != null) {
+            try {
+                //ImageIcon ii=new ImageIcon(scaleImage(77, 77, 
+                //      ImageIO.read(new File(
+                //            changeProfilePictureLabel.getIcon().toString()))));
+                ProfilePictureLabel.setIcon(changeProfilePictureLabel.getIcon());
+                changeProfilePictureOutputLabel.setText("Profile picture changed.");
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        } else {
+            changeProfilePictureOutputLabel.setText("Select a picture.");
         }
+
     }//GEN-LAST:event_CommitPhotoChangeButtonActionPerformed
 
     private void CreateNewPostButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CreateNewPostButtonActionPerformed
         // TODO add your handling code here:
+        //get users username...
+        String caption = captionField.getText();
+        String peopleTaged = tagedPeopleField.getText();
+        String hashTages = hashTagsField.getText();
         Date date = new Date();
         SimpleDateFormat format = new SimpleDateFormat("MM-dd HH:mm");
         String time = format.format(date);
+        //get post likes...
+        int likes = 0;
+
+        //save new post
+        UserPostPanel.add(new UserPanel(uploadedPictureLabel.getIcon(), caption, time, likes));
+        UserPostPanel.revalidate();
+        UserPostPanel.repaint();
     }//GEN-LAST:event_CreateNewPostButtonActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void SendButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SendButtonActionPerformed
         // TODO add your handling code here:
-        //System.getProperty("user.dir")+"\\ProfilePicture.png"
-        HomeOutputEditorPane.removeAll();
-        
-        int p=1;
-        int y1=0;
-        int y2=20;
-        int i=0;
-    while (i< 10){    
-        JLabel date= new JLabel();
-        date.setSize(100, 21);
-        date.setText("MM-dd HH:mm");
-        
-        JLabel username= new JLabel();
-        username.setSize(100,21);
-        username.setText("username");
-        
-        JLabel picture= new JLabel();
-        picture.setSize(120, 120);
-        try {
-            ImageIcon ii=new ImageIcon(scaleImage(120, 120, ImageIO.read(new File(System.getProperty("user.dir")+"\\ProfilePicture.png"))));
-            picture.setIcon(ii);
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-        
-        JTextArea caption= new JTextArea();
-        caption.setText("caption here...");
-        caption.setLineWrap(true);
-        caption.setEditable(false);
-        caption.setSize(100, 100);
-        JScrollPane CaptionScroll = new JScrollPane (caption, 
-   JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-        CaptionScroll.setSize(100,100);
-        
-        JTextArea comments= new JTextArea();
-        comments.setText("comments here...");
-        comments.setLineWrap(true);
-        comments.setSize(100, 100);
-        JScrollPane CommentScroll = new JScrollPane (comments, 
-   JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-        CommentScroll.setSize(100,100);
-        
-        JButton CommentButton= new JButton();
-        CommentButton.setText("Submit");
-        CommentButton.setSize(100, 21);
-        CommentButton.addActionListener(new ActionListener(){
-            @Override
-            public void actionPerformed(ActionEvent ae) {
-                //do stufff
-            }
-        });
-        
-        likes=0;
-        final JLabel likeLabel= new JLabel();
-        likeLabel.setText("LIKES: "+ Integer.toString(likes));
-        likeLabel.setSize(100,21);
-        
-        final JButton LikeButton= new JButton();
-        LikeButton.setText("Like");
-        LikeButton.setSize(100, 21);
-        LikeButton.addActionListener(new ActionListener(){
-            @Override
-            public void actionPerformed(ActionEvent ae) {
-                if (liked == false) {
-                    likes++;
-                    likeLabel.setText("LIKES: "+ Integer.toString(likes));
-                    LikeButton.setText("UnLike");
-                    liked=true;
-                }
-                else{
-                    likes--;
-                    likeLabel.setText("LIKES: "+ Integer.toString(likes));
-                    LikeButton.setText("Like");
-                    liked=false;
-                }
-            }
-        });
-        
-        
-        HomeOutputEditorPane.add(username, p).setLocation(125, y1);
-        p++;
-        HomeOutputEditorPane.add(CaptionScroll,p).setLocation(120, y2);
-        p++;
-        HomeOutputEditorPane.add(CommentButton,p).setLocation(230,y1);
-        p++;
-        HomeOutputEditorPane.add(CommentScroll, p).setLocation(230, y2);
-        p++;
-        HomeOutputEditorPane.add(LikeButton,p).setLocation(340, y1);
-        p++;
-        HomeOutputEditorPane.add(likeLabel,p).setLocation(340, y2);
-        p++;
-        HomeOutputEditorPane.add(date,p).setLocation(445, y1);
-        p++;
-        HomeOutputEditorPane.add(picture, p).setLocation(0, y1);
-        p++;
-        HomeOutputEditorPane.repaint();
-        i++;
-        y1=y1+130;
-        y2=y2+130;
-    }
+        String username = contactUsernameField.getText();
+        String message = messageField.getText();
+        Date date = new Date();
+        SimpleDateFormat format = new SimpleDateFormat("MM-dd HH:mm");
+        String time = format.format(date);
 
-    }//GEN-LAST:event_jButton1ActionPerformed
+        if (!username.equalsIgnoreCase("")) {
+            if (!message.equalsIgnoreCase("")) {
+                if (DMPhotoLabel.getIcon() != null) {
+                    String path = DMPhotoLabel.getIcon().toString();
+                    //save to sentsbox
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
-        NotificationOutputEditorPane.setLayout(new GridLayout(10,1, 10, 10));
-        JLabel date= new JLabel();
-        date.setSize(100, 21);
-        date.setText("date posted");
-        
-        JLabel username= new JLabel();
-        username.setSize(100,21);
-        username.setText("username");
-        
-        JLabel picture= new JLabel();
-        picture.setSize(120, 120);
-        try {
-            ImageIcon ii=new ImageIcon(scaleImage(120, 120, ImageIO.read(new File(System.getProperty("user.dir")+"\\ProfilePicture.png"))));
-            picture.setIcon(ii);
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-        
-        JTextArea caption= new JTextArea();
-        caption.setText("caption here...");
-        caption.setLineWrap(true);
-        caption.setEditable(false);
-        caption.setSize(100, 100);
-        JScrollPane CaptionScroll = new JScrollPane (caption, 
-   JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-        CaptionScroll.setSize(100,100);
-        
-        JTextArea comments= new JTextArea();
-        comments.setText("comments here...");
-        comments.setLineWrap(true);
-        comments.setSize(100, 100);
-        JScrollPane CommentScroll = new JScrollPane (comments, 
-   JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-        CommentScroll.setSize(100,100);
-        
-        JButton CommentButton= new JButton();
-        CommentButton.setText("Submit");
-        CommentButton.setSize(100, 21);
-        CommentButton.addActionListener(new ActionListener(){
-            @Override
-            public void actionPerformed(ActionEvent ae) {
-                //do stufff
-            }
-        });
-        
-        likes=0;
-        final JLabel likeLabel= new JLabel();
-        likeLabel.setText("LIKES: "+ Integer.toString(likes));
-        likeLabel.setSize(100,21);
-        
-        final JButton LikeButton= new JButton();
-        LikeButton.setText("Like");
-        LikeButton.setSize(100, 21);
-        LikeButton.addActionListener(new ActionListener(){
-            @Override
-            public void actionPerformed(ActionEvent ae) {
-                if (liked == false) {
-                    likes++;
-                    likeLabel.setText("LIKES: "+ Integer.toString(likes));
-                    LikeButton.setText("UnLike");
-                    liked=true;
+                    //send to reciever
+                    //user.inbox(new InboxSentsPanel(this.username, picturePath, message, time));
+                } else {
+                    MessageOutputLabel.setText("ERROR: enter a photo.");
                 }
-                else{
-                    likes--;
-                    likeLabel.setText("LIKES: "+ Integer.toString(likes));
-                    LikeButton.setText("Like");
-                    liked=false;
-                }
-            }
-        });
-        
-        
-        NotificationOutputEditorPane.add(username, 0).setLocation(125, 0);
-        NotificationOutputEditorPane.add(CaptionScroll,1).setLocation(120, 20);
-        NotificationOutputEditorPane.add(CommentButton,2).setLocation(230,0);
-        NotificationOutputEditorPane.add(CommentScroll, 3).setLocation(230, 20);
-        NotificationOutputEditorPane.add(LikeButton,4).setLocation(340, 0);
-        NotificationOutputEditorPane.add(likeLabel,5).setLocation(340, 20);
-        NotificationOutputEditorPane.add(date,6).setLocation(450, 0);
-        NotificationOutputEditorPane.add(picture, 7).setLocation(0, 0);
-        NotificationOutputEditorPane.repaint();
-    }//GEN-LAST:event_jButton2ActionPerformed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
-        int p=0;
-        int y1=0;
-        int y2=20;
-        int i=0;
-    while (i< 10){    
-        JLabel date= new JLabel();
-        date.setSize(100, 21);
-        date.setText("date posted");
-        
-        JLabel username= new JLabel();
-        username.setSize(100,21);
-        username.setText("username");
-        
-        JLabel picture= new JLabel();
-        picture.setSize(120, 120);
-        try {
-            ImageIcon ii=new ImageIcon(scaleImage(120, 120, ImageIO.read(new File(System.getProperty("user.dir")+"\\ProfilePicture.png"))));
-            picture.setIcon(ii);
-        } catch (Exception ex) {
-            ex.printStackTrace();
+            } else {
+                MessageOutputLabel.setText("ERROR: enter a message.");
+            }
+
+        } else {
+            MessageOutputLabel.setText("ERROR: Enter a username.");
         }
-        
-        JTextArea caption= new JTextArea();
-        caption.setText("caption here...");
-        caption.setLineWrap(true);
-        caption.setEditable(false);
-        caption.setSize(100, 100);
-        JScrollPane CaptionScroll = new JScrollPane (caption, 
-   JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-        CaptionScroll.setSize(100,100);
-        
-        JTextArea comments= new JTextArea();
-        comments.setText("comments here...");
-        comments.setLineWrap(true);
-        comments.setSize(100, 100);
-        JScrollPane CommentScroll = new JScrollPane (comments, 
-   JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-        CommentScroll.setSize(100,100);
-        
-        JButton commentButton= new JButton();
-        commentButton.setText("Submit");
-        commentButton.setSize(100, 21);
-        commentButton.addActionListener(new ActionListener(){
-            @Override
-            public void actionPerformed(ActionEvent ae) {
-                //do stufff
-            }
-        });
-        
-        likes=0;
-        final JLabel likeLabel= new JLabel();
-        likeLabel.setText("LIKES: "+ Integer.toString(likes));
-        likeLabel.setSize(100,21);
-        
-        final JButton likeButton= new JButton();
-        likeButton.setText("Like");
-        likeButton.setSize(100, 21);
-        likeButton.addActionListener(new ActionListener(){
-            @Override
-            public void actionPerformed(ActionEvent ae) {
-                if (liked == false) {
-                    likes++;
-                    likeLabel.setText("LIKES: "+ Integer.toString(likes));
-                    likeButton.setText("UnLike");
-                    liked=true;
-                }
-                else{
-                    likes--;
-                    likeLabel.setText("LIKES: "+ Integer.toString(likes));
-                    likeButton.setText("Like");
-                    liked=false;
-                }
-            }
-        });
-        
-        DMInboxOutputTextPane.add(username, p).setLocation(125, y1);
-        p++;
-        DMInboxOutputTextPane.add(CaptionScroll,p).setLocation(120, y2);
-        p++;
-        DMInboxOutputTextPane.add(commentButton,p).setLocation(230,y1);
-        p++;
-        DMInboxOutputTextPane.add(CommentScroll, p).setLocation(230, y2);
-        p++;
-        DMInboxOutputTextPane.add(likeButton,p).setLocation(340, y1);
-        p++;
-        DMInboxOutputTextPane.add(likeLabel,p).setLocation(340, y2);
-        p++;
-        DMInboxOutputTextPane.add(date,p).setLocation(450, y1);
-        p++;
-        DMInboxOutputTextPane.add(picture, p).setLocation(0, y1);
-        p++;
-        DMInboxOutputTextPane.repaint();
-        i++;
-        y1=y1+130;
-        y2=y2+130;
-    }
-    }//GEN-LAST:event_jButton3ActionPerformed
+
+
+    }//GEN-LAST:event_SendButtonActionPerformed
 
     /**
      * Scales size of image to correct size
+     *
      * @param w width of size needed
      * @param h height of size needed
      * @param img Image being used to resize
      * @return returns resized image
-     * @throws Exception 
+     * @throws Exception
      */
     public static BufferedImage scaleImage(int w, int h, BufferedImage img) throws Exception {
         BufferedImage bi;
@@ -1531,14 +1389,14 @@ public class UserFrame extends javax.swing.JFrame {
         g2d.dispose();
         return bi;
     }
-    
-    public static String UploadPhoto(JLabel x, int w, int h ){
+
+    public static String UploadPhoto(JLabel x, int w, int h) {
         JFileChooser chooser = new JFileChooser();
         chooser.showOpenDialog(null);
         final File f = chooser.getSelectedFile();
-        String path= f.getAbsolutePath();
+        String path = f.getAbsolutePath();
         try {
-            ImageIcon ii=new ImageIcon(scaleImage(w, h, ImageIO.read(new File(path))));
+            ImageIcon ii = new ImageIcon(scaleImage(w, h, ImageIO.read(new File(path))));
             x.setIcon(ii);
             return path;
         } catch (Exception ex) {
@@ -1546,7 +1404,7 @@ public class UserFrame extends javax.swing.JFrame {
             return null;
         }
     }
-    
+
     /**
      * @param args the command line arguments
      */
@@ -1595,17 +1453,13 @@ public class UserFrame extends javax.swing.JFrame {
     private javax.swing.JButton ChangePasswordButton;
     private javax.swing.JLabel ChangePasswordLabel;
     private javax.swing.JButton ChangeProfilePhotoButton;
-    private javax.swing.JLabel ChangeProfilePictureLabel;
-    private javax.swing.JTextArea CommentField;
     private javax.swing.JLabel CommentLabel;
     private javax.swing.JButton CommitPhotoChangeButton;
-    private javax.swing.JTextField ContactUsernameField;
     private javax.swing.JLabel ContactUsernameLabel;
     private javax.swing.JButton CreateNewPostButton;
     private javax.swing.JPasswordField CurrentPasswordField;
     private javax.swing.JLabel CurrentPasswordLabel;
     private javax.swing.JButton DMButton;
-    private javax.swing.JTextPane DMInboxOutputTextPane;
     private javax.swing.JPanel DMLayoutPanel;
     private javax.swing.JPanel DMMenuPanel;
     private javax.swing.JPanel DMPanel;
@@ -1615,15 +1469,12 @@ public class UserFrame extends javax.swing.JFrame {
     private javax.swing.JLabel FirstnameLabel;
     private javax.swing.JButton FollowButton;
     private javax.swing.JLabel HashTagsLabel;
-    private javax.swing.JTextArea HashtagsField;
     private javax.swing.JButton HomeButton;
-    private javax.swing.JEditorPane HomeOutputEditorPane;
     private javax.swing.JPanel HomePanel;
     private javax.swing.JButton InboxButton;
     private javax.swing.JPanel InboxPanel;
     private javax.swing.JLabel LastnameLabel;
     private javax.swing.JPanel LayoutPanel;
-    private javax.swing.JTextArea MessageField;
     private javax.swing.JLabel MessageLabel;
     private javax.swing.JLabel MessageOutputLabel;
     private javax.swing.JButton NewMessageButton;
@@ -1632,17 +1483,15 @@ public class UserFrame extends javax.swing.JFrame {
     private javax.swing.JPasswordField NewPasswordField2;
     private javax.swing.JLabel NewPasswordLabel1;
     private javax.swing.JLabel NewPasswordLabel2;
-    private javax.swing.JLabel NewPostOutputLabel;
     private javax.swing.JPanel NewPostPanel;
     private javax.swing.JButton NewpostButton;
-    private javax.swing.JButton NotifcationsButton;
-    private javax.swing.JPanel NotifcationsPanel;
-    private javax.swing.JEditorPane NotificationOutputEditorPane;
+    private javax.swing.JButton NotificationsButton;
+    private javax.swing.JPanel NotificationsPanel;
     private javax.swing.JLabel NumberFollowersLabel;
     private javax.swing.JLabel NumberFollowingLabel;
     private javax.swing.JLabel PasswordOutputLabel;
+    private javax.swing.JButton PrivateAccountButton;
     private javax.swing.JCheckBox PrivateAccountCheckBox;
-    private javax.swing.JButton PrivateAccoutButton;
     private javax.swing.JLabel PrivateAccoutLabel;
     private javax.swing.JLabel PrivateAccoutOutputLabel;
     private javax.swing.JButton ProfileButton;
@@ -1650,7 +1499,6 @@ public class UserFrame extends javax.swing.JFrame {
     private javax.swing.JLabel ProfilePictureLabel;
     private javax.swing.JButton SearchButton;
     private javax.swing.JButton SearchButton1;
-    private javax.swing.JTextArea SearchOutputArea;
     private javax.swing.JPanel SearchPanel;
     private javax.swing.JComboBox SearchParameter;
     private javax.swing.JPanel SearchParameterPanel;
@@ -1661,19 +1509,21 @@ public class UserFrame extends javax.swing.JFrame {
     private javax.swing.JPanel SettingsPanel;
     private javax.swing.JButton SignOutButton;
     private javax.swing.JPanel StaticProfilePanel;
-    private javax.swing.JTextArea TagedPeopleField;
     private javax.swing.JLabel TagedPeopleLabel;
     private javax.swing.JPanel TopMenu;
     private javax.swing.JButton UploadPictureButton;
-    private javax.swing.JLabel UploadedPictureLabel;
-    private javax.swing.JTextField UserInput;
     private javax.swing.JPanel UserPostPanel;
     private javax.swing.JScrollPane UserPostScrollPane;
     private javax.swing.JLabel UsernameLabel;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
+    private javax.swing.JTextArea captionField;
+    private javax.swing.JLabel changeProfilePictureLabel;
+    private javax.swing.JLabel changeProfilePictureOutputLabel;
+    private javax.swing.JTextField contactUsernameField;
+    private javax.swing.JTextArea hashTagsField;
+    private javax.swing.JPanel homePanel;
+    private javax.swing.JPanel inboxPanel;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane10;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
@@ -1682,6 +1532,14 @@ public class UserFrame extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane7;
     private javax.swing.JScrollPane jScrollPane8;
     private javax.swing.JScrollPane jScrollPane9;
+    private javax.swing.JTextArea messageField;
+    private javax.swing.JLabel newPostOutputLabel;
+    private javax.swing.JPanel notificationsPanel;
+    private javax.swing.JPanel searchOutputPanel;
+    private javax.swing.JPanel sentsPanel;
+    private javax.swing.JTextArea tagedPeopleField;
+    private javax.swing.JLabel uploadedPictureLabel;
+    private javax.swing.JTextField userInput;
     // End of variables declaration//GEN-END:variables
     private String NewFirstname;
     private String NewLastname;
@@ -1694,4 +1552,390 @@ public class UserFrame extends javax.swing.JFrame {
     private ImageIcon ii;
     private int likes;
     private boolean liked;
+
+    private class FeedPanel extends JPanel {
+
+        public FeedPanel(final String username, final Icon ii, final String caption, String date) {
+            setLayout(new GridBagLayout());
+            Border emptyBorder = BorderFactory.createEmptyBorder(2, 2, 2, 2);
+            Border lineBorder = BorderFactory.createLineBorder(Color.black);
+            setBorder(BorderFactory.createCompoundBorder(lineBorder, emptyBorder));
+
+            JLabel timeLabel = new JLabel();
+            timeLabel.setSize(100, 21);
+            timeLabel.setText(date);
+            add(timeLabel, createGbc(1, 1));
+
+            JLabel usernameLabel = new JLabel();
+            usernameLabel.setSize(100, 21);
+            usernameLabel.setText(username);
+            usernameLabel.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+            usernameLabel.addMouseListener(new MouseAdapter() {
+                public void mouseClicked(MouseEvent e) {
+                    //ProfilePopUp frame= new ProfilePopUp();
+                    //frame.setVisible(true); 
+                }
+            });
+            add(usernameLabel, createGbc(0, 1));
+
+            JTextArea captionText = new JTextArea();
+            captionText.setText(caption);
+            captionText.setLineWrap(true);
+            captionText.setEditable(false);
+            captionText.setSize(120, 120);
+            JScrollPane CaptionScroll = new JScrollPane(captionText,
+                    JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
+                    JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+            CaptionScroll.setSize(120, 120);
+            add(captionText, createGbc(1, 0));
+
+            JTextArea commentsLabel = new JTextArea();
+            commentsLabel.setText("Enter comment here...");
+            commentsLabel.setLineWrap(true);
+            commentsLabel.setSize(120, 120);
+            JScrollPane CommentScroll = new JScrollPane(commentsLabel,
+                    JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
+                    JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+            CommentScroll.setSize(120, 120);
+            add(commentsLabel, createGbc(2, 0));
+
+            JButton commentButton = new JButton();
+            commentButton.setText("Submit");
+            commentButton.setSize(100, 21);
+            commentButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent ae) {
+                    //do stufff
+                }
+            });
+            add(commentButton, createGbc(2, 1));
+
+            final JLabel likeLabel = new JLabel();
+            likeLabel.setText("LIKES: " + Integer.toString(0));
+            likeLabel.setSize(100, 21);
+            add(likeLabel, createGbc(3, 0));
+
+            likes = 0;
+            liked = false;
+            final JButton likeButton = new JButton();
+            likeButton.setText("Like");
+            likeButton.setSize(100, 21);
+            likeButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent ae) {
+                    if (liked == false) {
+                        likes++;
+                        likeLabel.setText("LIKES: " + Integer.toString(likes));
+                        likeButton.setText("UnLike");
+                        liked = true;
+                    } else {
+                        likes--;
+                        likeLabel.setText("LIKES: " + Integer.toString(likes));
+                        likeButton.setText("Like");
+                        liked = false;
+                    }
+                }
+            });
+
+            add(likeButton, createGbc(3, 1));
+
+            JLabel pictureLabel = new JLabel();
+            pictureLabel.setSize(120, 120);
+            try {
+                pictureLabel.setIcon(ii);
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+            pictureLabel.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+            pictureLabel.addMouseListener(new MouseAdapter() {
+                public void mouseClicked(MouseEvent e) {
+                    //PostPopUp frame= new PostPopUp(ii, username, likes, liked,
+                    //      caption, "comments", "hashtags","people");
+
+                    //frame.setVisible(true);
+                }
+            });
+            add(pictureLabel, createGbc(0, 0));
+
+        }
+
+        private GridBagConstraints createGbc(int x, int y) {
+            GridBagConstraints gbc = new GridBagConstraints();
+            gbc.gridx = x;
+            gbc.gridy = y;
+            gbc.gridwidth = 1;
+            gbc.gridheight = 1;
+            gbc.weightx = 1.0;
+            gbc.weighty = 1.0;
+            gbc.anchor = GridBagConstraints.WEST;
+
+            return gbc;
+        }
+    }
+
+    private class NotificationPanel extends JPanel {
+
+        public NotificationPanel(String username, String notification, String date) {
+            setLayout(new GridBagLayout());
+            Border emptyBorder = BorderFactory.createEmptyBorder(2, 2, 2, 2);
+            Border lineBorder = BorderFactory.createLineBorder(Color.black);
+            setBorder(BorderFactory.createCompoundBorder(lineBorder, emptyBorder));
+
+            JTextArea notificationLabel = new JTextArea();
+            notificationLabel.setText(notification);
+            notificationLabel.setLineWrap(true);
+            notificationLabel.setEditable(false);
+            notificationLabel.setSize(120, 120);
+            JScrollPane CaptionScroll = new JScrollPane(notificationLabel,
+                    JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
+                    JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+            CaptionScroll.setSize(120, 120);
+            add(notificationLabel, createGbc(1, 0));
+
+            JLabel usernameLabel = new JLabel();
+            usernameLabel.setText(username);
+            usernameLabel.setSize(100, 21);
+            usernameLabel.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+            usernameLabel.addMouseListener(new MouseAdapter() {
+                public void mouseClicked(MouseEvent e) {
+                    //ProfilePopUp frame= new ProfilePopUp();
+                    //frame.setVisible(true); 
+                }
+            });
+            add(usernameLabel, createGbc(0, 0));
+
+            JLabel timeLabel = new JLabel();
+            timeLabel.setSize(100, 21);
+            timeLabel.setText(date);
+            add(timeLabel, createGbc(2, 0));
+        }
+
+        private GridBagConstraints createGbc(int x, int y) {
+            GridBagConstraints gbc = new GridBagConstraints();
+            gbc.gridx = x;
+            gbc.gridy = y;
+            gbc.gridwidth = 1;
+            gbc.gridheight = 1;
+            gbc.weightx = 1.0;
+            gbc.weighty = 1.0;
+            gbc.anchor = GridBagConstraints.WEST;
+
+            return gbc;
+        }
+    }
+
+    private class InboxSentsPanel extends JPanel {
+
+        public InboxSentsPanel(String user, Icon ii, String message, String date) {
+            setLayout(new GridBagLayout());
+            Border emptyBorder = BorderFactory.createEmptyBorder(2, 2, 2, 2);
+            Border lineBorder = BorderFactory.createLineBorder(Color.black);
+            setBorder(BorderFactory.createCompoundBorder(lineBorder, emptyBorder));
+
+            JLabel pictureLabel = new JLabel();
+            pictureLabel.setSize(120, 120);
+            try {
+                pictureLabel.setIcon(ii);
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+            add(pictureLabel, createGbc(0, 0));
+
+            JTextArea messageLabel = new JTextArea();
+            messageLabel.setText(message);
+            messageLabel.setLineWrap(true);
+            messageLabel.setEditable(false);
+            messageLabel.setSize(120, 120);
+            JScrollPane CaptionScroll = new JScrollPane(messageLabel,
+                    JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
+                    JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+            CaptionScroll.setSize(120, 120);
+            add(messageLabel, createGbc(1, 0));
+
+            JLabel usernameLabel = new JLabel();
+            usernameLabel.setText(user);
+            usernameLabel.setSize(100, 21);
+            usernameLabel.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+            usernameLabel.addMouseListener(new MouseAdapter() {
+                public void mouseClicked(MouseEvent e) {
+                    //ProfilePopUp frame= new ProfilePopUp();
+                    //frame.setVisible(true); 
+                }
+            });
+            add(usernameLabel, createGbc(2, 0));
+
+            JLabel timeLabel = new JLabel();
+            timeLabel.setSize(100, 21);
+            timeLabel.setText(date);
+            add(timeLabel, createGbc(3, 0));
+        }
+
+        private GridBagConstraints createGbc(int x, int y) {
+            GridBagConstraints gbc = new GridBagConstraints();
+            gbc.gridx = x;
+            gbc.gridy = y;
+            gbc.gridwidth = 1;
+            gbc.gridheight = 1;
+            gbc.weightx = 1.0;
+            gbc.weighty = 1.0;
+            gbc.anchor = GridBagConstraints.WEST;
+
+            return gbc;
+        }
+    }
+
+    private class UserPanel extends JPanel {
+
+        public UserPanel(Icon ii, String caption, String date, int likes) {
+            setLayout(new GridBagLayout());
+            Border emptyBorder = BorderFactory.createEmptyBorder(2, 2, 2, 2);
+            Border lineBorder = BorderFactory.createLineBorder(Color.black);
+            setBorder(BorderFactory.createCompoundBorder(lineBorder, emptyBorder));
+
+            JLabel timeLabel = new JLabel();
+            timeLabel.setSize(100, 21);
+            timeLabel.setText(date);
+            add(timeLabel, createGbc(3, 0));
+
+            JTextArea captionText = new JTextArea();
+            captionText.setText(caption);
+            captionText.setLineWrap(true);
+            captionText.setEditable(false);
+            captionText.setSize(120, 120);
+            JScrollPane CaptionScroll = new JScrollPane(captionText,
+                    JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
+                    JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+            CaptionScroll.setSize(120, 120);
+            add(captionText, createGbc(1, 0));
+
+            final JLabel likeLabel = new JLabel();
+            likeLabel.setText("LIKES: " + Integer.toString(likes));
+            likeLabel.setSize(100, 21);
+            add(likeLabel, createGbc(2, 0));
+
+            JLabel pictureLabel = new JLabel();
+            pictureLabel.setSize(120, 120);
+            try {
+                pictureLabel.setIcon(ii);
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+            pictureLabel.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+            pictureLabel.addMouseListener(new MouseAdapter() {
+                public void mouseClicked(MouseEvent e) {
+                    //PostPopUp frame= new PostPopUp(ii, username, likes, liked,
+                    //      caption, "comments", "hashtags","people");
+
+                    //frame.setVisible(true); 
+                }
+            });
+            add(pictureLabel, createGbc(0, 0));
+        }
+
+        private GridBagConstraints createGbc(int x, int y) {
+            GridBagConstraints gbc = new GridBagConstraints();
+            gbc.gridx = x;
+            gbc.gridy = y;
+            gbc.gridwidth = 1;
+            gbc.gridheight = 1;
+            gbc.weightx = 1.0;
+            gbc.weighty = 1.0;
+            gbc.anchor = GridBagConstraints.WEST;
+
+            return gbc;
+        }
+    }
+
+    private class SearchOutputPanel extends JPanel {
+
+        public SearchOutputPanel(String method, String username, Icon ii, String date) {
+            if (method.equalsIgnoreCase("hash tags")) {
+                setLayout(new GridBagLayout());
+                Border emptyBorder = BorderFactory.createEmptyBorder(2, 2, 2, 2);
+                Border lineBorder = BorderFactory.createLineBorder(Color.black);
+                setBorder(BorderFactory.createCompoundBorder(lineBorder, emptyBorder));
+
+                JLabel timeLabel = new JLabel();
+                timeLabel.setText(date);
+                timeLabel.setSize(100, 21);
+                add(timeLabel, createGbc(2, 0));
+
+                JLabel usernameLabel = new JLabel();
+                usernameLabel.setText(username);
+                usernameLabel.setSize(100, 21);
+                usernameLabel.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+                usernameLabel.addMouseListener(new MouseAdapter() {
+                    public void mouseClicked(MouseEvent e) {
+                        //ProfilePopUp frame= new ProfilePopUp();
+                        //frame.setVisible(true); 
+                    }
+                });
+                add(usernameLabel, createGbc(1, 0));
+
+                JLabel pictureLabel = new JLabel();
+                pictureLabel.setSize(120, 120);
+                try {
+                    pictureLabel.setIcon(ii);
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+                pictureLabel.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+                pictureLabel.addMouseListener(new MouseAdapter() {
+                    public void mouseClicked(MouseEvent e) {
+                        //PostPopUp frame= new PostPopUp(ii, username, likes, liked,
+                        //  caption, "comments", "hashtags","people");
+
+                        //frame.setVisible(true);
+                    }
+                });
+                add(pictureLabel, createGbc(0, 0));
+            } else if (method.equalsIgnoreCase("people")) {
+                setLayout(new GridBagLayout());
+                Border emptyBorder = BorderFactory.createEmptyBorder(2, 2, 2, 2);
+                Border lineBorder = BorderFactory.createLineBorder(Color.black);
+                setBorder(BorderFactory.createCompoundBorder(lineBorder, emptyBorder));
+
+                JLabel usernameLabel = new JLabel();
+                usernameLabel.setText(username);
+                usernameLabel.setSize(100, 21);
+                usernameLabel.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+                usernameLabel.addMouseListener(new MouseAdapter() {
+                    public void mouseClicked(MouseEvent e) {
+                        //ProfilePopUp frame= new ProfilePopUp();
+                        //frame.setVisible(true); 
+                    }
+                });
+                add(usernameLabel, createGbc(1, 0));
+
+                JLabel pictureLabel = new JLabel();
+                pictureLabel.setSize(77, 77);
+                try {
+                    pictureLabel.setIcon(ii);
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+                pictureLabel.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+                pictureLabel.addMouseListener(new MouseAdapter() {
+                    public void mouseClicked(MouseEvent e) {
+                        //ProfilePopUp frame= new ProfilePopUp();
+                        //frame.setVisible(true);     
+                    }
+                });
+                add(pictureLabel, createGbc(0, 0));
+            }
+        }
+
+        private GridBagConstraints createGbc(int x, int y) {
+            GridBagConstraints gbc = new GridBagConstraints();
+            gbc.gridx = x;
+            gbc.gridy = y;
+            gbc.gridwidth = 1;
+            gbc.gridheight = 1;
+            gbc.weightx = 1.0;
+            gbc.weighty = 1.0;
+            gbc.anchor = GridBagConstraints.WEST;
+
+            return gbc;
+        }
+    }
 }

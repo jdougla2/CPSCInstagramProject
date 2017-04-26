@@ -1,12 +1,26 @@
 
+import java.awt.Color;
+import java.awt.Cursor;
+import java.awt.Graphics2D;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.RenderingHints;
 import java.awt.Toolkit;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.image.BufferedImage;
+import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
+import javax.swing.Icon;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.border.Border;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 /**
  *
  * @author Jose
@@ -16,8 +30,9 @@ public class GuestFrame extends javax.swing.JFrame {
     /**
      * Creates new form GuestFrame
      */
-    int width= (Toolkit.getDefaultToolkit().getScreenSize().width / 2) - 262;
-    int height= (Toolkit.getDefaultToolkit().getScreenSize().height / 2) - 250;
+    int width = (Toolkit.getDefaultToolkit().getScreenSize().width / 2) - 262;
+    int height = (Toolkit.getDefaultToolkit().getScreenSize().height / 2) - 250;
+
     public GuestFrame() {
         initComponents();
         this.setTitle("EagleGram");
@@ -45,10 +60,10 @@ public class GuestFrame extends javax.swing.JFrame {
         ProfileButton = new javax.swing.JButton();
         SearchPanel = new javax.swing.JPanel();
         SearchButton = new javax.swing.JButton();
-        UserInput = new javax.swing.JTextField();
-        SearchParameter = new javax.swing.JComboBox();
+        searchInputField = new javax.swing.JTextField();
+        searchParameterBox = new javax.swing.JComboBox();
         jScrollPane1 = new javax.swing.JScrollPane();
-        SearchOutput = new javax.swing.JTextArea();
+        searchOutputPanel = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -136,7 +151,7 @@ public class GuestFrame extends javax.swing.JFrame {
             }
         });
 
-        SearchParameter.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "People", "Hash Tags"}));
+        searchParameterBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "People", "Hash Tags"}));
 
         javax.swing.GroupLayout SearchPanelLayout = new javax.swing.GroupLayout(SearchPanel);
         SearchPanel.setLayout(SearchPanelLayout);
@@ -144,23 +159,33 @@ public class GuestFrame extends javax.swing.JFrame {
             SearchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(SearchPanelLayout.createSequentialGroup()
                 .addGap(6, 6, 6)
-                .addComponent(SearchParameter, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(searchParameterBox, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(UserInput, javax.swing.GroupLayout.PREFERRED_SIZE, 301, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(searchInputField, javax.swing.GroupLayout.PREFERRED_SIZE, 301, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(SearchButton, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         SearchPanelLayout.setVerticalGroup(
             SearchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(SearchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                .addComponent(SearchParameter, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addComponent(UserInput, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(searchParameterBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(searchInputField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addComponent(SearchButton))
         );
 
-        SearchOutput.setColumns(20);
-        SearchOutput.setRows(5);
-        jScrollPane1.setViewportView(SearchOutput);
+        javax.swing.GroupLayout searchOutputPanelLayout = new javax.swing.GroupLayout(searchOutputPanel);
+        searchOutputPanel.setLayout(searchOutputPanelLayout);
+        searchOutputPanelLayout.setHorizontalGroup(
+            searchOutputPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 522, Short.MAX_VALUE)
+        );
+        searchOutputPanelLayout.setVerticalGroup(
+            searchOutputPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 411, Short.MAX_VALUE)
+        );
+
+        jScrollPane1.setViewportView(searchOutputPanel);
+        searchOutputPanel.setLayout(new BoxLayout(searchOutputPanel, BoxLayout.Y_AXIS));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -198,30 +223,37 @@ public class GuestFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void SignInButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SignInButtonActionPerformed
-        Login z= new Login();
+        Login z = new Login();
         z.setVisible(true);
         super.dispose();
     }//GEN-LAST:event_SignInButtonActionPerformed
 
     private void SignUpButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SignUpButtonActionPerformed
-        SignUpFrame y= new SignUpFrame();
+        SignUpFrame y = new SignUpFrame();
         y.setVisible(true);
         super.dispose();
     }//GEN-LAST:event_SignUpButtonActionPerformed
 
     private void SearchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SearchButtonActionPerformed
-        SearchOutput.removeAll();
-        SearchOutput.repaint();
-        Input= UserInput.getText();
-        Parameter= SearchParameter.getSelectedItem().toString();
-        System.out.println(Input +" "+ Parameter);
+        Input = searchInputField.getText();
+        Parameter = searchParameterBox.getSelectedItem().toString();
+        searchOutputPanel.removeAll();
+        searchOutputPanel.repaint();
+        Parameter = searchParameterBox.getSelectedItem().toString();
+        //add search output
+
+        Icon ii = null;
+        /*for(number of results)
+         searchOutputPanel.add(new SearchPanel(Parameter, "username", ii, "date"));
+         searchOutputPanel.revalidate();
+         searchOutputPanel.repaint();*/
         //add search output
     }//GEN-LAST:event_SearchButtonActionPerformed
 
     private void SearchMenuButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SearchMenuButtonActionPerformed
         // TODO add your handling code here:
-        SearchOutput.removeAll();
-        SearchOutput.repaint();
+        searchOutputPanel.removeAll();
+        searchOutputPanel.repaint();
     }//GEN-LAST:event_SearchMenuButtonActionPerformed
 
     /**
@@ -268,15 +300,119 @@ public class GuestFrame extends javax.swing.JFrame {
     private javax.swing.JButton ProfileButton;
     private javax.swing.JButton SearchButton;
     private javax.swing.JButton SearchMenuButton;
-    private javax.swing.JTextArea SearchOutput;
     private javax.swing.JPanel SearchPanel;
-    private javax.swing.JComboBox SearchParameter;
     private javax.swing.JButton SignInButton;
     private javax.swing.JButton SignUpButton;
     private javax.swing.JPanel TopMenu;
-    private javax.swing.JTextField UserInput;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTextField searchInputField;
+    private javax.swing.JPanel searchOutputPanel;
+    private javax.swing.JComboBox searchParameterBox;
     // End of variables declaration//GEN-END:variables
     private String Parameter;
     private String Input;
+
+    public static BufferedImage scaleImage(int w, int h, BufferedImage img) throws Exception {
+        BufferedImage bi;
+        bi = new BufferedImage(w, h, BufferedImage.TRANSLUCENT);
+        Graphics2D g2d = (Graphics2D) bi.createGraphics();
+        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        g2d.addRenderingHints(new RenderingHints(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY));
+        g2d.drawImage(img, 0, 0, w, h, null);
+        g2d.dispose();
+        return bi;
+    }
+
+    private class SearchOutputPanel extends JPanel {
+
+        public SearchOutputPanel(String method, String username, Icon ii, String date) {
+            if (method.equalsIgnoreCase("hash tags")) {
+                setLayout(new GridBagLayout());
+                Border emptyBorder = BorderFactory.createEmptyBorder(2, 2, 2, 2);
+                Border lineBorder = BorderFactory.createLineBorder(Color.black);
+                setBorder(BorderFactory.createCompoundBorder(lineBorder, emptyBorder));
+
+                JLabel timeLabel = new JLabel();
+                timeLabel.setText(date);
+                timeLabel.setSize(100, 21);
+                add(timeLabel, createGbc(2, 0));
+
+                JLabel usernameLabel = new JLabel();
+                usernameLabel.setText(username);
+                usernameLabel.setSize(100, 21);
+                usernameLabel.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+                usernameLabel.addMouseListener(new MouseAdapter() {
+                    public void mouseClicked(MouseEvent e) {
+                        //ProfilePopUp frame= new ProfilePopUp();
+                        //frame.setVisible(true); 
+                    }
+                });
+                add(usernameLabel, createGbc(1, 0));
+
+                JLabel pictureLabel = new JLabel();
+                pictureLabel.setSize(120, 120);
+                try {
+                    pictureLabel.setIcon(ii);
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+                pictureLabel.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+                pictureLabel.addMouseListener(new MouseAdapter() {
+                    public void mouseClicked(MouseEvent e) {
+                        //PostPopUp frame= new PostPopUp(ii, username, likes, liked,
+                        //  caption, "comments", "hashtags","people");
+
+                        //frame.setVisible(true);
+                    }
+                });
+                add(pictureLabel, createGbc(0, 0));
+            } else if (method.equalsIgnoreCase("people")) {
+                setLayout(new GridBagLayout());
+                Border emptyBorder = BorderFactory.createEmptyBorder(2, 2, 2, 2);
+                Border lineBorder = BorderFactory.createLineBorder(Color.black);
+                setBorder(BorderFactory.createCompoundBorder(lineBorder, emptyBorder));
+
+                JLabel usernameLabel = new JLabel();
+                usernameLabel.setText(username);
+                usernameLabel.setSize(100, 21);
+                usernameLabel.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+                usernameLabel.addMouseListener(new MouseAdapter() {
+                    public void mouseClicked(MouseEvent e) {
+                        //ProfilePopUp frame= new ProfilePopUp();
+                        //frame.setVisible(true); 
+                    }
+                });
+                add(usernameLabel, createGbc(1, 0));
+
+                JLabel pictureLabel = new JLabel();
+                pictureLabel.setSize(77, 77);
+                try {
+                    pictureLabel.setIcon(ii);
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+                pictureLabel.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+                pictureLabel.addMouseListener(new MouseAdapter() {
+                    public void mouseClicked(MouseEvent e) {
+                        //ProfilePopUp frame= new ProfilePopUp();
+                        //frame.setVisible(true);     
+                    }
+                });
+                add(pictureLabel, createGbc(0, 0));
+            }
+        }
+
+        private GridBagConstraints createGbc(int x, int y) {
+            GridBagConstraints gbc = new GridBagConstraints();
+            gbc.gridx = x;
+            gbc.gridy = y;
+            gbc.gridwidth = 1;
+            gbc.gridheight = 1;
+            gbc.weightx = 1.0;
+            gbc.weighty = 1.0;
+            gbc.anchor = GridBagConstraints.WEST;
+
+            return gbc;
+        }
+    }
 }
