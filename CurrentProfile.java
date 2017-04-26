@@ -54,6 +54,8 @@ public class CurrentProfile {
     private RealProfile loggedIn;
     private ArrayList<post> feed = new ArrayList<post>();
     private ArrayList<RealProfile> allProfiles = null;
+    private static final long serialVersionUID = -8245875722878500126L;
+
 
     public CurrentProfile() {
         this.input();

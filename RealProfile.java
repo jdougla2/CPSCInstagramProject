@@ -31,6 +31,7 @@ public class RealProfile implements Serializable{
     private ArrayList<RealProfile> followers = new ArrayList<RealProfile>();
     private ArrayList<RealProfile> following = new ArrayList<RealProfile>();
     private ArrayList<DirectMessage> dms = new ArrayList<DirectMessage>();
+    private static final long serialVersionUID = -8245875722878500126L;
     
     public RealProfile(String username, String password, String firstName, String lastName){
         this.username = username;
@@ -65,6 +66,26 @@ public class RealProfile implements Serializable{
     
     public ArrayList<RealProfile> getFollowers(){
         return followers;
+    }
+    
+    public boolean getPrivacy(){
+        return isPrivate;
+    }
+    
+    public String getFirstName(){
+        return firstName;
+    }
+    
+    public String getLastName(){
+        return lastName;
+    }
+    
+    public void setLastName(String newLastName){
+        lastName = newLastName;
+    }
+    
+    public void setFirstName(String newFirstName){
+        firstName = newFirstName;
     }
     
     public void addNotifications(String newNotification){
