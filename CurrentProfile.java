@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
+import javax.swing.Icon;
 import javax.swing.event.*;
 
 /**
@@ -29,13 +30,11 @@ class ComparatorByDate {
             = new Comparator<post>() {
 
         public int compare(post post1, post post2) {
-            Date date1;
-            Date date2;
-            SimpleDateFormat originalFormat = new SimpleDateFormat("MMddyyyy HH:mm:ss");
+            SimpleDateFormat format = new SimpleDateFormat("MM-dd HH:mm");
             try {
-                date1 = post1.getDate();
-                date2 = post2.getDate();
-                return date1.compareTo(date2);
+                String time = post1.getDate();
+                String time2 = post2.getDate();
+                return time.compareTo(time2);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -53,7 +52,7 @@ public class CurrentProfile {
 
     private RealProfile loggedIn;
     private ArrayList<post> feed = new ArrayList<post>();
-    private ArrayList<RealProfile> allProfiles = null;
+    private ArrayList<RealProfile> allProfiles = new ArrayList<RealProfile>();
     private static final long serialVersionUID = -8245875722878500126L;
 
 
@@ -130,7 +129,7 @@ public class CurrentProfile {
         loggedIn = null;
     }
 
-    public void updateFeed() {
+    public ArrayList<post> updateFeed() {
         if (!loggedIn.getUsername().equals("guest")) {
             for (int i = 0; i < loggedIn.getFollowing().size(); i++) {
                 for (int j = 0; j < loggedIn.getFollowing().get(i).getPosts().size();
@@ -141,8 +140,37 @@ public class CurrentProfile {
 
             Collections.sort(feed, ComparatorByDate.ComparatorByDate);
         }
+        return feed;
     }
-
+    
+    public void following(String toFollow, String toBeFollowing){
+        RealProfile a = null;
+        RealProfile b = null;
+        for(int i = 0; i < allProfiles.size(); i++){
+            if(allProfiles.get(i).getUsername().equals(toFollow)){
+                a = allProfiles.get(i);
+            }
+            else if(allProfiles.get(i).getUsername().equals(toBeFollowing)){
+                b = allProfiles.get(i);
+            }
+        }
+        a.addFollower(b);
+    }
+    
+    public void removeFollowing(String toFollow, String toBeFollowing){
+        RealProfile a = null;
+        RealProfile b = null;
+        for(int i = 0; i < allProfiles.size(); i++){
+            if(allProfiles.get(i).getUsername().equals(toFollow)){
+                a = allProfiles.get(i);
+            }
+            else if(allProfiles.get(i).getUsername().equals(toBeFollowing)){
+                b = allProfiles.get(i);
+            }
+        }
+        a.getFollowers().remove(b);
+    }
+    
     public void follow(String toFollow) {
         for (int i = 0; i < allProfiles.size(); i++) {
             if (allProfiles.get(i).getUsername().equals(toFollow)) {
@@ -157,11 +185,14 @@ public class CurrentProfile {
             if (allProfiles.get(i).getUsername().equals(username)) {
                 results.add(allProfiles.get(i));
             }
+            else if(allProfiles.get(i).getUsername().contains(username)){
+                results.add(allProfiles.get(i));
+            }
         }
         return results;
     }
 
-    public void newPost(String caption, URL imageLink, ArrayList comments, ArrayList hashtags, ArrayList mentions) {
+    public void newPost(String caption, Icon imageLink, ArrayList comments, ArrayList hashtags, ArrayList mentions) {
         loggedIn.addPost(caption, imageLink, comments, mentions, hashtags);
 
         for (int i = 0; i < loggedIn.getFollowers().size(); i++) {
@@ -218,5 +249,9 @@ public class CurrentProfile {
     
     public RealProfile getLoggedIn() {
         return loggedIn;
+    }
+    
+    public ArrayList<RealProfile> getAllProfiles() {
+        return allProfiles;
     }
 }

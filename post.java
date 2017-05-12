@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.io.Serializable;
 import java.net.URL;
 import javax.imageio.ImageIO;
 
@@ -20,16 +21,21 @@ import javax.imageio.ImageIO;
  * @author Armando
  */
 import java.util.Date;
-public class post {
+import javax.swing.Icon;
+public class post implements Serializable{
 
     private String caption;
     private URL link;
+    private BufferedImage image = null;
+    private Icon icon = null;
     private ArrayList<String> comments = new ArrayList<String>();
     private ArrayList<String> tags = new ArrayList<String>();
     private ArrayList<String> hashtags = new ArrayList<String>();
-    DateFormat dateFormat = new SimpleDateFormat("MMddyyyy HH:mm:ss");
-    private Date date = new Date();
+    SimpleDateFormat format = new SimpleDateFormat("MM-dd HH:mm");
+    Date date = new Date();
+    String time = format.format(date);
     private int likes;
+    private static final long serialVersionUID = -8245875722878500126L;
     
     public post(String caption, ArrayList<String> comments, ArrayList<String> tags, ArrayList<String> hashtags, URL imageLink){
         this.caption = caption;
@@ -39,27 +45,30 @@ public class post {
         this.link = imageLink;
         this.getImage();
     }
+    
+    public post(String caption, ArrayList<String> comments, ArrayList<String> tags, ArrayList<String> hashtags, Icon imageLink){
+        this.caption = caption;
+        this.comments = comments;
+        this.hashtags = hashtags;
+        this.tags = tags;
+        this.icon = imageLink;
+        this.getImage();
+    }
 
     public String getCaption() {
         return caption;
     }
 
-    public void getImage() {
-        BufferedImage image = null;
-        try {
-            image = ImageIO.read(link);
-            ImageIO.write(image, "png",new File(System.getProperty("user.dir") + "\\out.png"));
-        } catch (IOException e) {
-        	e.printStackTrace();
-        }
+    public Icon getImage() {
+        return icon;
     }
 
     public ArrayList getComments() {
         return comments;
     }
 
-    public Date getDate() {
-        return date;
+    public String getDate() {
+        return time;
     }
 
     public int getLikes() {
@@ -80,5 +89,9 @@ public class post {
 
     public void addHashtag(String h) {
         hashtags.add(h);
+    }
+    
+    public void setLikes(int num){
+        likes++;
     }
 }
