@@ -302,7 +302,7 @@
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="userInput" min="-2" pref="313" max="-2" attributes="0"/>
                               <EmptySpace pref="12" max="32767" attributes="0"/>
-                              <Component id="SearchButton1" pref="105" max="32767" attributes="0"/>
+                              <Component id="SearchButton1" pref="102" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                     </DimensionLayout>
@@ -383,7 +383,7 @@
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="newPostOutputLabel" max="32767" attributes="0"/>
+                              <Component id="newPostOutputLabel" pref="506" max="32767" attributes="0"/>
                               <Group type="102" attributes="0">
                                   <Group type="103" groupAlignment="1" attributes="0">
                                       <Group type="102" alignment="1" attributes="0">
@@ -663,7 +663,7 @@
                                       <Component id="FollowButton" min="-2" pref="100" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
-                              <EmptySpace pref="81" max="32767" attributes="0"/>
+                              <EmptySpace max="32767" attributes="0"/>
                           </Group>
                       </Group>
                     </DimensionLayout>
@@ -708,33 +708,48 @@
                         </Property>
                       </Properties>
                       <AuxValues>
-                        <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="try {&#xa;    ImageIcon ii=new ImageIcon(scaleImage(77, 77, ImageIO.read(new File(System.getProperty(&quot;user.dir&quot;)+&quot;\\ProfilePicture.png&quot;))));//get the image from file chooser and scale it to match JLabel size&#xa;    ProfilePictureLabel.setIcon(ii);&#xa;} catch (Exception ex) {&#xa;    ex.printStackTrace();&#xa;}"/>
+                        <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="/*try {&#xa;    ImageIcon ii=new ImageIcon(scaleImage(77, 77, ImageIO.read(new File(System.getProperty(&quot;user.dir&quot;)+&quot;\\ProfilePicture.png&quot;))));&#xa;    if(main.getLoggedIn().getProfilePic() != null){&#xa;        ii = new ImageIcon(scaleImage(77, 77, ImageIO.read(new File(System.getProperty(&quot;user.dir&quot;)+ &quot;\\&quot; + main.getLoggedIn().getUsername() + &quot;profilepic.png&quot;))));&#xa;}    &#xa;    ProfilePictureLabel.setIcon(ii);&#xa;} catch (Exception ex) {&#xa;    ex.printStackTrace();&#xa;}*/"/>
                       </AuxValues>
                     </Component>
                     <Component class="javax.swing.JLabel" name="UsernameLabel">
                       <Properties>
                         <Property name="text" type="java.lang.String" value="Username"/>
                       </Properties>
+                      <AuxValues>
+                        <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="UsernameLabel.setText(main.getLoggedIn().getUsername());"/>
+                      </AuxValues>
                     </Component>
                     <Component class="javax.swing.JLabel" name="FirstnameLabel">
                       <Properties>
                         <Property name="text" type="java.lang.String" value="Firstname"/>
                       </Properties>
+                      <AuxValues>
+                        <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="FirstnameLabel.setText(main.getLoggedIn().getFirstName());"/>
+                      </AuxValues>
                     </Component>
                     <Component class="javax.swing.JLabel" name="LastnameLabel">
                       <Properties>
                         <Property name="text" type="java.lang.String" value="Lastname"/>
                       </Properties>
+                      <AuxValues>
+                        <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="LastnameLabel.setText(main.getLoggedIn().getLastName());"/>
+                      </AuxValues>
                     </Component>
                     <Component class="javax.swing.JLabel" name="NumberFollowersLabel">
                       <Properties>
                         <Property name="text" type="java.lang.String" value="# Followers: "/>
                       </Properties>
+                      <AuxValues>
+                        <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="NumberFollowersLabel.setText(&quot;# Followers: &quot; + main.getLoggedIn().getFollowers().size());"/>
+                      </AuxValues>
                     </Component>
                     <Component class="javax.swing.JLabel" name="NumberFollowingLabel">
                       <Properties>
                         <Property name="text" type="java.lang.String" value="# Following: "/>
                       </Properties>
+                      <AuxValues>
+                        <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="NumberFollowingLabel.setText(&quot;# Following: &quot; + main.getLoggedIn().getFollowing().size());"/>
+                      </AuxValues>
                     </Component>
                     <Component class="javax.swing.JButton" name="FollowButton">
                       <Properties>
@@ -786,7 +801,7 @@
                 <DimensionLayout dim="0">
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="DMMenuPanel" max="32767" attributes="0"/>
-                      <Component id="DMLayoutPanel" alignment="1" max="32767" attributes="0"/>
+                      <Component id="DMLayoutPanel" alignment="1" pref="536" max="32767" attributes="0"/>
                   </Group>
                 </DimensionLayout>
                 <DimensionLayout dim="1">
@@ -1015,7 +1030,7 @@
                                                   </Group>
                                               </Group>
                                           </Group>
-                                          <EmptySpace min="0" pref="133" max="32767" attributes="0"/>
+                                          <EmptySpace min="0" pref="16" max="32767" attributes="0"/>
                                       </Group>
                                       <Component id="MessageOutputLabel" alignment="1" max="32767" attributes="0"/>
                                   </Group>
@@ -1216,7 +1231,7 @@
                 <DimensionLayout dim="1">
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace pref="70" max="32767" attributes="0"/>
+                          <EmptySpace max="32767" attributes="0"/>
                           <Group type="103" groupAlignment="1" attributes="0">
                               <Component id="SignOutButton" min="-2" max="-2" attributes="0"/>
                               <Group type="102" attributes="0">

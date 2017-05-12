@@ -1,4 +1,7 @@
 
+import instagramproject.CurrentProfile;
+import instagramproject.RealProfile;
+import instagramproject.post;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import javax.swing.Icon;
@@ -24,7 +27,7 @@ public class PostPopUp extends javax.swing.JFrame {
      * Creates new form Post
      */
     public PostPopUp(Icon ii, String username, int likes, boolean liked,
-            String caption, String comments, String hashTags, String peopleTaged) {
+            String caption, String comments, String hashTags, String peopleTaged, RealProfile loggedIn) {
         initComponents();
         this.setTitle("EagleGram");
         this.setLocation(width, height);
@@ -40,6 +43,19 @@ public class PostPopUp extends javax.swing.JFrame {
         commentsArea.setText(comments);
         hashTagsArea.setText(hashTags);
         peopleTagedArea.setText(peopleTaged);
+        
+        this.findProfile(username, caption);
+    }
+    
+    private void findProfile(String username, String caption){
+        for(int i = 0; i < main.getAllProfiles().size(); i++){
+            if(main.getAllProfiles().get(i).getUsername().equals(username)){
+                for(int j = 0; j < main.getAllProfiles().get(i).getPosts().size(); j++){
+                    if(main.getAllProfiles().get(i).getPosts().get(j).getCaption().equals(caption))
+                        current = main.getAllProfiles().get(i).getPosts().get(j);
+                }
+            }        
+        }
     }
 
     /**
@@ -86,25 +102,20 @@ public class PostPopUp extends javax.swing.JFrame {
         likeLabel.setText("likes");
         likeLabel.setPreferredSize(new java.awt.Dimension(100, 21));
 
-        commentsArea.setEditable(false);
         commentsArea.setColumns(20);
         commentsArea.setLineWrap(true);
         commentsArea.setRows(5);
         jScrollPane1.setViewportView(commentsArea);
 
-        peopleTagedArea.setEditable(false);
         peopleTagedArea.setColumns(20);
         peopleTagedArea.setLineWrap(true);
         peopleTagedArea.setRows(5);
         jScrollPane3.setViewportView(peopleTagedArea);
 
-        captionArea.setEditable(false);
         captionArea.setColumns(20);
-        captionArea.setLineWrap(true);
         captionArea.setRows(5);
         jScrollPane2.setViewportView(captionArea);
 
-        hashTagsArea.setEditable(false);
         hashTagsArea.setColumns(20);
         hashTagsArea.setLineWrap(true);
         hashTagsArea.setRows(5);
@@ -246,12 +257,14 @@ public class PostPopUp extends javax.swing.JFrame {
             likes++;
             likeLabel.setText("LIKES: " + Integer.toString(likes));
             likeButton1.setText("UnLike");
+            current.setLikes(likes);
             liked = true;
         } else {
             likes--;
             likeLabel.setText("LIKES: " + Integer.toString(likes));
             likeButton1.setText("Like");
             liked = false;
+            current.setLikes(likes);
         }
 
     }//GEN-LAST:event_likeButton1ActionPerformed
@@ -260,6 +273,7 @@ public class PostPopUp extends javax.swing.JFrame {
         // TODO add your handling code here:
         //add comments
         commentsArea.setText(commentsArea.getText()+"\n"+addCommentArea.getText());
+        current.addComment(addCommentArea.getText());
     }//GEN-LAST:event_addCommentButtonActionPerformed
 
     /**
@@ -293,7 +307,7 @@ public class PostPopUp extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new PostPopUp(null,"username",2,true,"this is a caption",
-                        "this is the comments","#hashtag","@people").setVisible(true);
+                        "this is the comments","#hashtag","@people", null).setVisible(true);
             }
         });
     }
@@ -320,4 +334,6 @@ public class PostPopUp extends javax.swing.JFrame {
     private javax.swing.JLabel profilePictureLabel1;
     private javax.swing.JLabel usernameLabel;
     // End of variables declaration//GEN-END:variables
+    private CurrentProfile main = new CurrentProfile();
+    private post current;
 }

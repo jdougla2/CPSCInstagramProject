@@ -1,4 +1,5 @@
 
+import instagramproject.CurrentProfile;
 import java.awt.Toolkit;
 
 /*
@@ -170,15 +171,19 @@ public class SignUpFrame extends javax.swing.JFrame {
         if (!FirstName.equals("") && !LastName.equals("") 
                 && !Username.equals("") && !Password1.equals("")){
             if(Password1.equals(Password2)){
-                //if(username not already taken){
+                boolean signUp = main.signUp(Username, Password1, FirstName, LastName);
+                if(signUp){
                 //create new user
-                UserFrame y= new UserFrame();
-                y.setVisible(true);
-                super.dispose();
-                //}
-                //else{
-                    //ErrorMessageLabel.setText("Username already taken.");
-                //}
+                    main.output();
+                    main.logIn(Username, Password1);
+                    UserFrame y= new UserFrame(main.getLoggedIn());
+                    main.printAllProfiles();
+                    y.setVisible(true);
+                    super.dispose();
+                }
+                else{
+                    ErrorMessageLabel.setText("Username already taken.");
+                }
             }
             else{
                 ErrorMessageLabel.setText("Passwords do not match.");
@@ -253,5 +258,6 @@ public class SignUpFrame extends javax.swing.JFrame {
     private String Username;
     private String Password1;
     private String Password2;
+    private CurrentProfile main = new CurrentProfile();
     
 }

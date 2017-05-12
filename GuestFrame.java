@@ -1,4 +1,6 @@
 
+import instagramproject.CurrentProfile;
+import instagramproject.RealProfile;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Graphics2D;
@@ -9,6 +11,7 @@ import java.awt.Toolkit;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.Icon;
@@ -235,19 +238,26 @@ public class GuestFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_SignUpButtonActionPerformed
 
     private void SearchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SearchButtonActionPerformed
-        Input = searchInputField.getText();
-        Parameter = searchParameterBox.getSelectedItem().toString();
         searchOutputPanel.removeAll();
         searchOutputPanel.repaint();
+        Input = searchInputField.getText();
         Parameter = searchParameterBox.getSelectedItem().toString();
         //add search output
+        ArrayList<RealProfile> results = main.profileSearch(Input);
 
         Icon ii = null;
-        /*for(number of results)
-         searchOutputPanel.add(new SearchPanel(Parameter, "username", ii, "date"));
+        /*for(int i = 0; i < results.size(); i++){
+            ii = results.get(i).getProfilePic();
+            searchOutputPanel.add(new UserFrame.SearchOutputPanel(Parameter, results.get(i).getUsername(), ii, "date"));
+            searchOutputPanel.revalidate();
+            searchOutputPanel.repaint();
+        }*/
+        for(int i = 0; i < results.size(); i++){
+         searchOutputPanel.add(new SearchOutputPanel(Parameter, results.get(i).getUsername(), ii, "date"));
          searchOutputPanel.revalidate();
-         searchOutputPanel.repaint();*/
+         searchOutputPanel.repaint();
         //add search output
+        }
     }//GEN-LAST:event_SearchButtonActionPerformed
 
     private void SearchMenuButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SearchMenuButtonActionPerformed
@@ -311,6 +321,7 @@ public class GuestFrame extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
     private String Parameter;
     private String Input;
+    private CurrentProfile main = new CurrentProfile();
 
     public static BufferedImage scaleImage(int w, int h, BufferedImage img) throws Exception {
         BufferedImage bi;

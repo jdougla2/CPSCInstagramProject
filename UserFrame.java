@@ -1,10 +1,15 @@
 
+import instagramproject.CurrentProfile;
+import instagramproject.RealProfile;
+import instagramproject.post;
 import java.awt.event.*;
 import java.awt.*;
 import java.awt.image.*;
 import java.io.*;
+import java.net.URL;
 import javax.imageio.*;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -26,11 +31,33 @@ public class UserFrame extends javax.swing.JFrame {
     int width = (Toolkit.getDefaultToolkit().getScreenSize().width / 2) - 269;
     int height = (Toolkit.getDefaultToolkit().getScreenSize().height / 2) - 263;
 
-    public UserFrame() {
+    public UserFrame(RealProfile loggedIn) {
         initComponents();
         this.setTitle("EagleGram");
         this.setLocation(width, height);
         this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        main.logIn(loggedIn.getUsername(), loggedIn.getPassword());
+        
+        ProfilePictureLabel.setIcon(main.getLoggedIn().getProfilePic());
+        FirstnameLabel.setText(main.getLoggedIn().getFirstName());
+        LastnameLabel.setText(main.getLoggedIn().getLastName());
+        UsernameLabel.setText(main.getLoggedIn().getUsername());
+        for(int i = 0; i < main.getLoggedIn().getPosts().size(); i++) {
+            UserPostPanel.add(new UserPanel(main.getLoggedIn().getPosts().get(i).getImage(), main.getLoggedIn().getPosts().get(i).getCaption(), main.getLoggedIn().getPosts().get(i).getDate(), main.getLoggedIn().getPosts().get(i).getLikes()));
+            UserPostPanel.revalidate();
+            UserPostPanel.repaint();
+        }
+        
+        if(loggedIn.getUsername().equals("jaraujo")){
+            main.getLoggedIn().addFollowing(main.getAllProfiles().get(1));
+        }
+        ArrayList<post> feed = main.updateFeed();
+        for(int i = 0; i < feed.size(); i++){
+            homePanel.add(new UserPanel(feed.get(i).getImage(), feed.get(i).getCaption(), feed.get(i).getDate(), feed.get(i).getLikes()));
+            homePanel.revalidate();
+            homePanel.repaint();
+        }
+        
         addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent we) {
@@ -40,6 +67,7 @@ public class UserFrame extends javax.swing.JFrame {
                         JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null,
                         ObjButtons, ObjButtons[1]);
                 if (PromptResult == JOptionPane.YES_OPTION) {
+                    main.output();
                     System.exit(0);
                 }
             }
@@ -319,7 +347,7 @@ public class UserFrame extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(userInput, javax.swing.GroupLayout.PREFERRED_SIZE, 313, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
-                .addComponent(SearchButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 105, Short.MAX_VALUE))
+                .addComponent(SearchButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 102, Short.MAX_VALUE))
         );
         SearchParameterPanelLayout.setVerticalGroup(
             SearchParameterPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -405,7 +433,7 @@ public class UserFrame extends javax.swing.JFrame {
             .addGroup(NewPostPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(NewPostPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(newPostOutputLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(newPostOutputLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 506, Short.MAX_VALUE)
                     .addGroup(NewPostPanelLayout.createSequentialGroup()
                         .addGroup(NewPostPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(NewPostPanelLayout.createSequentialGroup()
@@ -497,561 +525,569 @@ public class UserFrame extends javax.swing.JFrame {
         ProfilePanel.setMinimumSize(new java.awt.Dimension(536, 466));
 
         ProfilePictureLabel.setText("");
-        try {
-            ImageIcon ii=new ImageIcon(scaleImage(77, 77, ImageIO.read(new File(System.getProperty("user.dir")+"\\ProfilePicture.png"))));//get the image from file chooser and scale it to match JLabel size
-            ProfilePictureLabel.setIcon(ii);
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
+        /*try {
+            ImageIcon ii=new ImageIcon(scaleImage(77, 77, ImageIO.read(new File(System.getProperty("user.dir")+"\\ProfilePicture.png"))));
+            if(main.getLoggedIn().getProfilePic() != null){
+                ii = new ImageIcon(scaleImage(77, 77, ImageIO.read(new File(System.getProperty("user.dir")+ "\\" + main.getLoggedIn().getUsername() + "profilepic.png"))));
+                }
+                ProfilePictureLabel.setIcon(ii);
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }*/
 
-        UsernameLabel.setText("Username");
+            UsernameLabel.setText("Username");
 
-        FirstnameLabel.setText("Firstname");
+            FirstnameLabel.setText("Firstname");
 
-        LastnameLabel.setText("Lastname");
+            LastnameLabel.setText("Lastname");
 
-        NumberFollowersLabel.setText("# Followers: ");
+            NumberFollowersLabel.setText("# Followers: ");
 
-        NumberFollowingLabel.setText("# Following: ");
+            NumberFollowingLabel.setText("# Following: ");
 
-        FollowButton.setText("Follow");
-        FollowButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                FollowButtonActionPerformed(evt);
-            }
-        });
+            FollowButton.setText("Follow");
+            FollowButton.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    FollowButtonActionPerformed(evt);
+                }
+            });
 
-        javax.swing.GroupLayout StaticProfilePanelLayout = new javax.swing.GroupLayout(StaticProfilePanel);
-        StaticProfilePanel.setLayout(StaticProfilePanelLayout);
-        StaticProfilePanelLayout.setHorizontalGroup(
-            StaticProfilePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(StaticProfilePanelLayout.createSequentialGroup()
-                .addGap(34, 34, 34)
-                .addComponent(ProfilePictureLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(71, 71, 71)
-                .addGroup(StaticProfilePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(UsernameLabel)
-                    .addGroup(StaticProfilePanelLayout.createSequentialGroup()
-                        .addGroup(StaticProfilePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addGroup(StaticProfilePanelLayout.createSequentialGroup()
-                                .addComponent(FirstnameLabel)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(LastnameLabel))
-                            .addGroup(StaticProfilePanelLayout.createSequentialGroup()
-                                .addComponent(NumberFollowersLabel)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(NumberFollowingLabel)))
-                        .addGap(38, 38, 38)
-                        .addComponent(FollowButton, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(81, Short.MAX_VALUE))
-        );
-        StaticProfilePanelLayout.setVerticalGroup(
-            StaticProfilePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, StaticProfilePanelLayout.createSequentialGroup()
-                .addGroup(StaticProfilePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(StaticProfilePanelLayout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(StaticProfilePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(NumberFollowersLabel)
-                            .addComponent(NumberFollowingLabel))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(StaticProfilePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(FirstnameLabel)
-                            .addComponent(LastnameLabel))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
-                    .addGroup(StaticProfilePanelLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(FollowButton)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addComponent(UsernameLabel)
-                .addGap(23, 23, 23))
-            .addGroup(StaticProfilePanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(ProfilePictureLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-
-        FollowButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-
-        javax.swing.GroupLayout UserPostPanelLayout = new javax.swing.GroupLayout(UserPostPanel);
-        UserPostPanel.setLayout(UserPostPanelLayout);
-        UserPostPanelLayout.setHorizontalGroup(
-            UserPostPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
-        UserPostPanelLayout.setVerticalGroup(
-            UserPostPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
-
-        UserPostScrollPane.setViewportView(UserPostPanel);
-        UserPostPanel.setLayout(new BoxLayout(UserPostPanel, BoxLayout.Y_AXIS));
-
-        javax.swing.GroupLayout ProfilePanelLayout = new javax.swing.GroupLayout(ProfilePanel);
-        ProfilePanel.setLayout(ProfilePanelLayout);
-        ProfilePanelLayout.setHorizontalGroup(
-            ProfilePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(StaticProfilePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(UserPostScrollPane)
-        );
-        ProfilePanelLayout.setVerticalGroup(
-            ProfilePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(ProfilePanelLayout.createSequentialGroup()
-                .addComponent(StaticProfilePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(UserPostScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 372, Short.MAX_VALUE))
-        );
-
-        LayoutPanel.add(ProfilePanel, "card5");
-
-        NewMessageButton.setText("New Message");
-        NewMessageButton.setMaximumSize(new java.awt.Dimension(100, 23));
-        NewMessageButton.setMinimumSize(new java.awt.Dimension(100, 23));
-        NewMessageButton.setPreferredSize(new java.awt.Dimension(100, 23));
-        NewMessageButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                NewMessageButtonActionPerformed(evt);
-            }
-        });
-
-        InboxButton.setText("Inbox");
-        InboxButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                InboxButtonActionPerformed(evt);
-            }
-        });
-
-        SentButton.setText("Sents");
-        SentButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                SentButtonActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout DMMenuPanelLayout = new javax.swing.GroupLayout(DMMenuPanel);
-        DMMenuPanel.setLayout(DMMenuPanelLayout);
-        DMMenuPanelLayout.setHorizontalGroup(
-            DMMenuPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(DMMenuPanelLayout.createSequentialGroup()
-                .addComponent(InboxButton, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(105, 105, 105)
-                .addComponent(SentButton, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(NewMessageButton, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
-        DMMenuPanelLayout.setVerticalGroup(
-            DMMenuPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(DMMenuPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                .addComponent(NewMessageButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addComponent(InboxButton)
-                .addComponent(SentButton))
-        );
-
-        NewMessageButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        InboxButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        SentButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-
-        DMLayoutPanel.setLayout(new java.awt.CardLayout());
-
-        javax.swing.GroupLayout inboxPanelLayout = new javax.swing.GroupLayout(inboxPanel);
-        inboxPanel.setLayout(inboxPanelLayout);
-        inboxPanelLayout.setHorizontalGroup(
-            inboxPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 534, Short.MAX_VALUE)
-        );
-        inboxPanelLayout.setVerticalGroup(
-            inboxPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 464, Short.MAX_VALUE)
-        );
-
-        jScrollPane10.setViewportView(inboxPanel);
-        inboxPanel.setLayout(new BoxLayout(inboxPanel, BoxLayout.Y_AXIS));
-
-        javax.swing.GroupLayout InboxPanelLayout = new javax.swing.GroupLayout(InboxPanel);
-        InboxPanel.setLayout(InboxPanelLayout);
-        InboxPanelLayout.setHorizontalGroup(
-            InboxPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane10)
-        );
-        InboxPanelLayout.setVerticalGroup(
-            InboxPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane10, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 437, Short.MAX_VALUE)
-        );
-
-        DMLayoutPanel.add(InboxPanel, "card4");
-
-        javax.swing.GroupLayout sentsPanelLayout = new javax.swing.GroupLayout(sentsPanel);
-        sentsPanel.setLayout(sentsPanelLayout);
-        sentsPanelLayout.setHorizontalGroup(
-            sentsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 534, Short.MAX_VALUE)
-        );
-        sentsPanelLayout.setVerticalGroup(
-            sentsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 464, Short.MAX_VALUE)
-        );
-
-        jScrollPane7.setViewportView(sentsPanel);
-        sentsPanel.setLayout(new BoxLayout(sentsPanel, BoxLayout.Y_AXIS));
-
-        javax.swing.GroupLayout SentPanelLayout = new javax.swing.GroupLayout(SentPanel);
-        SentPanel.setLayout(SentPanelLayout);
-        SentPanelLayout.setHorizontalGroup(
-            SentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane7)
-        );
-        SentPanelLayout.setVerticalGroup(
-            SentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane7, javax.swing.GroupLayout.DEFAULT_SIZE, 437, Short.MAX_VALUE)
-        );
-
-        DMLayoutPanel.add(SentPanel, "card2");
-
-        NewMessagePanel.setMaximumSize(new java.awt.Dimension(536, 466));
-        NewMessagePanel.setMinimumSize(new java.awt.Dimension(536, 466));
-
-        ContactUsernameLabel.setText("Enter Username of person you want to contact: ");
-
-        messageField.setColumns(20);
-        messageField.setRows(5);
-        jScrollPane3.setViewportView(messageField);
-
-        MessageLabel.setText("Enter Message to be sent: ");
-
-        SendButton.setText("Send");
-        SendButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                SendButtonActionPerformed(evt);
-            }
-        });
-
-        DMPhotoButton.setText("Select Photo");
-        DMPhotoButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                DMPhotoButtonActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout NewMessagePanelLayout = new javax.swing.GroupLayout(NewMessagePanel);
-        NewMessagePanel.setLayout(NewMessagePanelLayout);
-        NewMessagePanelLayout.setHorizontalGroup(
-            NewMessagePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(NewMessagePanelLayout.createSequentialGroup()
-                .addGroup(NewMessagePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(NewMessagePanelLayout.createSequentialGroup()
-                        .addGroup(NewMessagePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(NewMessagePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, NewMessagePanelLayout.createSequentialGroup()
-                                    .addContainerGap()
-                                    .addComponent(DMPhotoButton)
+            javax.swing.GroupLayout StaticProfilePanelLayout = new javax.swing.GroupLayout(StaticProfilePanel);
+            StaticProfilePanel.setLayout(StaticProfilePanelLayout);
+            StaticProfilePanelLayout.setHorizontalGroup(
+                StaticProfilePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(StaticProfilePanelLayout.createSequentialGroup()
+                    .addGap(34, 34, 34)
+                    .addComponent(ProfilePictureLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(71, 71, 71)
+                    .addGroup(StaticProfilePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(UsernameLabel)
+                        .addGroup(StaticProfilePanelLayout.createSequentialGroup()
+                            .addGroup(StaticProfilePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addGroup(StaticProfilePanelLayout.createSequentialGroup()
+                                    .addComponent(FirstnameLabel)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(DMPhotoLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, NewMessagePanelLayout.createSequentialGroup()
-                                    .addGap(210, 210, 210)
-                                    .addComponent(SendButton, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(NewMessagePanelLayout.createSequentialGroup()
-                                .addContainerGap()
+                                    .addComponent(LastnameLabel))
+                                .addGroup(StaticProfilePanelLayout.createSequentialGroup()
+                                    .addComponent(NumberFollowersLabel)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                    .addComponent(NumberFollowingLabel)))
+                            .addGap(38, 38, 38)
+                            .addComponent(FollowButton, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            );
+            StaticProfilePanelLayout.setVerticalGroup(
+                StaticProfilePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, StaticProfilePanelLayout.createSequentialGroup()
+                    .addGroup(StaticProfilePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(StaticProfilePanelLayout.createSequentialGroup()
+                            .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(StaticProfilePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(NumberFollowersLabel)
+                                .addComponent(NumberFollowingLabel))
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addGroup(StaticProfilePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(FirstnameLabel)
+                                .addComponent(LastnameLabel))
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
+                        .addGroup(StaticProfilePanelLayout.createSequentialGroup()
+                            .addContainerGap()
+                            .addComponent(FollowButton)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addComponent(UsernameLabel)
+                    .addGap(23, 23, 23))
+                .addGroup(StaticProfilePanelLayout.createSequentialGroup()
+                    .addContainerGap()
+                    .addComponent(ProfilePictureLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            );
+
+            UsernameLabel.setText(main.getLoggedIn().getUsername());
+            FirstnameLabel.setText(main.getLoggedIn().getFirstName());
+            LastnameLabel.setText(main.getLoggedIn().getLastName());
+            NumberFollowersLabel.setText("# Followers: " + main.getLoggedIn().getFollowers().size());
+            NumberFollowingLabel.setText("# Following: " + main.getLoggedIn().getFollowing().size());
+            FollowButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+
+            javax.swing.GroupLayout UserPostPanelLayout = new javax.swing.GroupLayout(UserPostPanel);
+            UserPostPanel.setLayout(UserPostPanelLayout);
+            UserPostPanelLayout.setHorizontalGroup(
+                UserPostPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGap(0, 0, Short.MAX_VALUE)
+            );
+            UserPostPanelLayout.setVerticalGroup(
+                UserPostPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGap(0, 0, Short.MAX_VALUE)
+            );
+
+            UserPostScrollPane.setViewportView(UserPostPanel);
+            UserPostPanel.setLayout(new BoxLayout(UserPostPanel, BoxLayout.Y_AXIS));
+
+            javax.swing.GroupLayout ProfilePanelLayout = new javax.swing.GroupLayout(ProfilePanel);
+            ProfilePanel.setLayout(ProfilePanelLayout);
+            ProfilePanelLayout.setHorizontalGroup(
+                ProfilePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(StaticProfilePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(UserPostScrollPane)
+            );
+            ProfilePanelLayout.setVerticalGroup(
+                ProfilePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(ProfilePanelLayout.createSequentialGroup()
+                    .addComponent(StaticProfilePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(UserPostScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 372, Short.MAX_VALUE))
+            );
+
+            LayoutPanel.add(ProfilePanel, "card5");
+
+            NewMessageButton.setText("New Message");
+            NewMessageButton.setMaximumSize(new java.awt.Dimension(100, 23));
+            NewMessageButton.setMinimumSize(new java.awt.Dimension(100, 23));
+            NewMessageButton.setPreferredSize(new java.awt.Dimension(100, 23));
+            NewMessageButton.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    NewMessageButtonActionPerformed(evt);
+                }
+            });
+
+            InboxButton.setText("Inbox");
+            InboxButton.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    InboxButtonActionPerformed(evt);
+                }
+            });
+
+            SentButton.setText("Sents");
+            SentButton.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    SentButtonActionPerformed(evt);
+                }
+            });
+
+            javax.swing.GroupLayout DMMenuPanelLayout = new javax.swing.GroupLayout(DMMenuPanel);
+            DMMenuPanel.setLayout(DMMenuPanelLayout);
+            DMMenuPanelLayout.setHorizontalGroup(
+                DMMenuPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(DMMenuPanelLayout.createSequentialGroup()
+                    .addComponent(InboxButton, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(105, 105, 105)
+                    .addComponent(SentButton, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(NewMessageButton, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))
+            );
+            DMMenuPanelLayout.setVerticalGroup(
+                DMMenuPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(DMMenuPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(NewMessageButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(InboxButton)
+                    .addComponent(SentButton))
+            );
+
+            NewMessageButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+            InboxButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+            SentButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+
+            DMLayoutPanel.setLayout(new java.awt.CardLayout());
+
+            javax.swing.GroupLayout inboxPanelLayout = new javax.swing.GroupLayout(inboxPanel);
+            inboxPanel.setLayout(inboxPanelLayout);
+            inboxPanelLayout.setHorizontalGroup(
+                inboxPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGap(0, 534, Short.MAX_VALUE)
+            );
+            inboxPanelLayout.setVerticalGroup(
+                inboxPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGap(0, 464, Short.MAX_VALUE)
+            );
+
+            jScrollPane10.setViewportView(inboxPanel);
+            inboxPanel.setLayout(new BoxLayout(inboxPanel, BoxLayout.Y_AXIS));
+
+            javax.swing.GroupLayout InboxPanelLayout = new javax.swing.GroupLayout(InboxPanel);
+            InboxPanel.setLayout(InboxPanelLayout);
+            InboxPanelLayout.setHorizontalGroup(
+                InboxPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(jScrollPane10)
+            );
+            InboxPanelLayout.setVerticalGroup(
+                InboxPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(jScrollPane10, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 437, Short.MAX_VALUE)
+            );
+
+            DMLayoutPanel.add(InboxPanel, "card4");
+
+            javax.swing.GroupLayout sentsPanelLayout = new javax.swing.GroupLayout(sentsPanel);
+            sentsPanel.setLayout(sentsPanelLayout);
+            sentsPanelLayout.setHorizontalGroup(
+                sentsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGap(0, 534, Short.MAX_VALUE)
+            );
+            sentsPanelLayout.setVerticalGroup(
+                sentsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGap(0, 464, Short.MAX_VALUE)
+            );
+
+            jScrollPane7.setViewportView(sentsPanel);
+            sentsPanel.setLayout(new BoxLayout(sentsPanel, BoxLayout.Y_AXIS));
+
+            javax.swing.GroupLayout SentPanelLayout = new javax.swing.GroupLayout(SentPanel);
+            SentPanel.setLayout(SentPanelLayout);
+            SentPanelLayout.setHorizontalGroup(
+                SentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(jScrollPane7)
+            );
+            SentPanelLayout.setVerticalGroup(
+                SentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(jScrollPane7, javax.swing.GroupLayout.DEFAULT_SIZE, 437, Short.MAX_VALUE)
+            );
+
+            DMLayoutPanel.add(SentPanel, "card2");
+
+            NewMessagePanel.setMaximumSize(new java.awt.Dimension(536, 466));
+            NewMessagePanel.setMinimumSize(new java.awt.Dimension(536, 466));
+
+            ContactUsernameLabel.setText("Enter Username of person you want to contact: ");
+
+            messageField.setColumns(20);
+            messageField.setRows(5);
+            jScrollPane3.setViewportView(messageField);
+
+            MessageLabel.setText("Enter Message to be sent: ");
+
+            SendButton.setText("Send");
+            SendButton.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    SendButtonActionPerformed(evt);
+                }
+            });
+
+            DMPhotoButton.setText("Select Photo");
+            DMPhotoButton.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    DMPhotoButtonActionPerformed(evt);
+                }
+            });
+
+            javax.swing.GroupLayout NewMessagePanelLayout = new javax.swing.GroupLayout(NewMessagePanel);
+            NewMessagePanel.setLayout(NewMessagePanelLayout);
+            NewMessagePanelLayout.setHorizontalGroup(
+                NewMessagePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(NewMessagePanelLayout.createSequentialGroup()
+                    .addGroup(NewMessagePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(NewMessagePanelLayout.createSequentialGroup()
+                            .addGroup(NewMessagePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addGroup(NewMessagePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addGroup(NewMessagePanelLayout.createSequentialGroup()
-                                        .addComponent(ContactUsernameLabel)
-                                        .addGap(50, 50, 50)
-                                        .addComponent(contactUsernameField, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(NewMessagePanelLayout.createSequentialGroup()
-                                        .addComponent(MessageLabel)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, NewMessagePanelLayout.createSequentialGroup()
+                                        .addContainerGap()
+                                        .addComponent(DMPhotoButton)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                        .addGap(0, 133, Short.MAX_VALUE))
-                    .addComponent(MessageOutputLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
-        );
-        NewMessagePanelLayout.setVerticalGroup(
-            NewMessagePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(NewMessagePanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(NewMessagePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(ContactUsernameLabel)
-                    .addComponent(contactUsernameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(NewMessagePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(MessageLabel))
-                .addGap(30, 30, 30)
-                .addGroup(NewMessagePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(DMPhotoButton)
-                    .addComponent(DMPhotoLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(25, 25, 25)
-                .addComponent(SendButton)
-                .addGap(18, 18, 18)
-                .addComponent(MessageOutputLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(97, Short.MAX_VALUE))
-        );
+                                        .addComponent(DMPhotoLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, NewMessagePanelLayout.createSequentialGroup()
+                                        .addGap(210, 210, 210)
+                                        .addComponent(SendButton, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGroup(NewMessagePanelLayout.createSequentialGroup()
+                                    .addContainerGap()
+                                    .addGroup(NewMessagePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                        .addGroup(NewMessagePanelLayout.createSequentialGroup()
+                                            .addComponent(ContactUsernameLabel)
+                                            .addGap(50, 50, 50)
+                                            .addComponent(contactUsernameField, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGroup(NewMessagePanelLayout.createSequentialGroup()
+                                            .addComponent(MessageLabel)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                            .addGap(0, 16, Short.MAX_VALUE))
+                        .addComponent(MessageOutputLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addContainerGap())
+            );
+            NewMessagePanelLayout.setVerticalGroup(
+                NewMessagePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(NewMessagePanelLayout.createSequentialGroup()
+                    .addContainerGap()
+                    .addGroup(NewMessagePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(ContactUsernameLabel)
+                        .addComponent(contactUsernameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addGroup(NewMessagePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(MessageLabel))
+                    .addGap(30, 30, 30)
+                    .addGroup(NewMessagePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(DMPhotoButton)
+                        .addComponent(DMPhotoLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGap(25, 25, 25)
+                    .addComponent(SendButton)
+                    .addGap(18, 18, 18)
+                    .addComponent(MessageOutputLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(97, Short.MAX_VALUE))
+            );
 
-        SendButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        DMPhotoButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+            SendButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+            DMPhotoButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 
-        DMLayoutPanel.add(NewMessagePanel, "card3");
+            DMLayoutPanel.add(NewMessagePanel, "card3");
 
-        javax.swing.GroupLayout DMPanelLayout = new javax.swing.GroupLayout(DMPanel);
-        DMPanel.setLayout(DMPanelLayout);
-        DMPanelLayout.setHorizontalGroup(
-            DMPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(DMMenuPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(DMLayoutPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
-        DMPanelLayout.setVerticalGroup(
-            DMPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(DMPanelLayout.createSequentialGroup()
-                .addComponent(DMMenuPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(DMLayoutPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 437, Short.MAX_VALUE))
-        );
+            javax.swing.GroupLayout DMPanelLayout = new javax.swing.GroupLayout(DMPanel);
+            DMPanel.setLayout(DMPanelLayout);
+            DMPanelLayout.setHorizontalGroup(
+                DMPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(DMMenuPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(DMLayoutPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 536, Short.MAX_VALUE)
+            );
+            DMPanelLayout.setVerticalGroup(
+                DMPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(DMPanelLayout.createSequentialGroup()
+                    .addComponent(DMMenuPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(DMLayoutPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 437, Short.MAX_VALUE))
+            );
 
-        LayoutPanel.add(DMPanel, "card7");
+            LayoutPanel.add(DMPanel, "card7");
 
-        SettingsPanel.setMaximumSize(new java.awt.Dimension(536, 466));
+            SettingsPanel.setMaximumSize(new java.awt.Dimension(536, 466));
 
-        ChangeFirstnameLabel.setText("Change First Name: ");
+            ChangeFirstnameLabel.setText("Change First Name: ");
 
-        ChangeFirstnameButton.setText("Commit");
-        ChangeFirstnameButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ChangeFirstnameButtonActionPerformed(evt);
-            }
-        });
+            ChangeFirstnameButton.setText("Commit");
+            ChangeFirstnameButton.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    ChangeFirstnameButtonActionPerformed(evt);
+                }
+            });
 
-        ChangeLastnameLabel.setText("Change Last Name: ");
+            ChangeLastnameLabel.setText("Change Last Name: ");
 
-        ChangeLastnameButton.setText("Commit");
-        ChangeLastnameButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ChangeLastnameButtonActionPerformed(evt);
-            }
-        });
+            ChangeLastnameButton.setText("Commit");
+            ChangeLastnameButton.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    ChangeLastnameButtonActionPerformed(evt);
+                }
+            });
 
-        ChangePasswordLabel.setText("Change Password: ");
+            ChangePasswordLabel.setText("Change Password: ");
 
-        CurrentPasswordLabel.setText("Current Password: ");
+            CurrentPasswordLabel.setText("Current Password: ");
 
-        PrivateAccoutLabel.setText("Private Account: ");
+            PrivateAccoutLabel.setText("Private Account: ");
 
-        PrivateAccountCheckBox.setText("(Only your followers will be able to view your profile)");
+            PrivateAccountCheckBox.setText("(Only your followers will be able to view your profile)");
 
-        PrivateAccountButton.setText("Commit");
-        PrivateAccountButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                PrivateAccountButtonActionPerformed(evt);
-            }
-        });
+            PrivateAccountButton.setText("Commit");
+            PrivateAccountButton.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    PrivateAccountButtonActionPerformed(evt);
+                }
+            });
 
-        NewPasswordLabel1.setText("New Password: ");
+            NewPasswordLabel1.setText("New Password: ");
 
-        NewPasswordLabel2.setText("Reenter New Password: ");
+            NewPasswordLabel2.setText("Reenter New Password: ");
 
-        ChangePasswordButton.setText("Commit");
-        ChangePasswordButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ChangePasswordButtonActionPerformed(evt);
-            }
-        });
+            ChangePasswordButton.setText("Commit");
+            ChangePasswordButton.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    ChangePasswordButtonActionPerformed(evt);
+                }
+            });
 
-        SignOutButton.setText("Sign Out");
-        SignOutButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                SignOutButtonActionPerformed(evt);
-            }
-        });
+            SignOutButton.setText("Sign Out");
+            SignOutButton.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    SignOutButtonActionPerformed(evt);
+                }
+            });
 
-        PrivateAccoutOutputLabel.setMaximumSize(new java.awt.Dimension(516, 21));
-        PrivateAccoutOutputLabel.setPreferredSize(new java.awt.Dimension(516, 21));
+            PrivateAccoutOutputLabel.setMaximumSize(new java.awt.Dimension(516, 21));
+            PrivateAccoutOutputLabel.setPreferredSize(new java.awt.Dimension(516, 21));
 
-        ChangeFirstnameOutputLabel.setMaximumSize(new java.awt.Dimension(516, 21));
-        ChangeFirstnameOutputLabel.setPreferredSize(new java.awt.Dimension(516, 21));
+            ChangeFirstnameOutputLabel.setMaximumSize(new java.awt.Dimension(516, 21));
+            ChangeFirstnameOutputLabel.setPreferredSize(new java.awt.Dimension(516, 21));
 
-        ChangeLastnameOutputLabel.setMaximumSize(new java.awt.Dimension(516, 21));
-        ChangeLastnameOutputLabel.setPreferredSize(new java.awt.Dimension(516, 21));
+            ChangeLastnameOutputLabel.setMaximumSize(new java.awt.Dimension(516, 21));
+            ChangeLastnameOutputLabel.setPreferredSize(new java.awt.Dimension(516, 21));
 
-        PasswordOutputLabel.setMaximumSize(new java.awt.Dimension(203, 141));
-        PasswordOutputLabel.setPreferredSize(new java.awt.Dimension(203, 141));
+            PasswordOutputLabel.setMaximumSize(new java.awt.Dimension(203, 141));
+            PasswordOutputLabel.setPreferredSize(new java.awt.Dimension(203, 141));
 
-        ChangeProfilePhotoButton.setText("Change Profile Picture");
-        ChangeProfilePhotoButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ChangeProfilePhotoButtonActionPerformed(evt);
-            }
-        });
+            ChangeProfilePhotoButton.setText("Change Profile Picture");
+            ChangeProfilePhotoButton.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    ChangeProfilePhotoButtonActionPerformed(evt);
+                }
+            });
 
-        changeProfilePictureLabel.setMaximumSize(new java.awt.Dimension(77, 77));
-        changeProfilePictureLabel.setPreferredSize(new java.awt.Dimension(77, 77));
+            changeProfilePictureLabel.setMaximumSize(new java.awt.Dimension(77, 77));
+            changeProfilePictureLabel.setPreferredSize(new java.awt.Dimension(77, 77));
 
-        CommitPhotoChangeButton.setText("Commit");
-        CommitPhotoChangeButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                CommitPhotoChangeButtonActionPerformed(evt);
-            }
-        });
+            CommitPhotoChangeButton.setText("Commit");
+            CommitPhotoChangeButton.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    CommitPhotoChangeButtonActionPerformed(evt);
+                }
+            });
 
-        changeProfilePictureOutputLabel.setPreferredSize(new java.awt.Dimension(139, 21));
+            changeProfilePictureOutputLabel.setPreferredSize(new java.awt.Dimension(139, 21));
 
-        javax.swing.GroupLayout SettingsPanelLayout = new javax.swing.GroupLayout(SettingsPanel);
-        SettingsPanel.setLayout(SettingsPanelLayout);
-        SettingsPanelLayout.setHorizontalGroup(
-            SettingsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, SettingsPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(SettingsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(ChangeLastnameOutputLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(ChangeFirstnameOutputLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(PrivateAccoutOutputLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, SettingsPanelLayout.createSequentialGroup()
-                        .addGroup(SettingsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, SettingsPanelLayout.createSequentialGroup()
-                                .addGroup(SettingsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(NewPasswordLabel2)
-                                    .addComponent(NewPasswordLabel1)
-                                    .addComponent(CurrentPasswordLabel))
-                                .addGap(76, 76, 76))
-                            .addGroup(SettingsPanelLayout.createSequentialGroup()
-                                .addGap(27, 27, 27)
-                                .addGroup(SettingsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(ChangeProfilePhotoButton)
-                                    .addComponent(ChangePasswordButton)
-                                    .addComponent(changeProfilePictureOutputLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(29, 29, 29)))
-                        .addGroup(SettingsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(SettingsPanelLayout.createSequentialGroup()
-                                .addGroup(SettingsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(CurrentPasswordField, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
-                                    .addComponent(NewPasswordField1)
-                                    .addComponent(NewPasswordField2))
-                                .addGap(18, 18, 18)
-                                .addComponent(PasswordOutputLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addGroup(SettingsPanelLayout.createSequentialGroup()
-                                .addComponent(changeProfilePictureLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addGroup(SettingsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(SettingsPanelLayout.createSequentialGroup()
-                                        .addComponent(CommitPhotoChangeButton)
-                                        .addGap(0, 0, Short.MAX_VALUE))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, SettingsPanelLayout.createSequentialGroup()
-                                        .addGap(0, 0, Short.MAX_VALUE)
-                                        .addComponent(SignOutButton, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))))))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, SettingsPanelLayout.createSequentialGroup()
-                        .addGroup(SettingsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(ChangeFirstnameLabel)
-                            .addComponent(ChangeLastnameLabel))
-                        .addGap(18, 18, 18)
-                        .addGroup(SettingsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(SettingsPanelLayout.createSequentialGroup()
-                                .addComponent(ChangeFirstnameField, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(ChangeFirstnameButton))
-                            .addGroup(SettingsPanelLayout.createSequentialGroup()
-                                .addComponent(ChangeLastnameField, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(ChangeLastnameButton))))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, SettingsPanelLayout.createSequentialGroup()
-                        .addGap(99, 99, 99)
-                        .addComponent(ChangePasswordLabel)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, SettingsPanelLayout.createSequentialGroup()
-                        .addComponent(PrivateAccoutLabel)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(PrivateAccountCheckBox)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(PrivateAccountButton)))
-                .addContainerGap())
-        );
-        SettingsPanelLayout.setVerticalGroup(
-            SettingsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(SettingsPanelLayout.createSequentialGroup()
-                .addContainerGap(70, Short.MAX_VALUE)
-                .addGroup(SettingsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(SignOutButton)
-                    .addGroup(SettingsPanelLayout.createSequentialGroup()
-                        .addGroup(SettingsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(ChangeFirstnameLabel)
-                            .addComponent(ChangeFirstnameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(ChangeFirstnameButton))
-                        .addGap(1, 1, 1)
-                        .addComponent(ChangeFirstnameOutputLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(SettingsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(ChangeLastnameLabel)
-                            .addComponent(ChangeLastnameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(ChangeLastnameButton))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(ChangeLastnameOutputLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(SettingsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+            javax.swing.GroupLayout SettingsPanelLayout = new javax.swing.GroupLayout(SettingsPanel);
+            SettingsPanel.setLayout(SettingsPanelLayout);
+            SettingsPanelLayout.setHorizontalGroup(
+                SettingsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, SettingsPanelLayout.createSequentialGroup()
+                    .addContainerGap()
+                    .addGroup(SettingsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(ChangeLastnameOutputLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(ChangeFirstnameOutputLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(PrivateAccoutOutputLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, SettingsPanelLayout.createSequentialGroup()
+                            .addGroup(SettingsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, SettingsPanelLayout.createSequentialGroup()
+                                    .addGroup(SettingsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(NewPasswordLabel2)
+                                        .addComponent(NewPasswordLabel1)
+                                        .addComponent(CurrentPasswordLabel))
+                                    .addGap(76, 76, 76))
+                                .addGroup(SettingsPanelLayout.createSequentialGroup()
+                                    .addGap(27, 27, 27)
+                                    .addGroup(SettingsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addComponent(ChangeProfilePhotoButton)
+                                        .addComponent(ChangePasswordButton)
+                                        .addComponent(changeProfilePictureOutputLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGap(29, 29, 29)))
+                            .addGroup(SettingsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(SettingsPanelLayout.createSequentialGroup()
+                                    .addGroup(SettingsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(CurrentPasswordField, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
+                                        .addComponent(NewPasswordField1)
+                                        .addComponent(NewPasswordField2))
+                                    .addGap(18, 18, 18)
+                                    .addComponent(PasswordOutputLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGroup(SettingsPanelLayout.createSequentialGroup()
+                                    .addComponent(changeProfilePictureLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(18, 18, 18)
+                                    .addGroup(SettingsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(SettingsPanelLayout.createSequentialGroup()
+                                            .addComponent(CommitPhotoChangeButton)
+                                            .addGap(0, 0, Short.MAX_VALUE))
+                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, SettingsPanelLayout.createSequentialGroup()
+                                            .addGap(0, 0, Short.MAX_VALUE)
+                                            .addComponent(SignOutButton, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, SettingsPanelLayout.createSequentialGroup()
+                            .addGroup(SettingsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(ChangeFirstnameLabel)
+                                .addComponent(ChangeLastnameLabel))
+                            .addGap(18, 18, 18)
+                            .addGroup(SettingsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(SettingsPanelLayout.createSequentialGroup()
+                                    .addComponent(ChangeFirstnameField, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(ChangeFirstnameButton))
+                                .addGroup(SettingsPanelLayout.createSequentialGroup()
+                                    .addComponent(ChangeLastnameField, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(ChangeLastnameButton))))
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, SettingsPanelLayout.createSequentialGroup()
+                            .addGap(99, 99, 99)
+                            .addComponent(ChangePasswordLabel)
+                            .addGap(0, 0, Short.MAX_VALUE))
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, SettingsPanelLayout.createSequentialGroup()
                             .addComponent(PrivateAccoutLabel)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                             .addComponent(PrivateAccountCheckBox)
-                            .addComponent(PrivateAccountButton))
-                        .addGroup(SettingsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(SettingsPanelLayout.createSequentialGroup()
-                                .addGap(1, 1, 1)
-                                .addComponent(PrivateAccoutOutputLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(SettingsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(ChangePasswordLabel)
-                                    .addGroup(SettingsPanelLayout.createSequentialGroup()
-                                        .addGap(36, 36, 36)
-                                        .addGroup(SettingsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                            .addComponent(CurrentPasswordLabel)
-                                            .addComponent(CurrentPasswordField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addGroup(SettingsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                            .addComponent(NewPasswordLabel1)
-                                            .addComponent(NewPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addGap(9, 9, 9)
-                                        .addGroup(SettingsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                            .addComponent(NewPasswordField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(NewPasswordLabel2))
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(ChangePasswordButton))))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, SettingsPanelLayout.createSequentialGroup()
-                                .addGap(27, 27, 27)
-                                .addComponent(PasswordOutputLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(22, 22, 22)
-                        .addGroup(SettingsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(SettingsPanelLayout.createSequentialGroup()
-                                .addComponent(ChangeProfilePhotoButton)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(changeProfilePictureOutputLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(changeProfilePictureLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(CommitPhotoChangeButton)))))
-        );
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(PrivateAccountButton)))
+                    .addContainerGap())
+            );
+            SettingsPanelLayout.setVerticalGroup(
+                SettingsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(SettingsPanelLayout.createSequentialGroup()
+                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(SettingsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(SignOutButton)
+                        .addGroup(SettingsPanelLayout.createSequentialGroup()
+                            .addGroup(SettingsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(ChangeFirstnameLabel)
+                                .addComponent(ChangeFirstnameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(ChangeFirstnameButton))
+                            .addGap(1, 1, 1)
+                            .addComponent(ChangeFirstnameOutputLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addGroup(SettingsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(ChangeLastnameLabel)
+                                .addComponent(ChangeLastnameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(ChangeLastnameButton))
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(ChangeLastnameOutputLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addGroup(SettingsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(PrivateAccoutLabel)
+                                .addComponent(PrivateAccountCheckBox)
+                                .addComponent(PrivateAccountButton))
+                            .addGroup(SettingsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(SettingsPanelLayout.createSequentialGroup()
+                                    .addGap(1, 1, 1)
+                                    .addComponent(PrivateAccoutOutputLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addGroup(SettingsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(ChangePasswordLabel)
+                                        .addGroup(SettingsPanelLayout.createSequentialGroup()
+                                            .addGap(36, 36, 36)
+                                            .addGroup(SettingsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                                .addComponent(CurrentPasswordLabel)
+                                                .addComponent(CurrentPasswordField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                            .addGroup(SettingsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                                .addComponent(NewPasswordLabel1)
+                                                .addComponent(NewPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                            .addGap(9, 9, 9)
+                                            .addGroup(SettingsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                                .addComponent(NewPasswordField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addComponent(NewPasswordLabel2))
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                            .addComponent(ChangePasswordButton))))
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, SettingsPanelLayout.createSequentialGroup()
+                                    .addGap(27, 27, 27)
+                                    .addComponent(PasswordOutputLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGap(22, 22, 22)
+                            .addGroup(SettingsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(SettingsPanelLayout.createSequentialGroup()
+                                    .addComponent(ChangeProfilePhotoButton)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(changeProfilePictureOutputLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(changeProfilePictureLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(CommitPhotoChangeButton)))))
+            );
 
-        ChangeFirstnameButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        ChangeLastnameButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        PrivateAccountButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        ChangePasswordButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        SignOutButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        ChangeProfilePhotoButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        CommitPhotoChangeButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+            ChangeFirstnameButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+            ChangeLastnameButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+            PrivateAccountButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+            ChangePasswordButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+            SignOutButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+            ChangeProfilePhotoButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+            CommitPhotoChangeButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 
-        LayoutPanel.add(SettingsPanel, "card8");
+            LayoutPanel.add(SettingsPanel, "card8");
 
-        jScrollPane1.setViewportView(LayoutPanel);
+            jScrollPane1.setViewportView(LayoutPanel);
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(BottomMenu, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(TopMenu, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jScrollPane1)
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(TopMenu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(BottomMenu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
+            javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+            getContentPane().setLayout(layout);
+            layout.setHorizontalGroup(
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(BottomMenu, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(TopMenu, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jScrollPane1)
+            );
+            layout.setVerticalGroup(
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addComponent(TopMenu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(BottomMenu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+            );
 
-        pack();
-    }// </editor-fold>//GEN-END:initComponents
+            pack();
+        }// </editor-fold>//GEN-END:initComponents
 
     private void HomeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_HomeButtonActionPerformed
         // TODO add your handling code here:
@@ -1065,6 +1101,13 @@ public class UserFrame extends javax.swing.JFrame {
          homePanel.revalidate();
          homePanel.repaint();
          */
+        /*homePanel.removeAll();
+        ArrayList<post> feed = main.updateFeed();
+        for(int i = 0; i < feed.size(); i++){
+            homePanel.add(new UserPanel(feed.get(i).getImage(), feed.get(i).getCaption(), feed.get(i).getDate(), feed.get(i).getLikes()));
+            homePanel.revalidate();
+            homePanel.repaint();
+        }*/
         LayoutPanel.repaint();
         LayoutPanel.revalidate();
     }//GEN-LAST:event_HomeButtonActionPerformed
@@ -1176,6 +1219,8 @@ public class UserFrame extends javax.swing.JFrame {
             PasswordOutputLabel.setText("Field not complete");
         } else {
             if (NewPassword1.equals(NewPassword2)) {
+                main.getLoggedIn().setPassword(NewPassword1);
+                main.output();
                 PasswordOutputLabel.setText("Password has been changed");
             } else {
                 PasswordOutputLabel.setText("<HTML>ERROR: New Passwords "
@@ -1186,32 +1231,41 @@ public class UserFrame extends javax.swing.JFrame {
 
     private void PrivateAccountButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PrivateAccountButtonActionPerformed
         // TODO add your handling code here:
-        PrivateAccount = PrivateAccountCheckBox.isSelected();
-        //change private Account status
-        PrivateAccoutOutputLabel.setText("Changing First name to: " + PrivateAccount);
+        PrivateAccount= PrivateAccountCheckBox.isSelected();
+        main.getLoggedIn().changePrivacy(!main.getLoggedIn().getPrivacy());
+        main.output();
+        PrivateAccoutOutputLabel.setText("Changing account privacy");
     }//GEN-LAST:event_PrivateAccountButtonActionPerformed
 
     private void ChangeLastnameButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ChangeLastnameButtonActionPerformed
         // TODO add your handling code here:
-        NewLastname = ChangeLastnameField.getText();
+        NewLastname= ChangeLastnameField.getText();
         ChangeLastnameField.setText("");
         //change user lastname
-        if (NewLastname.equals("")) {
+        if (NewLastname.equals("")){
             ChangeLastnameOutputLabel.setText("Field not Complete");
-        } else {
-            ChangeLastnameOutputLabel.setText("Changing Last name to: " + NewLastname);
+        }
+        else{
+            main.getLoggedIn().setLastName(NewLastname);
+            LastnameLabel.setText(main.getLoggedIn().getLastName());
+            main.output();
+            ChangeLastnameOutputLabel.setText("Changing Last name to: "+NewLastname);
         }
     }//GEN-LAST:event_ChangeLastnameButtonActionPerformed
 
     private void ChangeFirstnameButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ChangeFirstnameButtonActionPerformed
         // TODO add your handling code here:
-        NewFirstname = ChangeFirstnameField.getText();
+        NewFirstname= ChangeFirstnameField.getText();
         ChangeFirstnameField.setText("");
         //change user firstname
-        if (NewFirstname.equals("")) {
+        if (NewFirstname.equals("")){
             ChangeFirstnameOutputLabel.setText("Field not Complete");
-        } else {
-            ChangeFirstnameOutputLabel.setText("Changing First name to: " + NewFirstname);
+        }
+        else{
+            main.getLoggedIn().setFirstName(NewFirstname);
+            FirstnameLabel.setText(main.getLoggedIn().getFirstName());
+            main.output();
+            ChangeFirstnameOutputLabel.setText("Changing First name to: "+NewFirstname);
         }
     }//GEN-LAST:event_ChangeFirstnameButtonActionPerformed
 
@@ -1221,12 +1275,15 @@ public class UserFrame extends javax.swing.JFrame {
         SearchInput = userInput.getText();
         Parameter = SearchParameter.getSelectedItem().toString();
         //add search output
+        ArrayList<RealProfile> results = main.profileSearch(SearchInput);
 
         Icon ii = null;
-        /*for(number of results)
-         searchOutputPanel.add(new SearchOutputPanel(Parameter, "username", ii, "date"));
-         searchOutputPanel.revalidate();
-         searchOutputPanel.repaint();*/
+        for(int i = 0; i < results.size(); i++){
+            ii = results.get(i).getProfilePic();
+            searchOutputPanel.add(new SearchOutputPanel(Parameter, results.get(i).getUsername(), ii, "date"));
+            searchOutputPanel.revalidate();
+            searchOutputPanel.repaint();
+        }
     }//GEN-LAST:event_SearchButton1ActionPerformed
 
     private void InboxButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_InboxButtonActionPerformed
@@ -1272,6 +1329,8 @@ public class UserFrame extends javax.swing.JFrame {
         String ImagePath = UploadPhoto(uploadedPictureLabel, 120, 120);
         if (ImagePath != null) {
             //do stuff
+            /*main.getLoggedIn().setProfilePic(ImagePath);
+            main.output();*/
         } else {
             //error message
             newPostOutputLabel.setText("Picture was not found");
@@ -1298,6 +1357,7 @@ public class UserFrame extends javax.swing.JFrame {
     private void ChangeProfilePhotoButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ChangeProfilePhotoButtonActionPerformed
         // TODO add your handling code here:
         String ImagePath = UploadPhoto(changeProfilePictureLabel, 77, 77);
+        path = ImagePath;
         if (ImagePath != null) {
             //do stuff
         }
@@ -1311,6 +1371,10 @@ public class UserFrame extends javax.swing.JFrame {
                 //      ImageIO.read(new File(
                 //            changeProfilePictureLabel.getIcon().toString()))));
                 ProfilePictureLabel.setIcon(changeProfilePictureLabel.getIcon());
+                ImageIcon img = (ImageIcon) changeProfilePictureLabel.getIcon();
+                
+                main.getLoggedIn().setProfilePic(img);
+                //ImageIO.write((RenderedImage) img , "png",new File(System.getProperty("user.dir") + main.getLoggedIn().getUsername() + "\\profilepic.png"));
                 changeProfilePictureOutputLabel.setText("Profile picture changed.");
             } catch (Exception ex) {
                 ex.printStackTrace();
@@ -1325,16 +1389,47 @@ public class UserFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
         //get users username...
         String caption = captionField.getText();
-        String peopleTaged = tagedPeopleField.getText();
-        String hashTages = hashTagsField.getText();
+        //ArrayList<String peopleTaged = tagedPeopleField.getText();
+        ArrayList<String> peopleTaged = new ArrayList<String>();
+        String gross1 = tagedPeopleField.getText(); int i = 0;
+        while(gross1.length() != 0){
+            if(gross1.charAt(i) == ' ' || i == gross1.length()-1){
+                peopleTaged.add(gross1.substring(0, i));
+                if(i+1 > 0){
+                    gross1 = gross1.substring(i+1, gross1.length());
+                }
+                else
+                    gross1 = "";
+                i = 0;
+            }
+            i++;
+        }
+        
+        ArrayList<String> hashTages = new ArrayList<String>();
+        String gross2 = hashTagsField.getText(); i = 0;
+        int original2 = gross2.length();
+        while(gross2.length() != 0){
+            if(gross2.charAt(i) == ' ' || i == gross2.length()-1){
+                hashTages.add(gross2.substring(0, i));
+                if(i+1 > 0){
+                    gross2 = gross2.substring(i+1, gross2.length());
+                }
+                else
+                    gross2 = "";
+                i = 0;
+            }
+            i++;
+        }
+ 
         Date date = new Date();
         SimpleDateFormat format = new SimpleDateFormat("MM-dd HH:mm");
         String time = format.format(date);
         //get post likes...
         int likes = 0;
-
         //save new post
         UserPostPanel.add(new UserPanel(uploadedPictureLabel.getIcon(), caption, time, likes));
+        main.getLoggedIn().addPost(caption, uploadedPictureLabel.getIcon(), new ArrayList<String>(), hashTages, peopleTaged);
+        main.output();
         UserPostPanel.revalidate();
         UserPostPanel.repaint();
     }//GEN-LAST:event_CreateNewPostButtonActionPerformed
@@ -1435,7 +1530,8 @@ public class UserFrame extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new UserFrame().setVisible(true);
+                RealProfile test = new RealProfile("test", "test", "test", "test");
+                new UserFrame(test).setVisible(true);
             }
         });
     }
@@ -1552,6 +1648,8 @@ public class UserFrame extends javax.swing.JFrame {
     private ImageIcon ii;
     private int likes;
     private boolean liked;
+    private String path;
+    private CurrentProfile main = new CurrentProfile();
 
     private class FeedPanel extends JPanel {
 
@@ -1859,6 +1957,8 @@ public class UserFrame extends javax.swing.JFrame {
                 timeLabel.setText(date);
                 timeLabel.setSize(100, 21);
                 add(timeLabel, createGbc(2, 0));
+                
+                
 
                 JLabel usernameLabel = new JLabel();
                 usernameLabel.setText(username);
@@ -1866,7 +1966,13 @@ public class UserFrame extends javax.swing.JFrame {
                 usernameLabel.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
                 usernameLabel.addMouseListener(new MouseAdapter() {
                     public void mouseClicked(MouseEvent e) {
-                        //ProfilePopUp frame= new ProfilePopUp();
+                        RealProfile current;
+                        /*for(int i = 0; i < main.getAllProfiles().size(); i++){
+                            if(main.getAllProfiles().get(i).getUsername().equals(username)){
+                            current = main.getAllProfiles().get(i);
+                        }*/        
+                       //ProfilePopUp frame= new ProfilePopUp(ii, username, current.getFirst,
+            //String lastname, int followers, int following, boolean follow, RealProfile loggedIn);
                         //frame.setVisible(true); 
                     }
                 });

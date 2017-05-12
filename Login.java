@@ -1,4 +1,5 @@
 
+import instagramproject.CurrentProfile;
 import java.awt.Toolkit;
 
 /*
@@ -135,14 +136,16 @@ public class Login extends javax.swing.JFrame {
 
     private void UserLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UserLoginActionPerformed
         // TODO add your handling code here:
+        main.printAllProfiles();
         username= User.getText();
         password= Pass.getText();
         System.out.println(password+" "+username);
-        //if(User.password == password){
-            UserFrame y= new UserFrame();
+        boolean logInSuccess = main.logIn(username, password);;
+        if(logInSuccess){
+            UserFrame y= new UserFrame(main.getLoggedIn());
             y.setVisible(true);
             super.dispose();
-        //}
+        }        
         /*else
             Instructions.setText("Username or Password are incorrect.");
         }*/
@@ -211,4 +214,5 @@ public class Login extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
     private String password;
     private String username;
+    private CurrentProfile main = new CurrentProfile();
 }

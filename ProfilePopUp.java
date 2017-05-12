@@ -1,4 +1,6 @@
 
+import instagramproject.CurrentProfile;
+import instagramproject.RealProfile;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Graphics2D;
@@ -41,7 +43,7 @@ public class ProfilePopUp extends javax.swing.JFrame {
      * Creates new form ProfilePopUp
      */
     public ProfilePopUp(Icon i, String username, String firstname,
-            String lastname, int followers, int following, boolean follow) {
+            String lastname, int followers, int following, boolean follow, RealProfile loggedIn) {
         initComponents();
         this.setTitle("EagleGram");
         this.setLocation(width, height);
@@ -55,12 +57,18 @@ public class ProfilePopUp extends javax.swing.JFrame {
         if (follow)
             followButton.setText("unFollow");
         
+        this.findProfile(username);
         /*
         for(number of post)
         profilePostsPanel.add(new UserPanel(picturePath, caption, time, likes));
         profilePostsPanel.revalidate();
         profilePostsPanel.repaint();
         */
+        for(int j = 0; j < current.getPosts().size(); j++) {
+            profilePostsPanel.add(new UserPanel(current.getPosts().get(j).getImage(), current.getPosts().get(j).getCaption(), current.getPosts().get(j).getDate(), current.getPosts().get(j).getLikes()));
+            profilePostsPanel.revalidate();
+            profilePostsPanel.repaint();
+        }
     }
 
     /**
@@ -197,17 +205,29 @@ public class ProfilePopUp extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void findProfile(String username){
+        for(int i = 0; i < main.getAllProfiles().size(); i++){
+            if(main.getAllProfiles().get(i).getUsername().equals(username)){
+                current = main.getAllProfiles().get(i);
+            }        
+        }
+    }
+    
     private void followButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_followButtonActionPerformed
         // TODO add your handling code here:
         if (follow == false){
             //add users togeather
             follow=true;
+            main.getLoggedIn().addFollowing(current);
+            main.following(current.getUsername(), main.getLoggedIn().getUsername());
             followButton.setText("unFollow");
         }
         else
         {
             //do stuff
             follow=false;
+            main.getLoggedIn().removeFollowing(current);
+            main.removeFollowing(current.getUsername(), main.getLoggedIn().getUsername());
             followButton.setText("Follow");
         }
     }//GEN-LAST:event_followButtonActionPerformed
@@ -244,7 +264,7 @@ public class ProfilePopUp extends javax.swing.JFrame {
             @Override
             public void run() {
                 new ProfilePopUp(null, "username", "firstname",
-                        "lastname",0,0,false).setVisible(true);
+                        "lastname",0,0,false, null).setVisible(true);
             }
         });
     }
@@ -272,7 +292,9 @@ public class ProfilePopUp extends javax.swing.JFrame {
     private javax.swing.JPanel staticProfilePanel;
     private javax.swing.JLabel usernameLabel;
     // End of variables declaration//GEN-END:variables
-
+    private CurrentProfile main = new CurrentProfile();
+    private RealProfile current;
+    
     private class UserPanel extends JPanel {
 
         public UserPanel(Icon ii, String caption, String date, int likes) {

@@ -188,7 +188,6 @@
           <SubComponents>
             <Component class="javax.swing.JTextArea" name="commentsArea">
               <Properties>
-                <Property name="editable" type="boolean" value="false"/>
                 <Property name="columns" type="int" value="20"/>
                 <Property name="lineWrap" type="boolean" value="true"/>
                 <Property name="rows" type="int" value="5"/>
@@ -205,7 +204,6 @@
           <SubComponents>
             <Component class="javax.swing.JTextArea" name="peopleTagedArea">
               <Properties>
-                <Property name="editable" type="boolean" value="false"/>
                 <Property name="columns" type="int" value="20"/>
                 <Property name="lineWrap" type="boolean" value="true"/>
                 <Property name="rows" type="int" value="5"/>
@@ -222,9 +220,7 @@
           <SubComponents>
             <Component class="javax.swing.JTextArea" name="captionArea">
               <Properties>
-                <Property name="editable" type="boolean" value="false"/>
                 <Property name="columns" type="int" value="20"/>
-                <Property name="lineWrap" type="boolean" value="true"/>
                 <Property name="rows" type="int" value="5"/>
               </Properties>
             </Component>
@@ -239,7 +235,6 @@
           <SubComponents>
             <Component class="javax.swing.JTextArea" name="hashTagsArea">
               <Properties>
-                <Property name="editable" type="boolean" value="false"/>
                 <Property name="columns" type="int" value="20"/>
                 <Property name="lineWrap" type="boolean" value="true"/>
                 <Property name="rows" type="int" value="5"/>
