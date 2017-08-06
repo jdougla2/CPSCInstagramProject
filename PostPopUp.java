@@ -1,19 +1,15 @@
+package Instagram_GUI;
 
-import instagramproject.CurrentProfile;
-import instagramproject.RealProfile;
-import instagramproject.post;
+import Background_Code.*;
+import java.awt.Cursor;
 import java.awt.Toolkit;
-import java.awt.event.ActionEvent;
-import javax.swing.Icon;
-import javax.swing.ImageIcon;
-
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import javax.swing.*;
 
 /**
+ * This class deals with creating the post pop up frame
  *
  * @author Jose
  */
@@ -23,38 +19,62 @@ public class PostPopUp extends javax.swing.JFrame {
     private int likes;
     int width = (Toolkit.getDefaultToolkit().getScreenSize().width / 2) - 262;
     int height = (Toolkit.getDefaultToolkit().getScreenSize().height / 2) - 250;
+
     /**
-     * Creates new form Post
+     * Constructor for the post pop up class
+     *
+     * @param ii icon of this post
+     * @param lookingAt the user that owns this post
+     * @param postIndex the location of this post
+     * @param likes the number of likes for this post
+     * @param caption caption of this post
+     * @param comments the comments on this post
+     * @param hashTags the hash tags on this post
+     * @param peopleTaged the people tagged on this post
+     * @param loggedIn the user that is currently loggedIn
+     * @param liked whether or not the loggedIn user has liked this post
      */
-    public PostPopUp(Icon ii, String username, int likes, boolean liked,
-            String caption, String comments, String hashTags, String peopleTaged, RealProfile loggedIn) {
+    public PostPopUp(Icon ii, RealProfile lookingAt, int postIndex,
+            int likes,
+            String caption, ArrayList<String> comments, ArrayList<String> hashTags,
+            ArrayList<String> peopleTaged, RealProfile loggedIn, boolean liked) {
         initComponents();
         this.setTitle("EagleGram");
         this.setLocation(width, height);
-        
-        profilePictureLabel1.setIcon(ii);
-        usernameLabel.setText(username);
-        likeLabel.setText("LIKES: "+likes);
-        this.likes=likes;
-        this.liked=liked;
-        if (liked)
-            likeButton1.setText("unLike");
+
+        this.loggedIn = loggedIn;
+        postPicture.setIcon(ii);
+        dateLabel.setText(lookingAt.getPosts().get(postIndex).getDate());
+        usernameLabel.setText(lookingAt.getUsername());
+        likeLabel.setText("LIKES: " + likes);
+        this.likes = likes;
+        this.liked = liked;
+
+        this.lookingAt = lookingAt;
+        if (lookingAt.getUsername().equalsIgnoreCase(loggedIn.getUsername())) {
+            likeButton.setEnabled(false);
+        }
+
+        if (loggedIn.getUsername().equals(main.getLoggedIn().getUsername())) {
+            likeButton.setEnabled(false);
+            addCommentButton.setEnabled(false);
+            addCommentArea.setEditable(false);
+            addCommentArea.setEnabled(false);
+        }
+
+        this.postIndex = postIndex;
+        if (this.liked) {
+            likeButton.setText("unLike");
+        }
         captionArea.setText(caption);
-        commentsArea.setText(comments);
-        hashTagsArea.setText(hashTags);
-        peopleTagedArea.setText(peopleTaged);
-        
-        this.findProfile(username, caption);
-    }
-    
-    private void findProfile(String username, String caption){
-        for(int i = 0; i < main.getAllProfiles().size(); i++){
-            if(main.getAllProfiles().get(i).getUsername().equals(username)){
-                for(int j = 0; j < main.getAllProfiles().get(i).getPosts().size(); j++){
-                    if(main.getAllProfiles().get(i).getPosts().get(j).getCaption().equals(caption))
-                        current = main.getAllProfiles().get(i).getPosts().get(j);
-                }
-            }        
+        for (int i = 0; i < comments.size(); i++) {
+            commentsArea.append(comments.get(i) + "\n");
+        }
+        for (int i = 0; i < hashTags.size(); i++) {
+            hashTagsArea.append(hashTags.get(i) + "\n");
+        }
+        for (int i = 0; i < peopleTaged.size(); i++) {
+            peopleTagedArea.append(peopleTaged.get(i) + "\n");
         }
     }
 
@@ -68,7 +88,7 @@ public class PostPopUp extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        profilePictureLabel1 = new javax.swing.JLabel();
+        postPicture = new javax.swing.JLabel();
         usernameLabel = new javax.swing.JLabel();
         likeLabel = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -79,14 +99,15 @@ public class PostPopUp extends javax.swing.JFrame {
         captionArea = new javax.swing.JTextArea();
         jScrollPane4 = new javax.swing.JScrollPane();
         hashTagsArea = new javax.swing.JTextArea();
-        likeButton1 = new javax.swing.JButton();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
+        likeButton = new javax.swing.JButton();
+        peopleTaggedLabel = new javax.swing.JLabel();
+        hashTagsLabel = new javax.swing.JLabel();
+        commentsLabel = new javax.swing.JLabel();
         addCommentLabel = new javax.swing.JLabel();
         addCommentButton = new javax.swing.JButton();
         jScrollPane5 = new javax.swing.JScrollPane();
         addCommentArea = new javax.swing.JTextArea();
+        dateLabel = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(500, 500));
@@ -94,7 +115,7 @@ public class PostPopUp extends javax.swing.JFrame {
         jPanel1.setMaximumSize(new java.awt.Dimension(550, 550));
         jPanel1.setMinimumSize(new java.awt.Dimension(500, 500));
 
-        profilePictureLabel1.setPreferredSize(new java.awt.Dimension(120, 120));
+        postPicture.setIcon(new javax.swing.ImageIcon("C:\\Users\\Jose\\Desktop\\InstagramProject\\Empty Image.jpg")); // NOI18N
 
         usernameLabel.setText("username");
         usernameLabel.setPreferredSize(new java.awt.Dimension(100, 21));
@@ -102,178 +123,253 @@ public class PostPopUp extends javax.swing.JFrame {
         likeLabel.setText("likes");
         likeLabel.setPreferredSize(new java.awt.Dimension(100, 21));
 
+        commentsArea.setEditable(false);
         commentsArea.setColumns(20);
         commentsArea.setLineWrap(true);
         commentsArea.setRows(5);
+        commentsArea.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jScrollPane1.setViewportView(commentsArea);
 
+        peopleTagedArea.setEditable(false);
         peopleTagedArea.setColumns(20);
         peopleTagedArea.setLineWrap(true);
         peopleTagedArea.setRows(5);
+        peopleTagedArea.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jScrollPane3.setViewportView(peopleTagedArea);
 
+        captionArea.setEditable(false);
         captionArea.setColumns(20);
         captionArea.setRows(5);
         jScrollPane2.setViewportView(captionArea);
 
+        hashTagsArea.setEditable(false);
         hashTagsArea.setColumns(20);
         hashTagsArea.setLineWrap(true);
         hashTagsArea.setRows(5);
         jScrollPane4.setViewportView(hashTagsArea);
 
-        likeButton1.setText("Like");
-        likeButton1.setPreferredSize(new java.awt.Dimension(100, 21));
-        likeButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                likeButton1ActionPerformed(evt);
-            }
-        });
+        likeButton.setText("Like");
+        likeButton.setCursor(Cursor.getPredefinedCursor(
+            Cursor.HAND_CURSOR));
+    likeButton.setPreferredSize(new java.awt.Dimension(100, 21));
+    likeButton.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            likeButtonActionPerformed(evt);
+        }
+    });
 
-        jLabel2.setText("People tagged:");
-        jLabel2.setPreferredSize(new java.awt.Dimension(100, 21));
+    peopleTaggedLabel.setText("People tagged:");
+    peopleTaggedLabel.setPreferredSize(new java.awt.Dimension(100, 21));
 
-        jLabel3.setText("Hash Tags: ");
-        jLabel3.setPreferredSize(new java.awt.Dimension(100, 21));
+    hashTagsLabel.setText("Hash Tags: ");
+    hashTagsLabel.setPreferredSize(new java.awt.Dimension(100, 21));
 
-        jLabel4.setText("Comments: ");
-        jLabel4.setPreferredSize(new java.awt.Dimension(100, 21));
+    commentsLabel.setText("Comments: ");
+    commentsLabel.setPreferredSize(new java.awt.Dimension(100, 21));
 
-        addCommentLabel.setText("Add Comment:");
+    addCommentLabel.setText("Add Comment:");
 
-        addCommentButton.setText("Add");
-        addCommentButton.setPreferredSize(new java.awt.Dimension(75, 21));
-        addCommentButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                addCommentButtonActionPerformed(evt);
-            }
-        });
+    addCommentButton.setText("Add");
+    addCommentButton.setCursor(Cursor.getPredefinedCursor(
+        Cursor.HAND_CURSOR));
+addCommentButton.setPreferredSize(new java.awt.Dimension(75, 21));
+addCommentButton.addActionListener(new java.awt.event.ActionListener() {
+    public void actionPerformed(java.awt.event.ActionEvent evt) {
+        addCommentButtonActionPerformed(evt);
+    }
+    });
 
-        addCommentArea.setColumns(20);
-        addCommentArea.setLineWrap(true);
-        addCommentArea.setRows(5);
-        addCommentArea.setToolTipText("");
-        jScrollPane5.setViewportView(addCommentArea);
+    addCommentArea.setColumns(20);
+    addCommentArea.setCursor(Cursor.getPredefinedCursor(
+        Cursor.HAND_CURSOR));
+addCommentArea.setLineWrap(true);
+addCommentArea.setRows(5);
+addCommentArea.setToolTipText("");
+jScrollPane5.setViewportView(addCommentArea);
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+dateLabel.setText("date");
+dateLabel.setPreferredSize(new java.awt.Dimension(100, 21));
+
+javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+jPanel1.setLayout(jPanel1Layout);
+jPanel1Layout.setHorizontalGroup(
+    jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+    .addGroup(jPanel1Layout.createSequentialGroup()
+        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(12, 12, 12)
+                .addComponent(postPicture, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(12, 12, 12)
-                        .addComponent(profilePictureLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                .addComponent(usernameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
-                                .addComponent(likeLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(likeButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(addCommentLabel))))
-                .addContainerGap())
-            .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(usernameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
+                        .addComponent(likeLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(likeButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(dateLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(peopleTaggedLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(addCommentButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(14, 14, 14))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())))
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(likeLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(usernameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(24, 24, 24)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                    .addComponent(hashTagsLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(addCommentLabel))))
+        .addContainerGap())
+    .addGroup(jPanel1Layout.createSequentialGroup()
+        .addContainerGap()
+        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(commentsLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE))
+        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addComponent(addCommentButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(14, 14, 14))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())))
+    );
+    jPanel1Layout.setVerticalGroup(
+        jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        .addGroup(jPanel1Layout.createSequentialGroup()
+            .addContainerGap()
+            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(postPicture, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(likeButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(likeLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(usernameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGap(24, 24, 24)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(profilePictureLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(likeButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(addCommentLabel)
-                    .addComponent(addCommentButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 89, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap())
-        );
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addComponent(dateLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(0, 0, Short.MAX_VALUE)))))
+            .addGap(18, 18, 18)
+            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addComponent(commentsLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(addCommentLabel)
+                .addComponent(addCommentButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 89, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                    .addComponent(peopleTaggedLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                    .addComponent(hashTagsLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+            .addContainerGap())
+    );
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+    javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+    getContentPane().setLayout(layout);
+    layout.setHorizontalGroup(
+        layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+    );
+    layout.setVerticalGroup(
+        layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        .addGroup(layout.createSequentialGroup()
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(0, 0, 0))
-        );
+            .addGap(0, 0, 0))
+    );
 
-        pack();
+    pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void likeButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_likeButton1ActionPerformed
-        // TODO add your handling code here:
+    /**
+     * Changes the state of the like button and add this post to the loggedIn
+     * user's liked posts, and adds a like to the post
+     *
+     * @param evt when the user clicks the like button
+     */
+    private void likeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_likeButtonActionPerformed
         if (liked == false) {
             likes++;
             likeLabel.setText("LIKES: " + Integer.toString(likes));
-            likeButton1.setText("UnLike");
-            current.setLikes(likes);
+            likeButton.setText("UnLike");
+
+            loggedIn.addLikedPost(
+                    lookingAt.getPosts().get(postIndex).getCaption()
+                    + lookingAt.getPosts().get(postIndex).getDate());
+
+            Date date = new Date();
+            SimpleDateFormat format = new SimpleDateFormat("MM-dd HH:mm");
+            String time = format.format(date);
+            lookingAt.addNotification(lookingAt, loggedIn, time,
+                    "liked your post:", lookingAt.getPosts().get(postIndex),
+                     "post");
+
+            lookingAt.getPosts().get(postIndex).addLike();
             liked = true;
+            main.output();
         } else {
             likes--;
+            loggedIn.removeLikedPost(
+                    lookingAt.getPosts().get(postIndex).getCaption()
+                    + lookingAt.getPosts().get(postIndex).getDate());
             likeLabel.setText("LIKES: " + Integer.toString(likes));
-            likeButton1.setText("Like");
+            likeButton.setText("Like");
             liked = false;
-            current.setLikes(likes);
+            lookingAt.getPosts().get(postIndex).removeLike();
+
+            Date date = new Date();
+            SimpleDateFormat format = new SimpleDateFormat("MM-dd HH:mm");
+            String time = format.format(date);
+            if (!lookingAt.getUsername().equals(loggedIn.getUsername())) {
+                lookingAt.addNotification(lookingAt, loggedIn, time,
+                        "unliked your post:", lookingAt.getPosts().get(postIndex),
+                         "post");
+            }
+
+            main.output();
         }
 
-    }//GEN-LAST:event_likeButton1ActionPerformed
+    }//GEN-LAST:event_likeButtonActionPerformed
 
+    /**
+     * Adds a comment to this post
+     *
+     * @param evt when the user clicks the add comment button
+     */
     private void addCommentButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addCommentButtonActionPerformed
         // TODO add your handling code here:
         //add comments
-        commentsArea.setText(commentsArea.getText()+"\n"+addCommentArea.getText());
-        current.addComment(addCommentArea.getText());
+        if (!addCommentArea.getText().equalsIgnoreCase("")) {
+            commentsArea.append(loggedIn.getUsername() + ": "
+                    + addCommentArea.getText() + "\n");
+            lookingAt.getPosts().get(postIndex)
+                    .addComment(loggedIn.getUsername() + ": "
+                            + addCommentArea.getText());
+            addCommentArea.setText("");
+
+            Date date = new Date();
+            SimpleDateFormat format = new SimpleDateFormat("MM-dd HH:mm");
+            String time = format.format(date);
+            if (!lookingAt.getUsername().equals(loggedIn.getUsername())) {
+                lookingAt.addNotification(lookingAt, loggedIn, time,
+                        "commented on \nyour post:",
+                        lookingAt.getPosts().get(postIndex), "post");
+            }
+
+            main.output();
+        }
     }//GEN-LAST:event_addCommentButtonActionPerformed
 
     /**
@@ -306,8 +402,8 @@ public class PostPopUp extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new PostPopUp(null,"username",2,true,"this is a caption",
-                        "this is the comments","#hashtag","@people", null).setVisible(true);
+                new PostPopUp(null, null, 0, 2, "this is a caption",
+                        null, null, null, null, false).setVisible(true);
             }
         });
     }
@@ -318,22 +414,25 @@ public class PostPopUp extends javax.swing.JFrame {
     private javax.swing.JLabel addCommentLabel;
     private javax.swing.JTextArea captionArea;
     private javax.swing.JTextArea commentsArea;
+    private javax.swing.JLabel commentsLabel;
+    private javax.swing.JLabel dateLabel;
     private javax.swing.JTextArea hashTagsArea;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel hashTagsLabel;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
-    private javax.swing.JButton likeButton1;
+    private javax.swing.JButton likeButton;
     private javax.swing.JLabel likeLabel;
     private javax.swing.JTextArea peopleTagedArea;
-    private javax.swing.JLabel profilePictureLabel1;
+    private javax.swing.JLabel peopleTaggedLabel;
+    private javax.swing.JLabel postPicture;
     private javax.swing.JLabel usernameLabel;
     // End of variables declaration//GEN-END:variables
     private CurrentProfile main = new CurrentProfile();
-    private post current;
+    private RealProfile lookingAt;
+    private RealProfile loggedIn;
+    private int postIndex;
 }

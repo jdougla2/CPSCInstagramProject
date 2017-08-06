@@ -1,73 +1,120 @@
+package Instagram_GUI;
 
-import instagramproject.CurrentProfile;
-import instagramproject.RealProfile;
-import java.awt.Color;
-import java.awt.Cursor;
-import java.awt.Graphics2D;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.RenderingHints;
-import java.awt.Toolkit;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import Background_Code.*;
+import java.awt.*;
+import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import javax.imageio.ImageIO;
-import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
-import javax.swing.Icon;
-import javax.swing.ImageIcon;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
+import javax.swing.*;
 import javax.swing.border.Border;
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 /**
+ * This class deals with creating the profile pop up frame
  *
  * @author Jose
  */
 public class ProfilePopUp extends javax.swing.JFrame {
 
-    private boolean follow;
-    private static ImageIcon ii;
     int width = (Toolkit.getDefaultToolkit().getScreenSize().width / 2) - 262;
     int height = (Toolkit.getDefaultToolkit().getScreenSize().height / 2) - 250;
+
     /**
-     * Creates new form ProfilePopUp
+     * Constructor for the profile pop up frame
+     *
+     * @param i profile icon
+     * @param username profile username
+     * @param firstname profile first name
+     * @param lastname profile last name
+     * @param followers profile number of followers
+     * @param following profile number of following
+     * @param follow whether or not the current user is following lookAt user
+     * @param lookAt user that is being looked at
+     * @param current the current user that is logged in
+     * @param privacy the privacy setting for lookAt user
      */
     public ProfilePopUp(Icon i, String username, String firstname,
-            String lastname, int followers, int following, boolean follow, RealProfile loggedIn) {
+            String lastname, int followers, int following, boolean follow,
+            RealProfile lookAt, RealProfile current, boolean privacy) {
         initComponents();
         this.setTitle("EagleGram");
         this.setLocation(width, height);
-        
+
+        this.current = current;
+        this.lookAt = lookAt;
+        this.follow = follow;
+
+        if (current.equals(lookAt)
+                || current.getUsername().equals(main.getLoggedIn().getUsername())) {
+            followButton.setEnabled(false);
+        }
+
         profilePictureLabel.setIcon(i);
         usernameLabel.setText(username);
         firstNameLabel.setText(firstname);
         lastNameLabel.setText(lastname);
-        followersLabel.setText(Integer.toString(followers)+" followers");
-        followingLabel.setText(Integer.toString(following)+" following");
-        if (follow)
+        followersLabel.setText(Integer.toString(followers) + " followers");
+        followingLabel.setText(Integer.toString(following) + " following");
+        if (this.follow) {
             followButton.setText("unFollow");
-        
-        this.findProfile(username);
-        /*
-        for(number of post)
-        profilePostsPanel.add(new UserPanel(picturePath, caption, time, likes));
-        profilePostsPanel.revalidate();
-        profilePostsPanel.repaint();
-        */
-        for(int j = 0; j < current.getPosts().size(); j++) {
-            profilePostsPanel.add(new UserPanel(current.getPosts().get(j).getImage(), current.getPosts().get(j).getCaption(), current.getPosts().get(j).getDate(), current.getPosts().get(j).getLikes()));
-            profilePostsPanel.revalidate();
-            profilePostsPanel.repaint();
+        }
+
+        if (privacy) {
+            boolean isFollowed = false;
+            for (int z = 0; z < lookAt.getFollowing().size(); z++) {
+                if (lookAt.getFollowing().get(z).getUsername().equals(
+                        current.getUsername())) {
+                    isFollowed = true;
+                    if (lookAt != null) {
+                        for (int j = 0; j < lookAt.getPosts().size(); j++) {
+                            profilePostsPanel.add(new UserPanel(
+                                    lookAt.getPosts().get(j).getImage(),
+                                    lookAt.getPosts().get(j).getCaption(),
+                                    lookAt.getPosts().get(j).getDate(),
+                                    lookAt.getPosts().get(j).getLikes(),
+                                    true));
+                            profilePostsPanel.revalidate();
+                            profilePostsPanel.repaint();
+                        }
+                    }
+                }
+            }
+            if (!isFollowed) {
+                ImageIcon picture = null;
+                try {
+                    picture = new ImageIcon(scaleImage(
+                            120, 120, ImageIO.read(new File(System.getProperty(
+                                    "user.dir") + "\\LockedAccount.png"))));
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+                profilePostsPanel.add(new UserPanel(
+                        picture,
+                        "This user has a\n"
+                        + "private account.\n"
+                        + "They need to be\n"
+                        + "following you\n"
+                        + "for you to view\n"
+                        + "the account.",
+                        null, 0, false));
+                profilePostsPanel.revalidate();
+                profilePostsPanel.repaint();
+            }
+
+        } else {
+            if (lookAt != null) {
+                for (int j = 0; j < lookAt.getPosts().size(); j++) {
+                    profilePostsPanel.add(new UserPanel(
+                            lookAt.getPosts().get(j).getImage(),
+                            lookAt.getPosts().get(j).getCaption(),
+                            lookAt.getPosts().get(j).getDate(),
+                            lookAt.getPosts().get(j).getLikes(), true));
+                    profilePostsPanel.revalidate();
+                    profilePostsPanel.repaint();
+                }
+            }
         }
     }
 
@@ -95,7 +142,7 @@ public class ProfilePopUp extends javax.swing.JFrame {
 
         staticProfilePanel.setPreferredSize(new java.awt.Dimension(536, 88));
 
-        profilePictureLabel.setPreferredSize(new java.awt.Dimension(77, 77));
+        profilePictureLabel.setIcon(new javax.swing.ImageIcon("C:\\Users\\Jose\\Desktop\\InstagramProject\\ProfilePicture.png")); // NOI18N
         try {
             ii=new ImageIcon(scaleImage(77, 77, ImageIO.read(new File(System.getProperty("user.dir")+"\\ProfilePicture.png"))));//get the image from file chooser and scale it to match JLabel size
             profilePictureLabel.setIcon(ii);
@@ -118,117 +165,141 @@ public class ProfilePopUp extends javax.swing.JFrame {
         followingLabel.setText("# following");
         followingLabel.setPreferredSize(new java.awt.Dimension(100, 21));
 
-        followButton.setText("Follow");
-        followButton.setPreferredSize(new java.awt.Dimension(100, 21));
-        followButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                followButtonActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout staticProfilePanelLayout = new javax.swing.GroupLayout(staticProfilePanel);
-        staticProfilePanel.setLayout(staticProfilePanelLayout);
-        staticProfilePanelLayout.setHorizontalGroup(
-            staticProfilePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(staticProfilePanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(profilePictureLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addGroup(staticProfilePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(staticProfilePanelLayout.createSequentialGroup()
-                        .addComponent(usernameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(followersLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(followingLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(followButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(staticProfilePanelLayout.createSequentialGroup()
-                        .addComponent(firstNameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(lastNameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
-        );
-        staticProfilePanelLayout.setVerticalGroup(
-            staticProfilePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, staticProfilePanelLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(staticProfilePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(staticProfilePanelLayout.createSequentialGroup()
-                        .addGroup(staticProfilePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(usernameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(followersLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(followingLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(followButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(staticProfilePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(firstNameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lastNameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(profilePictureLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap())
-        );
-
-        jScrollPane1.setPreferredSize(new java.awt.Dimension(534, 404));
-
-        profilePostsPanel.setMinimumSize(new java.awt.Dimension(534, 404));
-
-        javax.swing.GroupLayout profilePostsPanelLayout = new javax.swing.GroupLayout(profilePostsPanel);
-        profilePostsPanel.setLayout(profilePostsPanelLayout);
-        profilePostsPanelLayout.setHorizontalGroup(
-            profilePostsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 534, Short.MAX_VALUE)
-        );
-        profilePostsPanelLayout.setVerticalGroup(
-            profilePostsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 404, Short.MAX_VALUE)
-        );
-
-        jScrollPane1.setViewportView(profilePostsPanel);
-        profilePostsPanel.setLayout(new BoxLayout(profilePostsPanel, BoxLayout.Y_AXIS));
-
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(staticProfilePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(staticProfilePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-
-        pack();
-    }// </editor-fold>//GEN-END:initComponents
-
-    private void findProfile(String username){
-        for(int i = 0; i < main.getAllProfiles().size(); i++){
-            if(main.getAllProfiles().get(i).getUsername().equals(username)){
-                current = main.getAllProfiles().get(i);
-            }        
+        followButton.setCursor(Cursor.getPredefinedCursor(
+            Cursor.HAND_CURSOR));
+    followButton.setText("Follow");
+    followButton.setPreferredSize(new java.awt.Dimension(100, 21));
+    followButton.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            followButtonActionPerformed(evt);
         }
-    }
-    
+    });
+
+    javax.swing.GroupLayout staticProfilePanelLayout = new javax.swing.GroupLayout(staticProfilePanel);
+    staticProfilePanel.setLayout(staticProfilePanelLayout);
+    staticProfilePanelLayout.setHorizontalGroup(
+        staticProfilePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        .addGroup(staticProfilePanelLayout.createSequentialGroup()
+            .addContainerGap()
+            .addComponent(profilePictureLabel)
+            .addGap(18, 18, 18)
+            .addGroup(staticProfilePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(staticProfilePanelLayout.createSequentialGroup()
+                    .addComponent(usernameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(followersLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addComponent(followingLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(followButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(staticProfilePanelLayout.createSequentialGroup()
+                    .addComponent(firstNameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(lastNameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 0, Short.MAX_VALUE)))
+            .addContainerGap())
+    );
+    staticProfilePanelLayout.setVerticalGroup(
+        staticProfilePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, staticProfilePanelLayout.createSequentialGroup()
+            .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(staticProfilePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(staticProfilePanelLayout.createSequentialGroup()
+                    .addGroup(staticProfilePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(usernameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(followersLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(followingLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(followButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addGroup(staticProfilePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(firstNameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lastNameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addComponent(profilePictureLabel))
+            .addContainerGap())
+    );
+
+    jScrollPane1.setPreferredSize(new java.awt.Dimension(534, 404));
+
+    profilePostsPanel.setMinimumSize(new java.awt.Dimension(534, 404));
+
+    javax.swing.GroupLayout profilePostsPanelLayout = new javax.swing.GroupLayout(profilePostsPanel);
+    profilePostsPanel.setLayout(profilePostsPanelLayout);
+    profilePostsPanelLayout.setHorizontalGroup(
+        profilePostsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        .addGap(0, 534, Short.MAX_VALUE)
+    );
+    profilePostsPanelLayout.setVerticalGroup(
+        profilePostsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        .addGap(0, 404, Short.MAX_VALUE)
+    );
+
+    jScrollPane1.setViewportView(profilePostsPanel);
+    profilePostsPanel.setLayout(new BoxLayout(profilePostsPanel, BoxLayout.Y_AXIS));
+
+    javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+    getContentPane().setLayout(layout);
+    layout.setHorizontalGroup(
+        layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        .addComponent(staticProfilePanel, javax.swing.GroupLayout.DEFAULT_SIZE, 555, Short.MAX_VALUE)
+        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+    );
+    layout.setVerticalGroup(
+        layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        .addGroup(layout.createSequentialGroup()
+            .addComponent(staticProfilePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+    );
+
+    pack();
+    }// </editor-fold>//GEN-END:initComponents
+    /**
+     * Changes the state of the follow button as well as adds a follower to
+     * lookAt user and a following to current user
+     *
+     * @param evt when the follow button is clicked
+     */
     private void followButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_followButtonActionPerformed
         // TODO add your handling code here:
-        if (follow == false){
+        if (follow == false) {
+
             //add users togeather
-            follow=true;
-            main.getLoggedIn().addFollowing(current);
-            main.following(current.getUsername(), main.getLoggedIn().getUsername());
+            follow = true;
+
+            current.addFollowing(lookAt);
+            lookAt.addFollower(current);
+
+            followersLabel.setText(lookAt.getFollowers().size() + " Followers");
+            followingLabel.setText(lookAt.getFollowing().size() + " Following");
+
+            Date date = new Date();
+            SimpleDateFormat format = new SimpleDateFormat("MM-dd HH:mm");
+            String time = format.format(date);
+            lookAt.addNotification(current, lookAt, time,
+                    "followed you", null, "follow");
+
             followButton.setText("unFollow");
-        }
-        else
-        {
+
+            main.output();
+        } else {
             //do stuff
-            follow=false;
-            main.getLoggedIn().removeFollowing(current);
-            main.removeFollowing(current.getUsername(), main.getLoggedIn().getUsername());
+            follow = false;
+
+            current.removeFollowing(lookAt);
+            lookAt.removeFollower(current);
+
+            followersLabel.setText(lookAt.getFollowers().size() + " Followers");
+            followingLabel.setText(lookAt.getFollowing().size() + " Following");
+
+            Date date = new Date();
+            SimpleDateFormat format = new SimpleDateFormat("MM-dd HH:mm");
+            String time = format.format(date);
+            lookAt.addNotification(current, lookAt, time,
+                    "unfollowed you", null, "follow");
+
             followButton.setText("Follow");
+
+            main.output();
         }
     }//GEN-LAST:event_followButtonActionPerformed
 
@@ -264,17 +335,29 @@ public class ProfilePopUp extends javax.swing.JFrame {
             @Override
             public void run() {
                 new ProfilePopUp(null, "username", "firstname",
-                        "lastname",0,0,false, null).setVisible(true);
+                        "lastname", 0, 0, false, null, null, false).setVisible(true);
             }
         });
     }
-    
-    public static BufferedImage scaleImage(int w, int h, BufferedImage img) throws Exception {
+
+    /**
+     * Processes an image to be used with a jLabel
+     *
+     * @param w width of the image
+     * @param h height of the image
+     * @param img image that is to be processed
+     * @return returns the processed image
+     * @throws Exception ---
+     */
+    public static BufferedImage scaleImage(int w, int h, BufferedImage img)
+            throws Exception {
         BufferedImage bi;
         bi = new BufferedImage(w, h, BufferedImage.TRANSLUCENT);
         Graphics2D g2d = (Graphics2D) bi.createGraphics();
-        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-        g2d.addRenderingHints(new RenderingHints(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY));
+        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+                RenderingHints.VALUE_ANTIALIAS_ON);
+        g2d.addRenderingHints(new RenderingHints(RenderingHints.KEY_RENDERING,
+                RenderingHints.VALUE_RENDER_QUALITY));
         g2d.drawImage(img, 0, 0, w, h, null);
         g2d.dispose();
         return bi;
@@ -293,15 +376,32 @@ public class ProfilePopUp extends javax.swing.JFrame {
     private javax.swing.JLabel usernameLabel;
     // End of variables declaration//GEN-END:variables
     private CurrentProfile main = new CurrentProfile();
+    private RealProfile lookAt;
     private RealProfile current;
-    
+    private boolean follow;
+    private static ImageIcon ii;
+
+    /**
+     * Creates a new panel for the users post
+     */
     private class UserPanel extends JPanel {
 
-        public UserPanel(Icon ii, String caption, String date, int likes) {
+        /**
+         * Constructor for UserPanel
+         *
+         * @param ii icon for this post
+         * @param caption caption for this post
+         * @param date date this post was posted
+         * @param likes number of like this post has
+         * @param privacy privacy setting of the owner of this post
+         */
+        public UserPanel(Icon ii, String caption, String date, int likes,
+                boolean privacy) {
             setLayout(new GridBagLayout());
             Border emptyBorder = BorderFactory.createEmptyBorder(2, 2, 2, 2);
             Border lineBorder = BorderFactory.createLineBorder(Color.black);
-            setBorder(BorderFactory.createCompoundBorder(lineBorder, emptyBorder));
+            setBorder(BorderFactory.createCompoundBorder(lineBorder,
+                    emptyBorder));
 
             JLabel timeLabel = new JLabel();
             timeLabel.setSize(100, 21);
@@ -315,18 +415,18 @@ public class ProfilePopUp extends javax.swing.JFrame {
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
-            pictureLabel.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-            pictureLabel.addMouseListener(new MouseAdapter()  {  
-                public void mouseClicked(MouseEvent e)  
-                {  
-                    //PostPopUp frame= new PostPopUp(ii, username, likes, liked,
-                      //      caption, "comments", "hashtags","people");
-                    
-                    //frame.setVisible(true);
-                    
-                    
-                }  
-            });
+            if (privacy) {
+                pictureLabel.setCursor(Cursor.getPredefinedCursor(
+                        Cursor.HAND_CURSOR));
+                pictureLabel.addMouseListener(new MouseAdapter() {
+                    public void mouseClicked(MouseEvent e) {
+                        //PostPopUp frame= new PostPopUp(ii, username, likes, liked,
+                        //      caption, "comments", "hashtags","people");
+
+                        //frame.setVisible(true);
+                    }
+                });
+            }
             add(pictureLabel, createGbc(0, 0));
 
             JTextArea captionText = new JTextArea();
@@ -334,18 +434,28 @@ public class ProfilePopUp extends javax.swing.JFrame {
             captionText.setLineWrap(true);
             captionText.setEditable(false);
             captionText.setSize(120, 120);
-            JScrollPane CaptionScroll = new JScrollPane(captionText,
+            JScrollPane captionScroll = new JScrollPane(captionText,
                     JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
                     JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-            CaptionScroll.setSize(120, 120);
+            captionScroll.setSize(120, 120);
             add(captionText, createGbc(1, 0));
 
-            final JLabel likeLabel = new JLabel();
-            likeLabel.setText("LIKES: " + Integer.toString(likes));
-            likeLabel.setSize(100, 21);
-            add(likeLabel, createGbc(2,0));
+            if (privacy) {
+                final JLabel likeLabel = new JLabel();
+                likeLabel.setText("LIKES: " + Integer.toString(likes));
+                likeLabel.setSize(100, 21);
+                add(likeLabel, createGbc(2, 0));
+            }
+
         }
 
+        /**
+         * Positions the different components
+         *
+         * @param x x coordinate
+         * @param y y coordinate
+         * @return returns all of the positioned component
+         */
         private GridBagConstraints createGbc(int x, int y) {
             GridBagConstraints gbc = new GridBagConstraints();
             gbc.gridx = x;

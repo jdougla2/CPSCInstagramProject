@@ -1,24 +1,27 @@
+package Instagram_GUI;
 
-import instagramproject.CurrentProfile;
-import java.awt.Toolkit;
+import Background_Code.CurrentProfile;
+import java.awt.*;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 /**
+ * This class creates the login GUI where users will be able to log into their
+ * accounts
  *
  * @author Jose
  */
 public class Login extends javax.swing.JFrame {
 
+    int width = (Toolkit.getDefaultToolkit().getScreenSize().width / 2) - 150;
+    int height = (Toolkit.getDefaultToolkit().getScreenSize().height / 2) - 150;
+
     /**
-     * Creates new form Login
+     * Constructor to initiate the login GUI
      */
-    int width= (Toolkit.getDefaultToolkit().getScreenSize().width / 2) - 150;
-    int height= (Toolkit.getDefaultToolkit().getScreenSize().height / 2) - 150;
     public Login() {
         initComponents();
         this.setTitle("EagleGram");
@@ -34,137 +37,168 @@ public class Login extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        UserLabel = new javax.swing.JLabel();
-        Pass = new javax.swing.JPasswordField();
-        PassLabel = new javax.swing.JLabel();
-        GuestLogin = new javax.swing.JButton();
-        UserLogin = new javax.swing.JButton();
-        User = new javax.swing.JTextField();
-        ErrorMessageLabel = new javax.swing.JLabel();
-        SignUpButton = new javax.swing.JButton();
-        EagleGramLabel = new javax.swing.JLabel();
+        userLabel = new javax.swing.JLabel();
+        pass = new javax.swing.JPasswordField();
+        passLabel = new javax.swing.JLabel();
+        guestLogin = new javax.swing.JButton();
+        userLogin = new javax.swing.JButton();
+        user = new javax.swing.JTextField();
+        errorMessageLabel = new javax.swing.JLabel();
+        signUpButton = new javax.swing.JButton();
+        eagleGramLabel = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setMaximumSize(new java.awt.Dimension(300, 300));
 
-        UserLabel.setText("User Name: ");
+        userLabel.setText("User Name: ");
 
-        PassLabel.setText("Password: ");
+        passLabel.setText("Password: ");
 
-        GuestLogin.setText("Guest");
-        GuestLogin.addActionListener(new java.awt.event.ActionListener() {
+        guestLogin.setText("Guest");
+        guestLogin.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                GuestLoginActionPerformed(evt);
+                guestLoginActionPerformed(evt);
             }
         });
 
-        UserLogin.setText("Sign In");
-        UserLogin.addActionListener(new java.awt.event.ActionListener() {
+        userLogin.setText("Sign In");
+        userLogin.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                UserLoginActionPerformed(evt);
+                userLoginActionPerformed(evt);
             }
         });
 
-        SignUpButton.setText("Sign Up");
-        SignUpButton.addActionListener(new java.awt.event.ActionListener() {
+        signUpButton.setText("Sign Up");
+        signUpButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                SignUpButtonActionPerformed(evt);
+                signUpButtonActionPerformed(evt);
             }
         });
 
-        EagleGramLabel.setText("EagleGram");
+        eagleGramLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        eagleGramLabel.setIcon(new javax.swing.ImageIcon("C:\\Users\\Jose\\Desktop\\InstagramProject\\EagleGram.png")); // NOI18N
+        eagleGramLabel.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        eagleGramLabel.setPreferredSize(new java.awt.Dimension(51, 14));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
+                    .addComponent(errorMessageLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(userLabel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(user, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(ErrorMessageLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(UserLabel)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(User, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(PassLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(GuestLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 80, Short.MAX_VALUE)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(Pass)
-                                    .addComponent(UserLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                            .addComponent(passLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(guestLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 80, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(pass)
+                            .addComponent(userLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(98, 98, 98)
-                                .addComponent(SignUpButton, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(120, 120, 120)
-                                .addComponent(EagleGramLabel)))
+                        .addGap(88, 88, 88)
+                        .addComponent(signUpButton, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addGap(89, 89, 89)
+                .addComponent(eagleGramLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(EagleGramLabel)
+                .addComponent(eagleGramLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(userLabel)
+                    .addComponent(user, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(UserLabel)
-                    .addComponent(User, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(Pass, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(PassLabel))
+                    .addComponent(pass, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(passLabel))
                 .addGap(34, 34, 34)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(GuestLogin)
-                    .addComponent(UserLogin))
+                    .addComponent(guestLogin)
+                    .addComponent(userLogin))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(SignUpButton)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(ErrorMessageLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(67, Short.MAX_VALUE))
+                .addComponent(signUpButton)
+                .addGap(18, 18, 18)
+                .addComponent(errorMessageLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(58, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void UserLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UserLoginActionPerformed
+    /**
+     * Logs in user
+     *
+     * @param evt when log in button is clicked
+     */
+    private void userLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_userLoginActionPerformed
         // TODO add your handling code here:
         main.printAllProfiles();
-        username= User.getText();
-        password= Pass.getText();
-        System.out.println(password+" "+username);
-        boolean logInSuccess = main.logIn(username, password);;
-        if(logInSuccess){
-            UserFrame y= new UserFrame(main.getLoggedIn());
-            y.setVisible(true);
-            super.dispose();
-        }        
-        /*else
-            Instructions.setText("Username or Password are incorrect.");
-        }*/
-    }//GEN-LAST:event_UserLoginActionPerformed
+        username = user.getText();
+        password = pass.getText();
+        boolean logInSuccess = main.logIn(username, password);
+        boolean userExists = false;
+        for (int i = 0; i < main.getAllProfiles().size(); i++) {
+            String otherUsername
+                    = main.getAllProfiles().get(i).getUsername();
+            if (username.equals(otherUsername)) {
+                userExists = true;
+            }
+        }
+        if (userExists) {
+            if (logInSuccess) {
+                if (main.getLoggedIn().getUsername().equalsIgnoreCase("guest")) {
+                    GuestFrame x = new GuestFrame();
+                    x.setVisible(true);
+                    super.dispose();
+                } else {
+                    EagleGram y = new EagleGram(main.getLoggedIn());
+                    y.setVisible(true);
+                    super.dispose();
+                }
+            } else {
+                errorMessageLabel.setText("Password incorrect.");
+            }
+        } else {
+            errorMessageLabel.setText("User does not exist.");
+        }
 
-    private void GuestLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_GuestLoginActionPerformed
+    }//GEN-LAST:event_userLoginActionPerformed
+
+    /**
+     * Logs the user into the guest frame
+     *
+     * @param evt when user clicks the guest button
+     */
+    private void guestLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_guestLoginActionPerformed
         // TODO add your handling code here:
-        GuestFrame x= new GuestFrame();
+        GuestFrame x = new GuestFrame();
         x.setVisible(true);
         super.dispose();
-        
-    }//GEN-LAST:event_GuestLoginActionPerformed
 
-    private void SignUpButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SignUpButtonActionPerformed
+    }//GEN-LAST:event_guestLoginActionPerformed
+
+    /**
+     * Sends the user to the sign up frame where they can sign up an account
+     *
+     * @param evt when the user clicks the sign up button
+     */
+    private void signUpButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_signUpButtonActionPerformed
         // TODO add your handling code here:
-        SignUpFrame z= new SignUpFrame();
+        SignUpFrame z = new SignUpFrame();
         z.setVisible(true);
         super.dispose();
-    }//GEN-LAST:event_SignUpButtonActionPerformed
+    }//GEN-LAST:event_signUpButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -202,15 +236,15 @@ public class Login extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel EagleGramLabel;
-    private javax.swing.JLabel ErrorMessageLabel;
-    private javax.swing.JButton GuestLogin;
-    private javax.swing.JPasswordField Pass;
-    private javax.swing.JLabel PassLabel;
-    private javax.swing.JButton SignUpButton;
-    private javax.swing.JTextField User;
-    private javax.swing.JLabel UserLabel;
-    private javax.swing.JButton UserLogin;
+    private javax.swing.JLabel eagleGramLabel;
+    private javax.swing.JLabel errorMessageLabel;
+    private javax.swing.JButton guestLogin;
+    private javax.swing.JPasswordField pass;
+    private javax.swing.JLabel passLabel;
+    private javax.swing.JButton signUpButton;
+    private javax.swing.JTextField user;
+    private javax.swing.JLabel userLabel;
+    private javax.swing.JButton userLogin;
     // End of variables declaration//GEN-END:variables
     private String password;
     private String username;

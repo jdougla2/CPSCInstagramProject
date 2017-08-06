@@ -101,8 +101,8 @@
       <SubComponents>
         <Component class="javax.swing.JLabel" name="profilePictureLabel">
           <Properties>
-            <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-              <Dimension value="[77, 77]"/>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="2" name="C:\Users\Jose\Desktop\InstagramProject\ProfilePicture.png"/>
             </Property>
           </Properties>
           <AuxValues>
@@ -159,6 +159,9 @@
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="followButtonActionPerformed"/>
           </Events>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="followButton.setCursor(Cursor.getPredefinedCursor(&#xa;                    Cursor.HAND_CURSOR));"/>
+          </AuxValues>
         </Component>
       </SubComponents>
     </Container>

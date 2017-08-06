@@ -39,42 +39,42 @@
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" attributes="0">
-                  <EmptySpace min="-2" pref="120" max="-2" attributes="0"/>
-                  <Component id="EagleGramLabel" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace max="32767" attributes="0"/>
-              </Group>
-              <Group type="102" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="1" attributes="0">
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="UsernameLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="Password1Label" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="FirstNameLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="LastNameLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="usernameLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="password1Label" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="firstNameLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="lastNameLabel" alignment="0" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace max="32767" attributes="0"/>
                           <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                              <Component id="LNameText" alignment="0" max="32767" attributes="0"/>
-                              <Component id="Password1Text" alignment="0" max="32767" attributes="0"/>
-                              <Component id="UsernameText" max="32767" attributes="0"/>
-                              <Component id="FNameText" min="-2" pref="100" max="-2" attributes="0"/>
+                              <Component id="lNameText" alignment="0" max="32767" attributes="0"/>
+                              <Component id="password1Text" alignment="0" max="32767" attributes="0"/>
+                              <Component id="usernameText" max="32767" attributes="0"/>
+                              <Component id="fNameText" min="-2" pref="100" max="-2" attributes="0"/>
                           </Group>
                       </Group>
-                      <Component id="ErrorMessageLabel" alignment="0" max="32767" attributes="0"/>
+                      <Component id="errorMessageLabel" alignment="0" max="32767" attributes="0"/>
                       <Group type="102" alignment="0" attributes="0">
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="Password2Label" min="-2" max="-2" attributes="0"/>
-                              <Component id="SignUpButton" alignment="0" min="-2" pref="100" max="-2" attributes="0"/>
+                              <Component id="password2Label" min="-2" max="-2" attributes="0"/>
+                              <Component id="signUpButton" alignment="0" min="-2" pref="100" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace pref="80" max="32767" attributes="0"/>
                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                              <Component id="Password2Text" pref="100" max="32767" attributes="0"/>
-                              <Component id="ReturnButton" max="32767" attributes="0"/>
+                              <Component id="password2Text" pref="100" max="32767" attributes="0"/>
+                              <Component id="returnButton" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
+              </Group>
+              <Group type="102" alignment="0" attributes="0">
+                  <EmptySpace min="-2" pref="93" max="-2" attributes="0"/>
+                  <Component id="eagleGramLabel" min="-2" pref="100" max="-2" attributes="0"/>
+                  <EmptySpace max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -82,101 +82,103 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="EagleGramLabel" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
+                  <Component id="eagleGramLabel" min="-2" pref="24" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="FNameText" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="FirstNameLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="fNameText" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="firstNameLabel" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="LastNameLabel" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="LNameText" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="lastNameLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="lNameText" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="UsernameText" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="UsernameLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="usernameText" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="usernameLabel" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="Password1Label" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="Password1Text" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="password1Label" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="password1Text" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="Password2Label" min="-2" max="-2" attributes="0"/>
-                      <Component id="Password2Text" min="-2" max="-2" attributes="0"/>
+                      <Component id="password2Label" min="-2" max="-2" attributes="0"/>
+                      <Component id="password2Text" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="17" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="SignUpButton" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="ReturnButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="signUpButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="returnButton" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Component id="ErrorMessageLabel" min="-2" pref="38" max="-2" attributes="0"/>
-                  <EmptySpace pref="25" max="32767" attributes="0"/>
+                  <Component id="errorMessageLabel" min="-2" pref="38" max="-2" attributes="0"/>
+                  <EmptySpace pref="40" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
       </Layout>
       <SubComponents>
-        <Component class="javax.swing.JTextField" name="FNameText">
+        <Component class="javax.swing.JTextField" name="fNameText">
         </Component>
-        <Component class="javax.swing.JLabel" name="FirstNameLabel">
+        <Component class="javax.swing.JLabel" name="firstNameLabel">
           <Properties>
             <Property name="text" type="java.lang.String" value="First Name: "/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JButton" name="SignUpButton">
+        <Component class="javax.swing.JButton" name="signUpButton">
           <Properties>
             <Property name="text" type="java.lang.String" value="Sign Up"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="SignUpButtonActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="signUpButtonActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JLabel" name="LastNameLabel">
+        <Component class="javax.swing.JLabel" name="lastNameLabel">
           <Properties>
             <Property name="text" type="java.lang.String" value="Last Name: "/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="LNameText">
+        <Component class="javax.swing.JTextField" name="lNameText">
         </Component>
-        <Component class="javax.swing.JTextField" name="UsernameText">
+        <Component class="javax.swing.JTextField" name="usernameText">
         </Component>
-        <Component class="javax.swing.JLabel" name="UsernameLabel">
+        <Component class="javax.swing.JLabel" name="usernameLabel">
           <Properties>
             <Property name="text" type="java.lang.String" value="Username: "/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JLabel" name="Password1Label">
+        <Component class="javax.swing.JLabel" name="password1Label">
           <Properties>
             <Property name="text" type="java.lang.String" value="Password: "/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JPasswordField" name="Password1Text">
+        <Component class="javax.swing.JPasswordField" name="password1Text">
         </Component>
-        <Component class="javax.swing.JLabel" name="Password2Label">
+        <Component class="javax.swing.JLabel" name="password2Label">
           <Properties>
             <Property name="text" type="java.lang.String" value="Reenter Password: "/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JPasswordField" name="Password2Text">
+        <Component class="javax.swing.JPasswordField" name="password2Text">
         </Component>
-        <Component class="javax.swing.JLabel" name="ErrorMessageLabel">
+        <Component class="javax.swing.JLabel" name="errorMessageLabel">
         </Component>
-        <Component class="javax.swing.JLabel" name="EagleGramLabel">
+        <Component class="javax.swing.JLabel" name="eagleGramLabel">
           <Properties>
-            <Property name="text" type="java.lang.String" value="EagleGram"/>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="2" name="C:\Users\Jose\Desktop\InstagramProject\EagleGram.png"/>
+            </Property>
           </Properties>
         </Component>
-        <Component class="javax.swing.JButton" name="ReturnButton">
+        <Component class="javax.swing.JButton" name="returnButton">
           <Properties>
             <Property name="text" type="java.lang.String" value="Return"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="ReturnButtonActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="returnButtonActionPerformed"/>
           </Events>
         </Component>
       </SubComponents>

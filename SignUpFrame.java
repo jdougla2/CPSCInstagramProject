@@ -1,24 +1,22 @@
+package Instagram_GUI;
 
-import instagramproject.CurrentProfile;
+import Background_Code.CurrentProfile;
 import java.awt.Toolkit;
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 /**
+ * This class deals with the GUI where the user will be able to sign an account
+ * up
  *
  * @author Jose
  */
 public class SignUpFrame extends javax.swing.JFrame {
 
+    int width = (Toolkit.getDefaultToolkit().getScreenSize().width / 2) - 150;
+    int height = (Toolkit.getDefaultToolkit().getScreenSize().height / 2) - 150;
+
     /**
-     * Creates new form SignUpFrame
+     * Creates a new SignUp frame
      */
-    int width= (Toolkit.getDefaultToolkit().getScreenSize().width / 2) - 150;
-    int height= (Toolkit.getDefaultToolkit().getScreenSize().height / 2) - 150;
     public SignUpFrame() {
         initComponents();
         this.setTitle("EagleGram");
@@ -35,46 +33,46 @@ public class SignUpFrame extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        FNameText = new javax.swing.JTextField();
-        FirstNameLabel = new javax.swing.JLabel();
-        SignUpButton = new javax.swing.JButton();
-        LastNameLabel = new javax.swing.JLabel();
-        LNameText = new javax.swing.JTextField();
-        UsernameText = new javax.swing.JTextField();
-        UsernameLabel = new javax.swing.JLabel();
-        Password1Label = new javax.swing.JLabel();
-        Password1Text = new javax.swing.JPasswordField();
-        Password2Label = new javax.swing.JLabel();
-        Password2Text = new javax.swing.JPasswordField();
-        ErrorMessageLabel = new javax.swing.JLabel();
-        EagleGramLabel = new javax.swing.JLabel();
-        ReturnButton = new javax.swing.JButton();
+        fNameText = new javax.swing.JTextField();
+        firstNameLabel = new javax.swing.JLabel();
+        signUpButton = new javax.swing.JButton();
+        lastNameLabel = new javax.swing.JLabel();
+        lNameText = new javax.swing.JTextField();
+        usernameText = new javax.swing.JTextField();
+        usernameLabel = new javax.swing.JLabel();
+        password1Label = new javax.swing.JLabel();
+        password1Text = new javax.swing.JPasswordField();
+        password2Label = new javax.swing.JLabel();
+        password2Text = new javax.swing.JPasswordField();
+        errorMessageLabel = new javax.swing.JLabel();
+        eagleGramLabel = new javax.swing.JLabel();
+        returnButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        FirstNameLabel.setText("First Name: ");
+        firstNameLabel.setText("First Name: ");
 
-        SignUpButton.setText("Sign Up");
-        SignUpButton.addActionListener(new java.awt.event.ActionListener() {
+        signUpButton.setText("Sign Up");
+        signUpButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                SignUpButtonActionPerformed(evt);
+                signUpButtonActionPerformed(evt);
             }
         });
 
-        LastNameLabel.setText("Last Name: ");
+        lastNameLabel.setText("Last Name: ");
 
-        UsernameLabel.setText("Username: ");
+        usernameLabel.setText("Username: ");
 
-        Password1Label.setText("Password: ");
+        password1Label.setText("Password: ");
 
-        Password2Label.setText("Reenter Password: ");
+        password2Label.setText("Reenter Password: ");
 
-        EagleGramLabel.setText("EagleGram");
+        eagleGramLabel.setIcon(new javax.swing.ImageIcon("C:\\Users\\Jose\\Desktop\\InstagramProject\\EagleGram.png")); // NOI18N
 
-        ReturnButton.setText("Return");
-        ReturnButton.addActionListener(new java.awt.event.ActionListener() {
+        returnButton.setText("Return");
+        returnButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ReturnButtonActionPerformed(evt);
+                returnButtonActionPerformed(evt);
             }
         });
 
@@ -83,67 +81,67 @@ public class SignUpFrame extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(120, 120, 120)
-                .addComponent(EagleGramLabel)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(UsernameLabel)
-                            .addComponent(Password1Label)
-                            .addComponent(FirstNameLabel)
-                            .addComponent(LastNameLabel))
+                            .addComponent(usernameLabel)
+                            .addComponent(password1Label)
+                            .addComponent(firstNameLabel)
+                            .addComponent(lastNameLabel))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(LNameText, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(Password1Text, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(UsernameText)
-                            .addComponent(FNameText, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(ErrorMessageLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(lNameText, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(password1Text, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(usernameText)
+                            .addComponent(fNameText, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(errorMessageLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(Password2Label)
-                            .addComponent(SignUpButton, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(password2Label)
+                            .addComponent(signUpButton, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 80, Short.MAX_VALUE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(Password2Text, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
-                            .addComponent(ReturnButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                            .addComponent(password2Text, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
+                            .addComponent(returnButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap())
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(93, 93, 93)
+                .addComponent(eagleGramLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(EagleGramLabel)
-                .addGap(30, 30, 30)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(FNameText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(FirstNameLabel))
+                .addComponent(eagleGramLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(LastNameLabel)
-                    .addComponent(LNameText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(fNameText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(firstNameLabel))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(UsernameText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(UsernameLabel))
+                    .addComponent(lastNameLabel)
+                    .addComponent(lNameText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(Password1Label)
-                    .addComponent(Password1Text, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(usernameText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(usernameLabel))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(password1Label)
+                    .addComponent(password1Text, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(Password2Label)
-                    .addComponent(Password2Text, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(password2Label)
+                    .addComponent(password2Text, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(17, 17, 17)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(SignUpButton)
-                    .addComponent(ReturnButton))
+                    .addComponent(signUpButton)
+                    .addComponent(returnButton))
                 .addGap(18, 18, 18)
-                .addComponent(ErrorMessageLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(25, Short.MAX_VALUE))
+                .addComponent(errorMessageLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(40, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -160,46 +158,62 @@ public class SignUpFrame extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void SignUpButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SignUpButtonActionPerformed
+    /**
+     * Checks to see if all the information is in check and then goes ahead and
+     * creates a new account
+     *
+     * @param evt when the user clicks the sign up button
+     */
+    private void signUpButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_signUpButtonActionPerformed
         // TODO add your handling code here:
-        ErrorMessageLabel.setText(null);
-        FirstName= FNameText.getText();
-        LastName= LNameText.getText();
-        Username= UsernameText.getText();
-        Password1= Password1Text.getText();
-        Password2= Password2Text.getText();
-        if (!FirstName.equals("") && !LastName.equals("") 
-                && !Username.equals("") && !Password1.equals("")){
-            if(Password1.equals(Password2)){
-                boolean signUp = main.signUp(Username, Password1, FirstName, LastName);
-                if(signUp){
-                //create new user
+        errorMessageLabel.setText(null);
+        firstName = fNameText.getText();
+        lastName = lNameText.getText();
+        username = usernameText.getText();
+        password1 = password1Text.getText();
+        password2 = password2Text.getText();
+        if (!firstName.equals("") && !lastName.equals("")
+                && !username.equals("") && !password1.equals("")) {
+            if (password1.equals(password2)) {
+                boolean newUser = true;
+                for (int i = 0; i < main.getAllProfiles().size(); i++) {
+                    String oldUsername
+                            = main.getAllProfiles().get(i).getUsername();
+                    if (username.equalsIgnoreCase(oldUsername)) {
+                        newUser = false;
+                    }
+                }
+                if (newUser) {
+                    //create new user
                     main.output();
-                    main.logIn(Username, Password1);
-                    UserFrame y= new UserFrame(main.getLoggedIn());
+                    main.signUp(username, password1, firstName, lastName);
+                    main.logIn(username, password1);
+                    EagleGram y = new EagleGram(main.getLoggedIn());
                     main.printAllProfiles();
                     y.setVisible(true);
                     super.dispose();
+                } else {
+                    errorMessageLabel.setText("Username already taken.");
                 }
-                else{
-                    ErrorMessageLabel.setText("Username already taken.");
-                }
+            } else {
+                errorMessageLabel.setText("Passwords do not match.");
             }
-            else{
-                ErrorMessageLabel.setText("Passwords do not match.");
-            }
+        } else {
+            errorMessageLabel.setText("Incomplete form");
         }
-        else{
-            ErrorMessageLabel.setText("Incomplete form");
-        }
-    }//GEN-LAST:event_SignUpButtonActionPerformed
+    }//GEN-LAST:event_signUpButtonActionPerformed
 
-    private void ReturnButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ReturnButtonActionPerformed
+    /**
+     * Returns the user to the login frame
+     *
+     * @param evt when the user clicks the return button
+     */
+    private void returnButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_returnButtonActionPerformed
         // TODO add your handling code here:
-        Login x= new Login();
+        Login x = new Login();
         x.setVisible(true);
         super.dispose();
-    }//GEN-LAST:event_ReturnButtonActionPerformed
+    }//GEN-LAST:event_returnButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -237,27 +251,26 @@ public class SignUpFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel EagleGramLabel;
-    private javax.swing.JLabel ErrorMessageLabel;
-    private javax.swing.JTextField FNameText;
-    private javax.swing.JLabel FirstNameLabel;
-    private javax.swing.JTextField LNameText;
-    private javax.swing.JLabel LastNameLabel;
-    private javax.swing.JLabel Password1Label;
-    private javax.swing.JPasswordField Password1Text;
-    private javax.swing.JLabel Password2Label;
-    private javax.swing.JPasswordField Password2Text;
-    private javax.swing.JButton ReturnButton;
-    private javax.swing.JButton SignUpButton;
-    private javax.swing.JLabel UsernameLabel;
-    private javax.swing.JTextField UsernameText;
+    private javax.swing.JLabel eagleGramLabel;
+    private javax.swing.JLabel errorMessageLabel;
+    private javax.swing.JTextField fNameText;
+    private javax.swing.JLabel firstNameLabel;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JTextField lNameText;
+    private javax.swing.JLabel lastNameLabel;
+    private javax.swing.JLabel password1Label;
+    private javax.swing.JPasswordField password1Text;
+    private javax.swing.JLabel password2Label;
+    private javax.swing.JPasswordField password2Text;
+    private javax.swing.JButton returnButton;
+    private javax.swing.JButton signUpButton;
+    private javax.swing.JLabel usernameLabel;
+    private javax.swing.JTextField usernameText;
     // End of variables declaration//GEN-END:variables
-    private String FirstName;
-    private String LastName;
-    private String Username;
-    private String Password1;
-    private String Password2;
+    private String firstName;
+    private String lastName;
+    private String username;
+    private String password1;
+    private String password2;
     private CurrentProfile main = new CurrentProfile();
-    
 }
