@@ -109,8 +109,8 @@ public class EagleGram extends javax.swing.JFrame {
         dmButton = new javax.swing.JButton();
         settingsButton = new javax.swing.JButton();
         eagleGramLabel = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        layoutPanel = new javax.swing.JPanel();
+        mainWindowScrollPane = new javax.swing.JScrollPane();
+        mainWindowLayoutPanel = new javax.swing.JPanel();
         homePanel = new javax.swing.JPanel();
         jScrollPane8 = new javax.swing.JScrollPane();
         feedPanel = new javax.swing.JPanel();
@@ -308,9 +308,9 @@ public class EagleGram extends javax.swing.JFrame {
         dmButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         settingsButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 
-        layoutPanel.setMaximumSize(new java.awt.Dimension(536, 466));
-        layoutPanel.setPreferredSize(new java.awt.Dimension(536, 466));
-        layoutPanel.setLayout(new java.awt.CardLayout());
+        mainWindowLayoutPanel.setMaximumSize(new java.awt.Dimension(536, 466));
+        mainWindowLayoutPanel.setPreferredSize(new java.awt.Dimension(536, 466));
+        mainWindowLayoutPanel.setLayout(new java.awt.CardLayout());
 
         homePanel.setMaximumSize(new java.awt.Dimension(536, 466));
         homePanel.setMinimumSize(new java.awt.Dimension(536, 466));
@@ -341,7 +341,7 @@ public class EagleGram extends javax.swing.JFrame {
             .addComponent(jScrollPane8, javax.swing.GroupLayout.Alignment.TRAILING)
         );
 
-        layoutPanel.add(homePanel, "card6");
+        mainWindowLayoutPanel.add(homePanel, "card6");
 
         searchPanel.setMaximumSize(new java.awt.Dimension(536, 466));
         searchPanel.setPreferredSize(new java.awt.Dimension(536, 466));
@@ -406,7 +406,7 @@ searchButton1.addActionListener(new java.awt.event.ActionListener() {
             .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 437, Short.MAX_VALUE))
     );
 
-    layoutPanel.add(searchPanel, "card3");
+    mainWindowLayoutPanel.add(searchPanel, "card3");
 
     newPostPanel.setMaximumSize(new java.awt.Dimension(536, 466));
 
@@ -509,7 +509,7 @@ searchButton1.addActionListener(new java.awt.event.ActionListener() {
     uploadPictureButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
     createNewPostButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 
-    layoutPanel.add(newPostPanel, "card2");
+    mainWindowLayoutPanel.add(newPostPanel, "card2");
 
     notificationPanel.setMaximumSize(new java.awt.Dimension(536, 466));
     notificationPanel.setMinimumSize(new java.awt.Dimension(536, 466));
@@ -539,7 +539,7 @@ searchButton1.addActionListener(new java.awt.event.ActionListener() {
         .addComponent(jScrollPane9)
     );
 
-    layoutPanel.add(notificationPanel, "card4");
+    mainWindowLayoutPanel.add(notificationPanel, "card4");
 
     profilePanel.setMaximumSize(new java.awt.Dimension(536, 466));
     profilePanel.setMinimumSize(new java.awt.Dimension(536, 466));
@@ -651,7 +651,7 @@ searchButton1.addActionListener(new java.awt.event.ActionListener() {
                 .addComponent(userPostScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 372, Short.MAX_VALUE))
         );
 
-        layoutPanel.add(profilePanel, "card5");
+        mainWindowLayoutPanel.add(profilePanel, "card5");
 
         newMessageButton.setText("New Message");
         newMessageButton.setMaximumSize(new java.awt.Dimension(100, 23));
@@ -855,7 +855,7 @@ searchButton1.addActionListener(new java.awt.event.ActionListener() {
                 .addComponent(dmLayoutPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 437, Short.MAX_VALUE))
         );
 
-        layoutPanel.add(dmPanel, "card7");
+        mainWindowLayoutPanel.add(dmPanel, "card7");
 
         settingsPanel.setMaximumSize(new java.awt.Dimension(536, 466));
 
@@ -1111,9 +1111,9 @@ searchButton1.addActionListener(new java.awt.event.ActionListener() {
         changeProfilePhotoButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         commitPhotoChangeButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 
-        layoutPanel.add(settingsPanel, "card8");
+        mainWindowLayoutPanel.add(settingsPanel, "card8");
 
-        jScrollPane1.setViewportView(layoutPanel);
+        mainWindowScrollPane.setViewportView(mainWindowLayoutPanel);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -1121,14 +1121,14 @@ searchButton1.addActionListener(new java.awt.event.ActionListener() {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(bottomMenu, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(topMenu, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jScrollPane1)
+            .addComponent(mainWindowScrollPane)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(topMenu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(mainWindowScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(bottomMenu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -1143,8 +1143,8 @@ searchButton1.addActionListener(new java.awt.event.ActionListener() {
      * @param evt when the user clicks the home button
      */
     private void homeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_homeButtonActionPerformed
-        layoutPanel.removeAll();
-        layoutPanel.add(homePanel);
+        mainWindowLayoutPanel.removeAll();
+        mainWindowLayoutPanel.add(homePanel);
         feedPanel.removeAll();
 
         main.clearFeed();
@@ -1170,8 +1170,8 @@ searchButton1.addActionListener(new java.awt.event.ActionListener() {
             feedPanel.repaint();
         }
 
-        layoutPanel.repaint();
-        layoutPanel.revalidate();
+        mainWindowLayoutPanel.repaint();
+        mainWindowLayoutPanel.revalidate();
     }//GEN-LAST:event_homeButtonActionPerformed
 
     /**
@@ -1180,12 +1180,12 @@ searchButton1.addActionListener(new java.awt.event.ActionListener() {
      * @param evt when the user clicks the search button
      */
     private void searchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchButtonActionPerformed
-        layoutPanel.removeAll();
-        layoutPanel.add(searchPanel);
+        mainWindowLayoutPanel.removeAll();
+        mainWindowLayoutPanel.add(searchPanel);
         userInput.setText("");
         searchOutputPanel.removeAll();
-        layoutPanel.repaint();
-        layoutPanel.revalidate();
+        mainWindowLayoutPanel.repaint();
+        mainWindowLayoutPanel.revalidate();
     }//GEN-LAST:event_searchButtonActionPerformed
 
     /**
@@ -1194,8 +1194,8 @@ searchButton1.addActionListener(new java.awt.event.ActionListener() {
      * @param evt when the user clicks the new post button
      */
     private void newPostButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newPostButtonActionPerformed
-        layoutPanel.removeAll();
-        layoutPanel.add(newPostPanel);
+        mainWindowLayoutPanel.removeAll();
+        mainWindowLayoutPanel.add(newPostPanel);
 
         try {
             ImageIcon emptyPicture = new ImageIcon(scaleImage(
@@ -1211,8 +1211,8 @@ searchButton1.addActionListener(new java.awt.event.ActionListener() {
         hashTagsField.setText("");
         newPostOutputLabel.setText("");
 
-        layoutPanel.repaint();
-        layoutPanel.revalidate();
+        mainWindowLayoutPanel.repaint();
+        mainWindowLayoutPanel.revalidate();
     }//GEN-LAST:event_newPostButtonActionPerformed
 
     /**
@@ -1222,8 +1222,8 @@ searchButton1.addActionListener(new java.awt.event.ActionListener() {
      * @param evt when the user clicks the notification button
      */
     private void notificationsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_notificationsButtonActionPerformed
-        layoutPanel.removeAll();
-        layoutPanel.add(notificationPanel);
+        mainWindowLayoutPanel.removeAll();
+        mainWindowLayoutPanel.add(notificationPanel);
         notificationOutputPanel.removeAll();
 
         RealProfile user = main.getLoggedIn();
@@ -1246,8 +1246,8 @@ searchButton1.addActionListener(new java.awt.event.ActionListener() {
 
         notificationOutputPanel.repaint();
         notificationOutputPanel.revalidate();
-        layoutPanel.repaint();
-        layoutPanel.revalidate();
+        mainWindowLayoutPanel.repaint();
+        mainWindowLayoutPanel.revalidate();
     }//GEN-LAST:event_notificationsButtonActionPerformed
 
     /**
@@ -1257,9 +1257,9 @@ searchButton1.addActionListener(new java.awt.event.ActionListener() {
      * @param evt when the user clicks the profile button
      */
     private void profileButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_profileButtonActionPerformed
-        layoutPanel.removeAll();
+        mainWindowLayoutPanel.removeAll();
         userPostPanel.removeAll();
-        layoutPanel.add(profilePanel);
+        mainWindowLayoutPanel.add(profilePanel);
 
         profilePictureLabel.setIcon(main.getLoggedIn().getProfilePic());
         numberFollowersLabel.setText(Integer.toString(
@@ -1282,8 +1282,8 @@ searchButton1.addActionListener(new java.awt.event.ActionListener() {
             userPostPanel.repaint();
         }
 
-        layoutPanel.repaint();
-        layoutPanel.revalidate();
+        mainWindowLayoutPanel.repaint();
+        mainWindowLayoutPanel.revalidate();
     }//GEN-LAST:event_profileButtonActionPerformed
 
     /**
@@ -1292,10 +1292,10 @@ searchButton1.addActionListener(new java.awt.event.ActionListener() {
      * @param evt when the user clicks the settings button
      */
     private void settingsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_settingsButtonActionPerformed
-        layoutPanel.removeAll();
-        layoutPanel.add(settingsPanel);
-        layoutPanel.repaint();
-        layoutPanel.revalidate();
+        mainWindowLayoutPanel.removeAll();
+        mainWindowLayoutPanel.add(settingsPanel);
+        mainWindowLayoutPanel.repaint();
+        mainWindowLayoutPanel.revalidate();
         passwordOutputLabel.setText("");
         changeFirstnameOutputLabel.setText("");
         changeLastnameOutputLabel.setText("");
@@ -1321,8 +1321,8 @@ searchButton1.addActionListener(new java.awt.event.ActionListener() {
      * @param evt when the user clicks the dm button
      */
     private void dmButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dmButtonActionPerformed
-        layoutPanel.removeAll();
-        layoutPanel.add(dmPanel);
+        mainWindowLayoutPanel.removeAll();
+        mainWindowLayoutPanel.add(dmPanel);
         inboxOutputPanel.removeAll();
 
         for (int i = 0; i < main.getLoggedIn().getInbox().size(); i++) {
@@ -1332,8 +1332,8 @@ searchButton1.addActionListener(new java.awt.event.ActionListener() {
 
         inboxOutputPanel.repaint();
         inboxOutputPanel.revalidate();
-        layoutPanel.repaint();
-        layoutPanel.revalidate();
+        mainWindowLayoutPanel.repaint();
+        mainWindowLayoutPanel.revalidate();
     }//GEN-LAST:event_dmButtonActionPerformed
 
     /**
@@ -1947,7 +1947,6 @@ searchButton1.addActionListener(new java.awt.event.ActionListener() {
     private javax.swing.JButton inboxButton;
     private javax.swing.JPanel inboxOutputPanel;
     private javax.swing.JPanel inboxPanel;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane10;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
@@ -1958,7 +1957,8 @@ searchButton1.addActionListener(new java.awt.event.ActionListener() {
     private javax.swing.JScrollPane jScrollPane8;
     private javax.swing.JScrollPane jScrollPane9;
     private javax.swing.JLabel lastnameLabel;
-    private javax.swing.JPanel layoutPanel;
+    private javax.swing.JPanel mainWindowLayoutPanel;
+    private javax.swing.JScrollPane mainWindowScrollPane;
     private javax.swing.JTextArea messageField;
     private javax.swing.JLabel messageLabel;
     private javax.swing.JLabel messageOutputLabel;

@@ -149,7 +149,7 @@ public class ProfilePopUp extends javax.swing.JFrame {
         lastNameLabel = new javax.swing.JLabel();
         followingLabel = new javax.swing.JLabel();
         followButton = new javax.swing.JButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
+        postsScrollPane = new javax.swing.JScrollPane();
         profilePostsPanel = new javax.swing.JPanel();
         menuPanel = new javax.swing.JPanel();
         returnButton = new javax.swing.JButton();
@@ -236,7 +236,7 @@ followButton.addActionListener(new java.awt.event.ActionListener() {
             .addContainerGap())
     );
 
-    jScrollPane1.setPreferredSize(new java.awt.Dimension(534, 404));
+    postsScrollPane.setPreferredSize(new java.awt.Dimension(534, 404));
 
     profilePostsPanel.setMinimumSize(new java.awt.Dimension(534, 404));
 
@@ -251,7 +251,7 @@ followButton.addActionListener(new java.awt.event.ActionListener() {
         .addGap(0, 438, Short.MAX_VALUE)
     );
 
-    jScrollPane1.setViewportView(profilePostsPanel);
+    postsScrollPane.setViewportView(profilePostsPanel);
     profilePostsPanel.setLayout(new BoxLayout(profilePostsPanel, BoxLayout.Y_AXIS));
 
     returnButton.setText("Return");
@@ -287,7 +287,7 @@ followButton.addActionListener(new java.awt.event.ActionListener() {
     layout.setHorizontalGroup(
         layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
         .addComponent(staticProfilePanel, javax.swing.GroupLayout.DEFAULT_SIZE, 534, Short.MAX_VALUE)
-        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        .addComponent(postsScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         .addComponent(menuPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
     );
     layout.setVerticalGroup(
@@ -297,7 +297,7 @@ followButton.addActionListener(new java.awt.event.ActionListener() {
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
             .addComponent(staticProfilePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(postsScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
     );
 
@@ -429,9 +429,9 @@ followButton.addActionListener(new java.awt.event.ActionListener() {
     private javax.swing.JButton followButton;
     private javax.swing.JLabel followersLabel;
     private javax.swing.JLabel followingLabel;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lastNameLabel;
     private javax.swing.JPanel menuPanel;
+    private javax.swing.JScrollPane postsScrollPane;
     private javax.swing.JLabel profilePictureLabel;
     private javax.swing.JPanel profilePostsPanel;
     private javax.swing.JButton returnButton;

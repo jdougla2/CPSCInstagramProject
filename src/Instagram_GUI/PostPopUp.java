@@ -107,13 +107,13 @@ public class PostPopUp extends javax.swing.JFrame {
         postPicture = new javax.swing.JLabel();
         usernameLabel = new javax.swing.JLabel();
         likeLabel = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
+        postCommentsScrollPane = new javax.swing.JScrollPane();
         commentsArea = new javax.swing.JTextArea();
-        jScrollPane3 = new javax.swing.JScrollPane();
+        postTagsScrollPane = new javax.swing.JScrollPane();
         peopleTagedArea = new javax.swing.JTextArea();
-        jScrollPane2 = new javax.swing.JScrollPane();
+        postDiscriptionScrollPane = new javax.swing.JScrollPane();
         captionArea = new javax.swing.JTextArea();
-        jScrollPane4 = new javax.swing.JScrollPane();
+        postHashTagScrollPane = new javax.swing.JScrollPane();
         hashTagsArea = new javax.swing.JTextArea();
         likeButton = new javax.swing.JButton();
         peopleTaggedLabel = new javax.swing.JLabel();
@@ -121,7 +121,7 @@ public class PostPopUp extends javax.swing.JFrame {
         commentsLabel = new javax.swing.JLabel();
         addCommentLabel = new javax.swing.JLabel();
         addCommentButton = new javax.swing.JButton();
-        jScrollPane5 = new javax.swing.JScrollPane();
+        postAddCommentScrollPane = new javax.swing.JScrollPane();
         addCommentArea = new javax.swing.JTextArea();
         dateLabel = new javax.swing.JLabel();
         menuPanel = new javax.swing.JPanel();
@@ -145,25 +145,25 @@ public class PostPopUp extends javax.swing.JFrame {
         commentsArea.setLineWrap(true);
         commentsArea.setRows(5);
         commentsArea.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        jScrollPane1.setViewportView(commentsArea);
+        postCommentsScrollPane.setViewportView(commentsArea);
 
         peopleTagedArea.setEditable(false);
         peopleTagedArea.setColumns(20);
         peopleTagedArea.setLineWrap(true);
         peopleTagedArea.setRows(5);
         peopleTagedArea.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        jScrollPane3.setViewportView(peopleTagedArea);
+        postTagsScrollPane.setViewportView(peopleTagedArea);
 
         captionArea.setEditable(false);
         captionArea.setColumns(20);
         captionArea.setRows(5);
-        jScrollPane2.setViewportView(captionArea);
+        postDiscriptionScrollPane.setViewportView(captionArea);
 
         hashTagsArea.setEditable(false);
         hashTagsArea.setColumns(20);
         hashTagsArea.setLineWrap(true);
         hashTagsArea.setRows(5);
-        jScrollPane4.setViewportView(hashTagsArea);
+        postHashTagScrollPane.setViewportView(hashTagsArea);
 
         likeButton.setText("Like");
         likeButton.setCursor(Cursor.getPredefinedCursor(
@@ -202,7 +202,7 @@ addCommentButton.addActionListener(new java.awt.event.ActionListener() {
 addCommentArea.setLineWrap(true);
 addCommentArea.setRows(5);
 addCommentArea.setToolTipText("");
-jScrollPane5.setViewportView(addCommentArea);
+postAddCommentScrollPane.setViewportView(addCommentArea);
 
 dateLabel.setText("date");
 dateLabel.setPreferredSize(new java.awt.Dimension(100, 21));
@@ -218,41 +218,40 @@ contentPanelLayout.setHorizontalGroup(
                 .addComponent(postPicture, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(contentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(postDiscriptionScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(contentPanelLayout.createSequentialGroup()
                         .addComponent(usernameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(likeLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(18, 45, Short.MAX_VALUE)
+                .addGap(18, 39, Short.MAX_VALUE)
                 .addGroup(contentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(likeButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(dateLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, contentPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addGroup(contentPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(commentsLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(166, 166, 166)
                 .addComponent(addCommentLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(addCommentButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(addCommentButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+        .addContainerGap())
+    .addGroup(contentPanelLayout.createSequentialGroup()
+        .addContainerGap()
+        .addGroup(contentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(contentPanelLayout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(contentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(peopleTaggedLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(peopleTaggedLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(postCommentsScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 272, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(contentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(contentPanelLayout.createSequentialGroup()
                         .addComponent(hashTagsLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(contentPanelLayout.createSequentialGroup()
-                        .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))))
-        .addContainerGap())
+                        .addContainerGap(156, Short.MAX_VALUE))
+                    .addComponent(postAddCommentScrollPane)))
+            .addGroup(contentPanelLayout.createSequentialGroup()
+                .addComponent(postTagsScrollPane)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(postHashTagScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 256, javax.swing.GroupLayout.PREFERRED_SIZE))))
     );
     contentPanelLayout.setVerticalGroup(
         contentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -271,7 +270,7 @@ contentPanelLayout.setHorizontalGroup(
                                 .addComponent(usernameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(likeLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                            .addComponent(postDiscriptionScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)))))
             .addGap(18, 18, 18)
             .addGroup(contentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                 .addGroup(contentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -280,16 +279,16 @@ contentPanelLayout.setHorizontalGroup(
                 .addComponent(addCommentLabel))
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
             .addGroup(contentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(postCommentsScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(postAddCommentScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addGap(18, 18, 18)
             .addGroup(contentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addComponent(peopleTaggedLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addComponent(hashTagsLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addGap(18, 18, 18)
             .addGroup(contentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(postTagsScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(postHashTagScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addContainerGap(96, Short.MAX_VALUE))
     );
 
@@ -470,17 +469,17 @@ contentPanelLayout.setHorizontalGroup(
     private javax.swing.JLabel eagleGramLabel;
     private javax.swing.JTextArea hashTagsArea;
     private javax.swing.JLabel hashTagsLabel;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JScrollPane jScrollPane4;
-    private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JButton likeButton;
     private javax.swing.JLabel likeLabel;
     private javax.swing.JPanel menuPanel;
     private javax.swing.JTextArea peopleTagedArea;
     private javax.swing.JLabel peopleTaggedLabel;
+    private javax.swing.JScrollPane postAddCommentScrollPane;
+    private javax.swing.JScrollPane postCommentsScrollPane;
+    private javax.swing.JScrollPane postDiscriptionScrollPane;
+    private javax.swing.JScrollPane postHashTagScrollPane;
     private javax.swing.JLabel postPicture;
+    private javax.swing.JScrollPane postTagsScrollPane;
     private javax.swing.JButton returnButton;
     private javax.swing.JLabel usernameLabel;
     // End of variables declaration//GEN-END:variables

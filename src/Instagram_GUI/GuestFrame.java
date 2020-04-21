@@ -66,7 +66,7 @@ public class GuestFrame extends javax.swing.JFrame {
         searchButton = new javax.swing.JButton();
         searchInputField = new javax.swing.JTextField();
         searchParameterBox = new javax.swing.JComboBox();
-        jScrollPane1 = new javax.swing.JScrollPane();
+        searchScrollPane = new javax.swing.JScrollPane();
         searchOutputPanel = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -199,7 +199,7 @@ public class GuestFrame extends javax.swing.JFrame {
             .addGap(0, 411, Short.MAX_VALUE)
         );
 
-        jScrollPane1.setViewportView(searchOutputPanel);
+        searchScrollPane.setViewportView(searchOutputPanel);
         searchOutputPanel.setLayout(new BoxLayout(searchOutputPanel, BoxLayout.Y_AXIS));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -211,7 +211,7 @@ public class GuestFrame extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addComponent(bottomMenu, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING))
+                    .addComponent(searchScrollPane, javax.swing.GroupLayout.Alignment.LEADING))
                 .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -221,7 +221,7 @@ public class GuestFrame extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(searchPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 413, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(searchScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 413, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(bottomMenu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -359,7 +359,6 @@ public class GuestFrame extends javax.swing.JFrame {
     private javax.swing.JPanel bottomMenu;
     private javax.swing.JLabel eagleGramLabel;
     private javax.swing.JButton homeButton;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton newPostButton;
     private javax.swing.JButton notificationsButton;
     private javax.swing.JButton profileButton;
@@ -369,6 +368,7 @@ public class GuestFrame extends javax.swing.JFrame {
     private javax.swing.JPanel searchOutputPanel;
     private javax.swing.JPanel searchPanel;
     private javax.swing.JComboBox searchParameterBox;
+    private javax.swing.JScrollPane searchScrollPane;
     private javax.swing.JButton signInButton;
     private javax.swing.JButton signUpButton;
     private javax.swing.JPanel topMenu;
