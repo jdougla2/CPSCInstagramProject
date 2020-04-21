@@ -167,11 +167,6 @@
         <Component class="javax.swing.JLabel" name="errorMessageLabel">
         </Component>
         <Component class="javax.swing.JLabel" name="eagleGramLabel">
-          <Properties>
-            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="2" name="C:\Users\Jose\Desktop\InstagramProject\EagleGram.png"/>
-            </Property>
-          </Properties>
         </Component>
         <Component class="javax.swing.JButton" name="returnButton">
           <Properties>

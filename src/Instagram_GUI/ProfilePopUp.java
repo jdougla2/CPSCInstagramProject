@@ -1,6 +1,7 @@
 package Instagram_GUI;
 
 import Background_Code.*;
+import static Instagram_GUI.EagleGram.scaleImage;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
@@ -45,6 +46,15 @@ public class ProfilePopUp extends javax.swing.JFrame {
         initComponents();
         this.setTitle("EagleGram");
         this.setLocation(width, height);
+        
+        try {
+            ImageIcon emptyPicture = new ImageIcon(scaleImage(
+                    100, 23, ImageIO.read(new File(imagesDir
+                            + "EagleGramTransparent.png"))));
+            eagleGramLabel.setIcon(emptyPicture);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
 
         this.current = current;
         this.lookAt = lookAt;
@@ -141,6 +151,9 @@ public class ProfilePopUp extends javax.swing.JFrame {
         followButton = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         profilePostsPanel = new javax.swing.JPanel();
+        menuPanel = new javax.swing.JPanel();
+        returnButton = new javax.swing.JButton();
+        eagleGramLabel = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -206,8 +219,10 @@ followButton.addActionListener(new java.awt.event.ActionListener() {
     staticProfilePanelLayout.setVerticalGroup(
         staticProfilePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, staticProfilePanelLayout.createSequentialGroup()
-            .addContainerGap(33, Short.MAX_VALUE)
             .addGroup(staticProfilePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(staticProfilePanelLayout.createSequentialGroup()
+                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(profilePictureLabel))
                 .addGroup(staticProfilePanelLayout.createSequentialGroup()
                     .addGroup(staticProfilePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(usernameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -217,8 +232,7 @@ followButton.addActionListener(new java.awt.event.ActionListener() {
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                     .addGroup(staticProfilePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(firstNameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(lastNameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addComponent(profilePictureLabel))
+                        .addComponent(lastNameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
             .addContainerGap())
     );
 
@@ -230,29 +244,61 @@ followButton.addActionListener(new java.awt.event.ActionListener() {
     profilePostsPanel.setLayout(profilePostsPanelLayout);
     profilePostsPanelLayout.setHorizontalGroup(
         profilePostsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-        .addGap(0, 534, Short.MAX_VALUE)
+        .addGap(0, 568, Short.MAX_VALUE)
     );
     profilePostsPanelLayout.setVerticalGroup(
         profilePostsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-        .addGap(0, 404, Short.MAX_VALUE)
+        .addGap(0, 438, Short.MAX_VALUE)
     );
 
     jScrollPane1.setViewportView(profilePostsPanel);
     profilePostsPanel.setLayout(new BoxLayout(profilePostsPanel, BoxLayout.Y_AXIS));
 
+    returnButton.setText("Return");
+    returnButton.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            returnButtonActionPerformed(evt);
+        }
+    });
+
+    javax.swing.GroupLayout menuPanelLayout = new javax.swing.GroupLayout(menuPanel);
+    menuPanel.setLayout(menuPanelLayout);
+    menuPanelLayout.setHorizontalGroup(
+        menuPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, menuPanelLayout.createSequentialGroup()
+            .addContainerGap()
+            .addComponent(returnButton)
+            .addGap(129, 129, 129)
+            .addComponent(eagleGramLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+    );
+    menuPanelLayout.setVerticalGroup(
+        menuPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        .addGroup(menuPanelLayout.createSequentialGroup()
+            .addGap(6, 6, 6)
+            .addGroup(menuPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(eagleGramLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(returnButton))
+            .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+    );
+
     javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
     getContentPane().setLayout(layout);
     layout.setHorizontalGroup(
         layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-        .addComponent(staticProfilePanel, javax.swing.GroupLayout.DEFAULT_SIZE, 555, Short.MAX_VALUE)
+        .addComponent(staticProfilePanel, javax.swing.GroupLayout.DEFAULT_SIZE, 534, Short.MAX_VALUE)
         .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        .addComponent(menuPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
     );
     layout.setVerticalGroup(
         layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
         .addGroup(layout.createSequentialGroup()
+            .addComponent(menuPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
             .addComponent(staticProfilePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
     );
 
     pack();
@@ -306,6 +352,15 @@ followButton.addActionListener(new java.awt.event.ActionListener() {
             main.output();
         }
     }//GEN-LAST:event_followButtonActionPerformed
+
+    private void returnButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_returnButtonActionPerformed
+        // TODO add your handling code here:
+        
+        
+        
+        
+        
+    }//GEN-LAST:event_returnButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -369,14 +424,17 @@ followButton.addActionListener(new java.awt.event.ActionListener() {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel eagleGramLabel;
     private javax.swing.JLabel firstNameLabel;
     private javax.swing.JButton followButton;
     private javax.swing.JLabel followersLabel;
     private javax.swing.JLabel followingLabel;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lastNameLabel;
+    private javax.swing.JPanel menuPanel;
     private javax.swing.JLabel profilePictureLabel;
     private javax.swing.JPanel profilePostsPanel;
+    private javax.swing.JButton returnButton;
     private javax.swing.JPanel staticProfilePanel;
     private javax.swing.JLabel usernameLabel;
     // End of variables declaration//GEN-END:variables

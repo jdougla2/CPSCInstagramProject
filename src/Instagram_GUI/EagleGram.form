@@ -140,7 +140,7 @@
               <Group type="102" alignment="0" attributes="0">
                   <Component id="dmButton" min="-2" pref="100" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="110" max="-2" attributes="0"/>
-                  <Component id="ealgeGramLabel" min="-2" max="-2" attributes="0"/>
+                  <Component id="eagleGramLabel" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="32767" attributes="0"/>
                   <Component id="settingsButton" min="-2" pref="100" max="-2" attributes="0"/>
               </Group>
@@ -148,7 +148,7 @@
         </DimensionLayout>
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Component id="ealgeGramLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+              <Component id="eagleGramLabel" alignment="0" min="-2" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="dmButton" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="settingsButton" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -179,7 +179,7 @@
             <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="settingsButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));"/>
           </AuxValues>
         </Component>
-        <Component class="javax.swing.JLabel" name="ealgeGramLabel">
+        <Component class="javax.swing.JLabel" name="eagleGramLabel">
         </Component>
       </SubComponents>
     </Container>

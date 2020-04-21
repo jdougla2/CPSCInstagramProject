@@ -1,7 +1,11 @@
 package Instagram_GUI;
 
 import Background_Code.CurrentProfile;
+import static Instagram_GUI.GuestFrame.scaleImage;
 import java.awt.*;
+import java.io.File;
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -16,8 +20,12 @@ import java.awt.*;
  */
 public class Login extends javax.swing.JFrame {
 
-    int width = (Toolkit.getDefaultToolkit().getScreenSize().width / 2) - 150;
-    int height = (Toolkit.getDefaultToolkit().getScreenSize().height / 2) - 150;
+    private String fileSeparator = System.getProperty("file.separator");
+    private String workingDir = System.getProperty("user.dir");
+    private String imagesDir =  workingDir + fileSeparator + "src"
+            + fileSeparator + "Images" + fileSeparator;
+    private int width = (Toolkit.getDefaultToolkit().getScreenSize().width / 2) - 150;
+    private int height = (Toolkit.getDefaultToolkit().getScreenSize().height / 2) - 150;
 
     /**
      * Constructor to initiate the login GUI
@@ -26,6 +34,14 @@ public class Login extends javax.swing.JFrame {
         initComponents();
         this.setTitle("EagleGram");
         this.setLocation(width, height);
+        try {
+            ImageIcon eaglePicture = new ImageIcon(scaleImage(
+                    100, 23, ImageIO.read(new File(imagesDir
+                            + "EagleGramTransparent.png"))));
+            eagleGramLabel.setIcon(eaglePicture);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
     }
 
     /**
@@ -75,7 +91,6 @@ public class Login extends javax.swing.JFrame {
         });
 
         eagleGramLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        eagleGramLabel.setIcon(new javax.swing.ImageIcon("C:\\Users\\Jose\\Desktop\\InstagramProject\\EagleGram.png")); // NOI18N
         eagleGramLabel.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         eagleGramLabel.setPreferredSize(new java.awt.Dimension(51, 14));
 
@@ -106,7 +121,7 @@ public class Login extends javax.swing.JFrame {
                 .addContainerGap())
             .addGroup(layout.createSequentialGroup()
                 .addGap(89, 89, 89)
-                .addComponent(eagleGramLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(eagleGramLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(

@@ -39,6 +39,14 @@ public class EagleGram extends javax.swing.JFrame {
         this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         main.logIn(loggedIn.getUsername(), loggedIn.getPassword());
 
+        try {
+            ImageIcon emptyPicture = new ImageIcon(scaleImage(
+                    100, 23, ImageIO.read(new File(imagesDir
+                            + "EagleGramTransparent.png"))));
+            eagleGramLabel.setIcon(emptyPicture);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
         profilePictureLabel.setIcon(main.getLoggedIn().getProfilePic());
         firstnameLabel.setText(main.getLoggedIn().getFirstName());
         lastnameLabel.setText(main.getLoggedIn().getLastName());
@@ -100,7 +108,7 @@ public class EagleGram extends javax.swing.JFrame {
         topMenu = new javax.swing.JPanel();
         dmButton = new javax.swing.JButton();
         settingsButton = new javax.swing.JButton();
-        ealgeGramLabel = new javax.swing.JLabel();
+        eagleGramLabel = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         layoutPanel = new javax.swing.JPanel();
         homePanel = new javax.swing.JPanel();
@@ -278,8 +286,6 @@ public class EagleGram extends javax.swing.JFrame {
             }
         });
 
-        ealgeGramLabel.setIcon(new javax.swing.ImageIcon("C:\\Users\\Jose\\Desktop\\InstagramProject\\EagleGram.png")); // NOI18N
-
         javax.swing.GroupLayout topMenuLayout = new javax.swing.GroupLayout(topMenu);
         topMenu.setLayout(topMenuLayout);
         topMenuLayout.setHorizontalGroup(
@@ -287,13 +293,13 @@ public class EagleGram extends javax.swing.JFrame {
             .addGroup(topMenuLayout.createSequentialGroup()
                 .addComponent(dmButton, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(110, 110, 110)
-                .addComponent(ealgeGramLabel)
+                .addComponent(eagleGramLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(settingsButton, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         topMenuLayout.setVerticalGroup(
             topMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(ealgeGramLabel)
+            .addComponent(eagleGramLabel)
             .addGroup(topMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                 .addComponent(dmButton)
                 .addComponent(settingsButton))
@@ -410,8 +416,6 @@ searchButton1.addActionListener(new java.awt.event.ActionListener() {
             uploadPictureButtonActionPerformed(evt);
         }
     });
-
-    uploadedPictureLabel.setIcon(new javax.swing.ImageIcon("C:\\Users\\Jose\\Desktop\\InstagramProject\\Empty Image.jpg")); // NOI18N
 
     captionField.setColumns(20);
     captionField.setRows(5);
@@ -540,7 +544,6 @@ searchButton1.addActionListener(new java.awt.event.ActionListener() {
     profilePanel.setMaximumSize(new java.awt.Dimension(536, 466));
     profilePanel.setMinimumSize(new java.awt.Dimension(536, 466));
 
-    profilePictureLabel.setIcon(new javax.swing.ImageIcon("C:\\Users\\Jose\\Desktop\\InstagramProject\\ProfilePicture.png")); // NOI18N
     /*try {
         ImageIcon ii=new ImageIcon(scaleImage(77, 77, ImageIO.read(new File(System.getProperty("user.dir")+"\\ProfilePicture.png"))));
         if(main.getLoggedIn().getProfilePic() != null){
@@ -778,8 +781,6 @@ searchButton1.addActionListener(new java.awt.event.ActionListener() {
             }
         });
 
-        dmPhotoLabel.setIcon(new javax.swing.ImageIcon("C:\\Users\\Jose\\Desktop\\InstagramProject\\Empty Image.jpg")); // NOI18N
-
         javax.swing.GroupLayout newMessagePanelLayout = new javax.swing.GroupLayout(newMessagePanel);
         newMessagePanel.setLayout(newMessagePanelLayout);
         newMessagePanelLayout.setHorizontalGroup(
@@ -928,8 +929,6 @@ searchButton1.addActionListener(new java.awt.event.ActionListener() {
                 changeProfilePhotoButtonActionPerformed(evt);
             }
         });
-
-        changeProfilePictureLabel.setIcon(new javax.swing.ImageIcon("C:\\Users\\Jose\\Desktop\\InstagramProject\\ProfilePicture.png")); // NOI18N
 
         commitPhotoChangeButton.setText("Commit");
         commitPhotoChangeButton.addActionListener(new java.awt.event.ActionListener() {
@@ -1937,7 +1936,7 @@ searchButton1.addActionListener(new java.awt.event.ActionListener() {
     private javax.swing.JPanel dmPanel;
     private javax.swing.JButton dmPhotoButton;
     private javax.swing.JLabel dmPhotoLabel;
-    private javax.swing.JLabel ealgeGramLabel;
+    private javax.swing.JLabel eagleGramLabel;
     private javax.swing.JPanel feedPanel;
     private javax.swing.JLabel firstnameLabel;
     private javax.swing.JButton followButton;

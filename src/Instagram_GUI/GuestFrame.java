@@ -1,9 +1,12 @@
 package Instagram_GUI;
 
 import Background_Code.*;
+import static Instagram_GUI.EagleGram.scaleImage;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
+import java.io.File;
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.Border;
 
@@ -16,8 +19,12 @@ import javax.swing.border.Border;
  */
 public class GuestFrame extends javax.swing.JFrame {
 
-    int width = (Toolkit.getDefaultToolkit().getScreenSize().width / 2) - 262;
-    int height = (Toolkit.getDefaultToolkit().getScreenSize().height / 2) - 250;
+    private String fileSeparator = System.getProperty("file.separator");
+    private String workingDir = System.getProperty("user.dir");
+    private String imagesDir =  workingDir + fileSeparator + "src"
+            + fileSeparator + "Images" + fileSeparator;
+    private int width = (Toolkit.getDefaultToolkit().getScreenSize().width / 2) - 262;
+    private int height = (Toolkit.getDefaultToolkit().getScreenSize().height / 2) - 250;
 
     /**
      * Creates new form GuestFrame
@@ -26,6 +33,14 @@ public class GuestFrame extends javax.swing.JFrame {
         initComponents();
         this.setTitle("EagleGram");
         this.setLocation(width, height);
+        try {
+            ImageIcon emptyPicture = new ImageIcon(scaleImage(
+                    100, 23, ImageIO.read(new File(imagesDir
+                            + "EagleGramTransparent.png"))));
+            eagleGramLabel.setIcon(emptyPicture);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
     }
 
     /**

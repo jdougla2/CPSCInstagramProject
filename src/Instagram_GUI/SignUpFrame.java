@@ -1,7 +1,11 @@
 package Instagram_GUI;
 
 import Background_Code.CurrentProfile;
+import static Instagram_GUI.GuestFrame.scaleImage;
 import java.awt.Toolkit;
+import java.io.File;
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 
 /**
  * This class deals with the GUI where the user will be able to sign an account
@@ -11,16 +15,30 @@ import java.awt.Toolkit;
  */
 public class SignUpFrame extends javax.swing.JFrame {
 
-    int width = (Toolkit.getDefaultToolkit().getScreenSize().width / 2) - 150;
-    int height = (Toolkit.getDefaultToolkit().getScreenSize().height / 2) - 150;
+    private String fileSeparator = System.getProperty("file.separator");
+    private String workingDir = System.getProperty("user.dir");
+    private String imagesDir =  workingDir + fileSeparator + "src"
+            + fileSeparator + "Images" + fileSeparator;
+    private int width = (Toolkit.getDefaultToolkit().getScreenSize().width / 2) - 150;
+    private int height = (Toolkit.getDefaultToolkit().getScreenSize().height / 2) - 150;
 
     /**
      * Creates a new SignUp frame
      */
     public SignUpFrame() {
         initComponents();
-        this.setTitle("EagleGram");
+        //this.setTitle("EagleGram");
+        
         this.setLocation(width, height);
+        try {
+            ImageIcon eaglePicture = new ImageIcon(scaleImage(
+                    100, 23, ImageIO.read(new File(imagesDir
+                            + "EagleGramTransparent.png"))));
+            eagleGramLabel.setIcon(eaglePicture);
+            this.setIconImage(eaglePicture.getImage());
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
     }
 
     /**
