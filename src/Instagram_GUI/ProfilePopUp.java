@@ -89,8 +89,8 @@ public class ProfilePopUp extends javax.swing.JFrame {
                 ImageIcon picture = null;
                 try {
                     picture = new ImageIcon(scaleImage(
-                            120, 120, ImageIO.read(new File(System.getProperty(
-                                    imagesDir + "LockedAccount.png")))));
+                            120, 120, ImageIO.read(new File(imagesDir
+                                    + "LockedAccount.png"))));
                 } catch (Exception ex) {
                     ex.printStackTrace();
                 }
