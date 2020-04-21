@@ -266,7 +266,20 @@ public class GuestFrame extends javax.swing.JFrame {
         RealProfile user = null;
         int postIndex = 0;
 
-        if (parameter.equalsIgnoreCase("hash tags")) {
+        if (parameter.equalsIgnoreCase("Username")){
+            for (int i = 0; i < main.getAllProfiles().size(); i++){
+                if(main.getAllProfiles().get(i).getUsername().toLowerCase(
+                    ).contains(input.toLowerCase())){
+                    user = main.getAllProfiles().get(i);
+                    if (!user.getUsername().equalsIgnoreCase("guest")){
+                        postIndex = i;
+                        searchOutputPanel.add(new SearchOutputPanel(parameter,
+                                    input, user, postIndex));
+                    }
+                }
+            }
+        }
+        else if (parameter.equalsIgnoreCase("hash tags")) {
             for (int i = 0; i < main.getAllProfiles().size(); i++) {
                 for (int j = 0; j
                         < main.getAllProfiles().get(i).getPosts().size(); j++) {
@@ -486,16 +499,7 @@ public class GuestFrame extends javax.swing.JFrame {
                 });
                 add(pictureLabel, createGbc(0, 0));
             } else if (method.equalsIgnoreCase("username")) {
-                RealProfile lookingAt = null;
-                for (int i = 0; i < main.getAllProfiles().size(); i++) {
-                    if (main.getAllProfiles().get(i).getUsername()
-                            .equalsIgnoreCase(searchInput)) {
-                        lookingAt = main.getAllProfiles().get(i);
-                    }
-                }
-
-                if (lookingAt != null) {
-                    String username = lookingAt.getUsername();
+                    String username = user.getUsername();
 
                     JLabel usernameLabel = new JLabel();
                     usernameLabel.setText(username);
@@ -535,7 +539,7 @@ public class GuestFrame extends javax.swing.JFrame {
                     JLabel pictureLabel = new JLabel();
                     pictureLabel.setSize(77, 77);
                     try {
-                        pictureLabel.setIcon(lookingAt.getProfilePic());
+                        pictureLabel.setIcon(user.getProfilePic());
                     } catch (Exception ex) {
                         ex.printStackTrace();
                     }
@@ -572,7 +576,6 @@ public class GuestFrame extends javax.swing.JFrame {
                         }
                     });
                     add(pictureLabel, createGbc(0, 0));
-                }
             }
         }
 
