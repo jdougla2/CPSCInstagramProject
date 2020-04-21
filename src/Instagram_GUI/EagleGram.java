@@ -1740,9 +1740,12 @@ searchButton1.addActionListener(new java.awt.event.ActionListener() {
         RealProfile user = null;
         for (int i = 0; i < main.getAllProfiles().size(); i++) {
             if (main.getAllProfiles().get(i).getUsername().equals(username)) {
-                realUser = true;
-                user = main.getAllProfiles().get(i);
-                break;
+                if (!main.getAllProfiles().get(i).getUsername()
+                        .equalsIgnoreCase("guest")){
+                    realUser = true;
+                    user = main.getAllProfiles().get(i);
+                    break;
+                }
             }
         }
 
