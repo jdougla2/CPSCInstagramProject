@@ -151,21 +151,15 @@ public class Login extends javax.swing.JFrame {
         for (int i = 0; i < main.getAllProfiles().size(); i++) {
             String otherUsername
                     = main.getAllProfiles().get(i).getUsername();
-            if (username.equals(otherUsername)) {
+            if (username.equals(otherUsername) && !username.equalsIgnoreCase("guest")) {
                 userExists = true;
             }
         }
         if (userExists) {
             if (logInSuccess) {
-                if (main.getLoggedIn().getUsername().equalsIgnoreCase("guest")) {
-                    GuestFrame x = new GuestFrame();
-                    x.setVisible(true);
-                    super.dispose();
-                } else {
-                    EagleGram y = new EagleGram(main.getLoggedIn());
-                    y.setVisible(true);
-                    super.dispose();
-                }
+                EagleGram y = new EagleGram(main.getLoggedIn());
+                y.setVisible(true);
+                super.dispose();
             } else {
                 errorMessageLabel.setText("Password incorrect.");
             }
