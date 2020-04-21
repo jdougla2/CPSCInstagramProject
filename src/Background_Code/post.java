@@ -22,9 +22,9 @@ public class post implements Serializable {
     private ArrayList<String> comments = new ArrayList<String>();
     private ArrayList<String> tags = new ArrayList<String>();
     private ArrayList<String> hashtags = new ArrayList<String>();
-    SimpleDateFormat format = new SimpleDateFormat("MM-dd HH:mm");
-    Date date = new Date();
-    String time = format.format(date);
+    private SimpleDateFormat format = new SimpleDateFormat("MM-dd HH:mm");
+    private Date date = new Date();
+    private String time = format.format(date);
     private int likes;
     private static final long serialVersionUID = -8245875722878500126L;
 

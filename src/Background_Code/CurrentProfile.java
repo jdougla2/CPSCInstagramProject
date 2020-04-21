@@ -227,23 +227,4 @@ public class CurrentProfile {
     public ArrayList<RealProfile> getAllProfiles() {
         return allProfiles;
     }
-
-    /**
-     * Returns all users that contain the searchInput
-     * 
-     * @param searchInput user input to search on
-     * @return all users that contain the searchInput
-     */
-    public ArrayList<RealProfile> profileSearch(String searchInput) {
-        ArrayList<RealProfile> returnList = new ArrayList<RealProfile>();
-        for(int i= 0; i < allProfiles.size(); i++){
-            System.out.println(allProfiles.get(i).getUsername().toLowerCase()
-                    .contains(searchInput));
-            if (allProfiles.get(i).getUsername().toLowerCase()
-                    .contains(searchInput)){
-                returnList.add(allProfiles.get(i));
-            }
-        }
-        return null;
-    }
 }
