@@ -1,7 +1,6 @@
 package Instagram_GUI;
 
 import Background_Code.*;
-import static Instagram_GUI.EagleGram.scaleImage;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
@@ -19,6 +18,7 @@ import javax.swing.border.Border;
  */
 public class GuestFrame extends javax.swing.JFrame {
 
+    private JFrame mainWindow;
     private String fileSeparator = System.getProperty("file.separator");
     private String workingDir = System.getProperty("user.dir");
     private String imagesDir =  workingDir + fileSeparator + "src"
@@ -30,16 +30,16 @@ public class GuestFrame extends javax.swing.JFrame {
      * Creates new form GuestFrame
      */
     public GuestFrame() {
+        mainWindow = this;
         initComponents();
         this.setTitle("EagleGram");
         this.setLocation(width, height);
         try {
-            ImageIcon emptyPicture = new ImageIcon(scaleImage(
+            ImageIcon eaglePicture = new ImageIcon(scaleImage(
                     100, 23, ImageIO.read(new File(imagesDir
                             + "EagleGramTransparent.png"))));
-            eagleGramLabel.setIcon(emptyPicture);
+            eagleGramLabel.setIcon(eaglePicture);
         } catch (Exception ex) {
-            ex.printStackTrace();
         }
     }
 
@@ -235,6 +235,7 @@ public class GuestFrame extends javax.swing.JFrame {
      * @param evt when the user clicks the sign in button
      */
     private void signInButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_signInButtonActionPerformed
+        main.close();
         Login z = new Login();
         z.setVisible(true);
         super.dispose();
@@ -246,6 +247,7 @@ public class GuestFrame extends javax.swing.JFrame {
      * @param evt when the user clicks the sign up button
      */
     private void signUpButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_signUpButtonActionPerformed
+        main.close();
         SignUpFrame y = new SignUpFrame();
         y.setVisible(true);
         super.dispose();
@@ -263,14 +265,13 @@ public class GuestFrame extends javax.swing.JFrame {
         String parameter = searchParameterBox.getSelectedItem().toString();
 
         //add search output
-        RealProfile user = null;
         int postIndex = 0;
 
         if (parameter.equalsIgnoreCase("Username")){
             for (int i = 0; i < main.getAllProfiles().size(); i++){
                 if(main.getAllProfiles().get(i).getUsername().toLowerCase(
                     ).contains(input.toLowerCase())){
-                    user = main.getAllProfiles().get(i);
+                    RealProfile user = main.getAllProfiles().get(i);
                     if (!user.getUsername().equalsIgnoreCase("guest")){
                         postIndex = i;
                         searchOutputPanel.add(new SearchOutputPanel(parameter,
@@ -288,7 +289,7 @@ public class GuestFrame extends javax.swing.JFrame {
                         if (main.getAllProfiles().get(i)
                                 .getPosts().get(j).getHashtags().get(x)
                                 .equalsIgnoreCase(input)) {
-                            user = main.getAllProfiles().get(i);
+                            RealProfile user = main.getAllProfiles().get(i);
                             postIndex = j;
                             searchOutputPanel.add(new SearchOutputPanel(parameter,
                                     input, user, postIndex));
@@ -305,7 +306,7 @@ public class GuestFrame extends javax.swing.JFrame {
                         if (main.getAllProfiles().get(i)
                                 .getPosts().get(j).getTagged().get(x)
                                 .equalsIgnoreCase(input)) {
-                            user = main.getAllProfiles().get(i);
+                            RealProfile user = main.getAllProfiles().get(i);
                             postIndex = j;
                             searchOutputPanel.add(new SearchOutputPanel(parameter,
                                     input, user, postIndex));
@@ -492,9 +493,9 @@ public class GuestFrame extends javax.swing.JFrame {
                                 user.getPosts().get(postIndex).getComments(),
                                 user.getPosts().get(postIndex).getHashtags(),
                                 user.getPosts().get(postIndex).getTagged(),
-                                main.getLoggedIn(), liked);
-
+                                main.getLoggedIn(), liked, mainWindow);
                         frame.setVisible(true);
+                        mainWindow.setVisible(false);
                     }
                 });
                 add(pictureLabel, createGbc(0, 0));
@@ -530,8 +531,9 @@ public class GuestFrame extends javax.swing.JFrame {
                                     current.getFollowers().size(),
                                     current.getFollowing().size(),
                                     follows, current, main.getLoggedIn(),
-                                    current.getPrivacy());
+                                    current.getPrivacy(),mainWindow);
                             popUp.setVisible(true);
+                            mainWindow.setVisible(false);
                         }
                     });
                     add(usernameLabel, createGbc(1, 0));
@@ -571,8 +573,9 @@ public class GuestFrame extends javax.swing.JFrame {
                                     current.getFollowers().size(),
                                     current.getFollowing().size(),
                                     follows, current, main.getLoggedIn(),
-                                    current.getPrivacy());
+                                    current.getPrivacy(),mainWindow);
                             popUp.setVisible(true);
+                            mainWindow.setVisible(false);
                         }
                     });
                     add(pictureLabel, createGbc(0, 0));

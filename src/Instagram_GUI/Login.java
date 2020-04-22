@@ -191,6 +191,7 @@ public class Login extends javax.swing.JFrame {
      */
     private void guestLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_guestLoginActionPerformed
         // TODO add your handling code here:
+        main.logIn("guest", "guest");
         GuestFrame x = new GuestFrame();
         x.setVisible(true);
         super.dispose();

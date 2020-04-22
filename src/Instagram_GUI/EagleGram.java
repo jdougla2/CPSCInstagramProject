@@ -18,6 +18,7 @@ import javax.swing.border.Border;
  */
 public class EagleGram extends javax.swing.JFrame {
 
+    private JFrame mainWindow;
     private String fileSeparator = System.getProperty("file.separator");
     private String workingDir = System.getProperty("user.dir");
     private String imagesDir =  workingDir + fileSeparator + "src"
@@ -33,6 +34,7 @@ public class EagleGram extends javax.swing.JFrame {
      * @param loggedIn the current user that is logged in
      */
     public EagleGram(RealProfile loggedIn) {
+        mainWindow = this;
         initComponents();
         this.setTitle("EagleGram");
         this.setLocation(width, height);
@@ -2077,8 +2079,10 @@ searchButton1.addActionListener(new java.awt.event.ActionListener() {
                                 actor.getFirstName(), actor.getLastName(),
                                 actor.getFollowers().size(),
                                 actor.getFollowing().size(),
-                                follows, actor, receiver, actor.getPrivacy());
+                                follows, actor, receiver, actor.getPrivacy(),
+                                mainWindow);
                         frame.setVisible(true);
+                        mainWindow.setVisible(false);
                     }
                 });
                 add(usernameLabel, createGbc(0, 0));
@@ -2121,8 +2125,10 @@ searchButton1.addActionListener(new java.awt.event.ActionListener() {
                                 receiver.getFirstName(), receiver.getLastName(),
                                 receiver.getFollowers().size(),
                                 receiver.getFollowing().size(),
-                                follows, receiver, actor, receiver.getPrivacy());
+                                follows, receiver, actor, receiver.getPrivacy(),
+                                mainWindow);
                         frame.setVisible(true);
+                        mainWindow.setVisible(false);
                     }
                 });
                 add(usernameLabel, createGbc(0, 0));
@@ -2150,7 +2156,7 @@ searchButton1.addActionListener(new java.awt.event.ActionListener() {
                                     actor.getPosts().get(postIndex).getComments(),
                                     actor.getPosts().get(postIndex).getHashtags(),
                                     actor.getPosts().get(postIndex).getTagged(),
-                                    main.getLoggedIn(), false);
+                                    main.getLoggedIn(), false, mainWindow);
 
                             frame.setVisible(true);
                         }
@@ -2251,8 +2257,10 @@ searchButton1.addActionListener(new java.awt.event.ActionListener() {
                                 sender.getFirstName(), sender.getLastName(),
                                 sender.getFollowers().size(),
                                 sender.getFollowing().size(),
-                                follows, sender, user, sender.getPrivacy());
+                                follows, sender, user, sender.getPrivacy(),
+                                mainWindow);
                         frame.setVisible(true);
+                        mainWindow.setVisible(false);
                     }
                 });
                 add(usernameLabel, createGbc(0, 0));
@@ -2308,8 +2316,10 @@ searchButton1.addActionListener(new java.awt.event.ActionListener() {
                                 reciever.getFirstName(), reciever.getLastName(),
                                 reciever.getFollowers().size(),
                                 reciever.getFollowing().size(),
-                                follows, reciever, user, reciever.getPrivacy());
+                                follows, reciever, user, reciever.getPrivacy(),
+                                mainWindow);
                         frame.setVisible(true);
+                        mainWindow.setVisible(false);
                     }
                 });
                 add(usernameLabel, createGbc(0, 0));
@@ -2420,7 +2430,7 @@ searchButton1.addActionListener(new java.awt.event.ActionListener() {
                             user.getPosts().get(postIndex).getComments(),
                             user.getPosts().get(postIndex).getHashtags(),
                             user.getPosts().get(postIndex).getTagged(),
-                            main.getLoggedIn(), liked);
+                            main.getLoggedIn(), liked, mainWindow);
 
                     frame.setVisible(true);
                 }
@@ -2530,9 +2540,9 @@ searchButton1.addActionListener(new java.awt.event.ActionListener() {
                                 user.getPosts().get(postIndex).getComments(),
                                 user.getPosts().get(postIndex).getHashtags(),
                                 user.getPosts().get(postIndex).getTagged(),
-                                main.getLoggedIn(), liked);
-
+                                main.getLoggedIn(), liked, mainWindow);
                         frame.setVisible(true);
+                        mainWindow.dispose();
                     }
                 });
                 add(pictureLabel, createGbc(0, 0));
@@ -2569,8 +2579,9 @@ searchButton1.addActionListener(new java.awt.event.ActionListener() {
                                 current.getFollowers().size(),
                                 current.getFollowing().size(),
                                 follows, current, main.getLoggedIn(),
-                                current.getPrivacy());
+                                current.getPrivacy(), mainWindow);
                         popUp.setVisible(true);
+                        mainWindow.setVisible(false);
                     }
                 });
                 add(usernameLabel, createGbc(1, 0));
@@ -2610,8 +2621,11 @@ searchButton1.addActionListener(new java.awt.event.ActionListener() {
                                 current.getFollowers().size(),
                                 current.getFollowing().size(),
                                 follows, current, main.getLoggedIn(),
-                                current.getPrivacy());
+                                current.getPrivacy(),mainWindow);
                         popUp.setVisible(true);
+                        System.out.println("Loged in: "
+                                + main.getLoggedIn().getUsername());
+                        mainWindow.setVisible(false);
                     }
                 });
                 add(pictureLabel, createGbc(0, 0));

@@ -1,7 +1,6 @@
 package Instagram_GUI;
 
 import Background_Code.*;
-import static Instagram_GUI.EagleGram.scaleImage;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
@@ -18,14 +17,6 @@ import javax.swing.border.Border;
  * @author Jose
  */
 public class ProfilePopUp extends javax.swing.JFrame {
-
-    private String fileSeparator = System.getProperty("file.separator");
-    private String workingDir = System.getProperty("user.dir");
-    private String imagesDir =  workingDir + fileSeparator + "src"
-            + fileSeparator + "Images" + fileSeparator;
-    int width = (Toolkit.getDefaultToolkit().getScreenSize().width / 2) - 262;
-    int height = (Toolkit.getDefaultToolkit().getScreenSize().height / 2) - 250;
-
     /**
      * Constructor for the profile pop up frame
      *
@@ -42,20 +33,22 @@ public class ProfilePopUp extends javax.swing.JFrame {
      */
     public ProfilePopUp(Icon i, String username, String firstname,
             String lastname, int followers, int following, boolean follow,
-            RealProfile lookAt, RealProfile current, boolean privacy) {
+            RealProfile lookAt, RealProfile current, boolean privacy,
+            JFrame mainWindow) {
         initComponents();
         this.setTitle("EagleGram");
         this.setLocation(width, height);
         
         try {
-            ImageIcon emptyPicture = new ImageIcon(scaleImage(
+            ImageIcon eaglePicture = new ImageIcon(scaleImage(
                     100, 23, ImageIO.read(new File(imagesDir
                             + "EagleGramTransparent.png"))));
-            eagleGramLabel.setIcon(emptyPicture);
+            eagleGramLabel.setIcon(eaglePicture);
         } catch (Exception ex) {
             ex.printStackTrace();
         }
 
+        this.mainWindow = mainWindow;
         this.current = current;
         this.lookAt = lookAt;
         this.follow = follow;
@@ -354,12 +347,14 @@ followButton.addActionListener(new java.awt.event.ActionListener() {
     }//GEN-LAST:event_followButtonActionPerformed
 
     private void returnButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_returnButtonActionPerformed
-        // TODO add your handling code here:
-        
-        
-        
-        
-        
+        System.out.println(current.getUsername());
+        if (current.getUsername().equalsIgnoreCase("guest")){
+            mainWindow.setVisible(true);
+            super.dispose();
+        }else{
+            mainWindow.setVisible(true);
+            super.dispose();
+        } 
     }//GEN-LAST:event_returnButtonActionPerformed
 
     /**
@@ -395,7 +390,8 @@ followButton.addActionListener(new java.awt.event.ActionListener() {
             @Override
             public void run() {
                 new ProfilePopUp(null, "username", "firstname",
-                        "lastname", 0, 0, false, null, null, false).setVisible(true);
+                        "lastname", 0, 0, false, null, null, false,
+                null).setVisible(true);
             }
         });
     }
@@ -443,6 +439,13 @@ followButton.addActionListener(new java.awt.event.ActionListener() {
     private RealProfile current;
     private boolean follow;
     private static ImageIcon ii;
+    private JFrame mainWindow;
+    private String fileSeparator = System.getProperty("file.separator");
+    private String workingDir = System.getProperty("user.dir");
+    private String imagesDir =  workingDir + fileSeparator + "src"
+            + fileSeparator + "Images" + fileSeparator;
+    int width = (Toolkit.getDefaultToolkit().getScreenSize().width / 2) - 262;
+    int height = (Toolkit.getDefaultToolkit().getScreenSize().height / 2) - 250;
 
     /**
      * Creates a new panel for the users post

@@ -17,16 +17,6 @@ import javax.swing.*;
  * @author Jose
  */
 public class PostPopUp extends javax.swing.JFrame {
-
-    private String fileSeparator = System.getProperty("file.separator");
-    private String workingDir = System.getProperty("user.dir");
-    private String imagesDir =  workingDir + fileSeparator + "src"
-            + fileSeparator + "Images" + fileSeparator;
-    private boolean liked;
-    private int likes;
-    int width = (Toolkit.getDefaultToolkit().getScreenSize().width / 2) - 262;
-    int height = (Toolkit.getDefaultToolkit().getScreenSize().height / 2) - 250;
-
     /**
      * Constructor for the post pop up class
      *
@@ -44,16 +34,17 @@ public class PostPopUp extends javax.swing.JFrame {
     public PostPopUp(Icon ii, RealProfile lookingAt, int postIndex,
             int likes,
             String caption, ArrayList<String> comments, ArrayList<String> hashTags,
-            ArrayList<String> peopleTaged, RealProfile loggedIn, boolean liked) {
+            ArrayList<String> peopleTaged, RealProfile loggedIn, boolean liked,
+            JFrame mainWindow) {
         initComponents();
         this.setTitle("EagleGram");
         this.setLocation(width, height);
         
         try {
-            ImageIcon emptyPicture = new ImageIcon(scaleImage(
+            ImageIcon eaglePicture = new ImageIcon(scaleImage(
                     100, 23, ImageIO.read(new File(imagesDir
                             + "EagleGramTransparent.png"))));
-            eagleGramLabel.setIcon(emptyPicture);
+            eagleGramLabel.setIcon(eaglePicture);
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -65,6 +56,7 @@ public class PostPopUp extends javax.swing.JFrame {
         likeLabel.setText("LIKES: " + likes);
         this.likes = likes;
         this.liked = liked;
+        this.mainWindow = mainWindow;
 
         this.lookingAt = lookingAt;
         if (lookingAt.getUsername().equalsIgnoreCase(loggedIn.getUsername())) {
@@ -394,8 +386,6 @@ contentPanelLayout.setHorizontalGroup(
      * @param evt when the user clicks the add comment button
      */
     private void addCommentButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addCommentButtonActionPerformed
-        // TODO add your handling code here:
-        //add comments
         if (!addCommentArea.getText().equalsIgnoreCase("")) {
             commentsArea.append(loggedIn.getUsername() + ": "
                     + addCommentArea.getText() + "\n");
@@ -417,8 +407,19 @@ contentPanelLayout.setHorizontalGroup(
         }
     }//GEN-LAST:event_addCommentButtonActionPerformed
 
+    /**
+     * Returns user to the main window
+     * 
+     * @param evt 
+     */
     private void returnButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_returnButtonActionPerformed
-        // TODO add your handling code here:
+        if(loggedIn.getUsername().equalsIgnoreCase("guest")){
+            mainWindow.setVisible(true);
+            super.dispose();
+        }else{
+            mainWindow.setVisible(true);
+            super.dispose();
+        }
     }//GEN-LAST:event_returnButtonActionPerformed
 
     /**
@@ -452,7 +453,7 @@ contentPanelLayout.setHorizontalGroup(
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new PostPopUp(null, null, 0, 2, "this is a caption",
-                        null, null, null, null, false).setVisible(true);
+                        null, null, null, null, false, null).setVisible(true);
             }
         });
     }
@@ -483,6 +484,15 @@ contentPanelLayout.setHorizontalGroup(
     private javax.swing.JButton returnButton;
     private javax.swing.JLabel usernameLabel;
     // End of variables declaration//GEN-END:variables
+    int width = (Toolkit.getDefaultToolkit().getScreenSize().width / 2) - 262;
+    int height = (Toolkit.getDefaultToolkit().getScreenSize().height / 2) - 250;
+    private String fileSeparator = System.getProperty("file.separator");
+    private String workingDir = System.getProperty("user.dir");
+    private String imagesDir =  workingDir + fileSeparator + "src"
+            + fileSeparator + "Images" + fileSeparator;
+    private boolean liked;
+    private int likes;
+    private final JFrame mainWindow;
     private CurrentProfile main = new CurrentProfile();
     private RealProfile lookingAt;
     private RealProfile loggedIn;
