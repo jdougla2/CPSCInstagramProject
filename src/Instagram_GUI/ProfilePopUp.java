@@ -448,18 +448,18 @@ followButton.addActionListener(new java.awt.event.ActionListener() {
     int height = (Toolkit.getDefaultToolkit().getScreenSize().height / 2) - 250;
 
     /**
-     * Creates a new panel for the users post
+     * Creates a new panel for the users Post
      */
     private class UserPanel extends JPanel {
 
         /**
          * Constructor for UserPanel
          *
-         * @param ii icon for this post
-         * @param caption caption for this post
-         * @param date date this post was posted
-         * @param likes number of like this post has
-         * @param privacy privacy setting of the owner of this post
+         * @param ii icon for this Post
+         * @param caption caption for this Post
+         * @param date date this Post was posted
+         * @param likes number of like this Post has
+         * @param privacy privacy setting of the owner of this Post
          */
         public UserPanel(Icon ii, String caption, String date, int likes,
                 boolean privacy) {

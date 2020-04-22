@@ -16,16 +16,16 @@ import java.util.Collections;
 import java.util.Comparator;
 
 /**
- * Sorts all of the post by their dates
+ * Sorts all of the Post by their dates
  *
  * @author jack and Jose
  */
 class ComparatorByDate {
 
-    public static Comparator<post> ComparatorByDate
-            = new Comparator<post>() {
+    public static Comparator<Post> ComparatorByDate
+            = new Comparator<Post>() {
 
-        public int compare(post post1, post post2) {
+        public int compare(Post post1, Post post2) {
             SimpleDateFormat format = new SimpleDateFormat("MM-dd HH:mm");
             try {
                 String time = post1.getDate();
@@ -51,7 +51,7 @@ public class CurrentProfile {
     private String fileSeparator = System.getProperty("file.separator");
     private String dir = System.getProperty("user.dir") + fileSeparator;
     private RealProfile loggedIn;
-    private ArrayList<post> feed = new ArrayList<>();
+    private ArrayList<Post> feed = new ArrayList<>();
     private ArrayList<RealProfile> allProfiles = new ArrayList<>();
     private static final long serialVersionUID = -8245875722878500126L;
 
@@ -162,7 +162,7 @@ public class CurrentProfile {
      *
      * @return all of the posts
      */
-    public ArrayList<post> updateFeed() {
+    public ArrayList<Post> updateFeed() {
         if (!loggedIn.getUsername().equals("guest")) {
             for (int i = 0; i < loggedIn.getFollowing().size(); i++) {
                 for (int j = 0; j

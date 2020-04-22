@@ -254,7 +254,7 @@ public class GuestFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_signUpButtonActionPerformed
 
     /**
-     * Performs a search for another user or a post
+     * Performs a search for another user or a Post
      *
      * @param evt when the user clicks the search button
      */
@@ -424,11 +424,11 @@ public class GuestFrame extends javax.swing.JFrame {
          * @param method the method that this search will use
          * @param searchInput what the user would like to search for
          * @param user the user that is searching
-         * @param postIndex the location of the post that the user is looking
-         * for
+         * @param postIndex the location of the Post that the user is looking
+ for
          */
         public SearchOutputPanel(String method,
-                String searchInput, RealProfile user, int postIndex) {
+                String searchInput, RealProfile lookingAt, int postIndex) {
             setLayout(new GridBagLayout());
             Border emptyBorder
                     = BorderFactory.createEmptyBorder(2, 2, 2, 2);
@@ -441,11 +441,11 @@ public class GuestFrame extends javax.swing.JFrame {
                     || method.equalsIgnoreCase("people tagged")) {
                 JLabel timeLabel = new JLabel();
                 timeLabel.setSize(100, 21);
-                timeLabel.setText(user.getPosts().get(postIndex).getDate());
+                timeLabel.setText(lookingAt.getPosts().get(postIndex).getDate());
                 add(timeLabel, createGbc(3, 0));
 
                 JTextArea captionText = new JTextArea();
-                captionText.setText(user.getPosts().get(postIndex).getCaption());
+                captionText.setText(lookingAt.getPosts().get(postIndex).getCaption());
                 captionText.setLineWrap(true);
                 captionText.setEditable(false);
                 captionText.setSize(120, 120);
@@ -457,7 +457,7 @@ public class GuestFrame extends javax.swing.JFrame {
 
                 final JLabel likeLabel = new JLabel();
                 likeLabel.setText("LIKES: " + Integer.toString(
-                        user.getPosts().get(postIndex).getLikes()));
+                        lookingAt.getPosts().get(postIndex).getLikes()));
                 likeLabel.setSize(100, 21);
                 add(likeLabel, createGbc(2, 0));
 
@@ -465,7 +465,7 @@ public class GuestFrame extends javax.swing.JFrame {
                 pictureLabel.setSize(120, 120);
                 try {
                     pictureLabel.setIcon(
-                            user.getPosts().get(postIndex).getImage());
+                            lookingAt.getPosts().get(postIndex).getImage());
                 } catch (Exception ex) {
                     ex.printStackTrace();
                 }
@@ -473,34 +473,15 @@ public class GuestFrame extends javax.swing.JFrame {
                         Cursor.HAND_CURSOR));
                 pictureLabel.addMouseListener(new MouseAdapter() {
                     public void mouseClicked(MouseEvent e) {
-                        boolean liked = false;
-                        for (int i = 0; i < main.getLoggedIn().getLikedPosts().size(); i++) {
-                            String match
-                                    = user.getPosts().get(postIndex).getCaption()
-                                    + user.getPosts().get(postIndex).getDate();
-
-                            if (main.getLoggedIn().getLikedPosts().get(i).equals(
-                                    match)) {
-                                liked = true;
-                                break;
-                            }
-                        }
-                        PostPopUp frame = new PostPopUp(
-                                user.getPosts().get(postIndex).getImage(),
-                                user, postIndex,
-                                user.getPosts().get(postIndex).getLikes(),
-                                user.getPosts().get(postIndex).getCaption(),
-                                user.getPosts().get(postIndex).getComments(),
-                                user.getPosts().get(postIndex).getHashtags(),
-                                user.getPosts().get(postIndex).getTagged(),
-                                main.getLoggedIn(), liked, mainWindow);
+                        PostPopUp frame = new PostPopUp(lookingAt,
+                                main.getLoggedIn(), postIndex, mainWindow);
                         frame.setVisible(true);
                         mainWindow.setVisible(false);
                     }
                 });
                 add(pictureLabel, createGbc(0, 0));
             } else if (method.equalsIgnoreCase("username")) {
-                    String username = user.getUsername();
+                    String username = lookingAt.getUsername();
 
                     JLabel usernameLabel = new JLabel();
                     usernameLabel.setText(username);
@@ -541,7 +522,7 @@ public class GuestFrame extends javax.swing.JFrame {
                     JLabel pictureLabel = new JLabel();
                     pictureLabel.setSize(77, 77);
                     try {
-                        pictureLabel.setIcon(user.getProfilePic());
+                        pictureLabel.setIcon(lookingAt.getProfilePic());
                     } catch (Exception ex) {
                         ex.printStackTrace();
                     }

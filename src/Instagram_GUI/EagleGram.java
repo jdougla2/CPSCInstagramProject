@@ -54,7 +54,7 @@ public class EagleGram extends javax.swing.JFrame {
         lastnameLabel.setText(main.getLoggedIn().getLastName());
         usernameLabel.setText(main.getLoggedIn().getUsername());
 
-        ArrayList<post> feed = main.updateFeed();
+        ArrayList<Post> feed = main.updateFeed();
         for (int i = 0; i < feed.size(); i++) {
             RealProfile lookingAt = null;
             for (int x = 0; x < main.getLoggedIn().getFollowing().size(); x++) {
@@ -1150,7 +1150,7 @@ searchButton1.addActionListener(new java.awt.event.ActionListener() {
         feedPanel.removeAll();
 
         main.clearFeed();
-        ArrayList<post> feed = main.updateFeed();
+        ArrayList<Post> feed = main.updateFeed();
         for (int i = 0; i < feed.size(); i++) {
             RealProfile lookingAt = null;
             for (int x = 0; x < main.getLoggedIn().getFollowing().size(); x++) {
@@ -1191,9 +1191,9 @@ searchButton1.addActionListener(new java.awt.event.ActionListener() {
     }//GEN-LAST:event_searchButtonActionPerformed
 
     /**
-     * Takes the user to the new post page where they can post a new post
+     * Takes the user to the new Post page where they can Post a new Post
      *
-     * @param evt when the user clicks the new post button
+     * @param evt when the user clicks the new Post button
      */
     private void newPostButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newPostButtonActionPerformed
         mainWindowLayoutPanel.removeAll();
@@ -1572,7 +1572,7 @@ searchButton1.addActionListener(new java.awt.event.ActionListener() {
     }//GEN-LAST:event_newMessageButtonActionPerformed
 
     /**
-     * Uploads a picture to be added to a post
+     * Uploads a picture to be added to a Post
      *
      * @param evt when the user clicks the upload picture button
      */
@@ -1633,9 +1633,9 @@ searchButton1.addActionListener(new java.awt.event.ActionListener() {
     }//GEN-LAST:event_commitPhotoChangeButtonActionPerformed
 
     /**
-     * Creates a new post to be posted
+     * Creates a new Post to be posted
      *
-     * @param evt when the user clicks the create new post button
+     * @param evt when the user clicks the create new Post button
      */
     private void createNewPostButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createNewPostButtonActionPerformed
         String caption = captionField.getText();
@@ -2033,13 +2033,13 @@ searchButton1.addActionListener(new java.awt.event.ActionListener() {
          * @param receiver user that received the action
          * @param notification the action
          * @param date the date that the action happened
-         * @param ii the icon of the post if this is post related
-         * @param method whether this is post related or not
-         * @param post the post if this is a post related notification
+         * @param ii the icon of the Post if this is Post related
+         * @param method whether this is Post related or not
+         * @param post the Post if this is a Post related notification
          */
         public NotificationPanel(RealProfile actor, RealProfile receiver,
                 String notification, String date, ImageIcon ii, String method,
-                post post) {
+                Post post) {
             setLayout(new GridBagLayout());
             Border emptyBorder = BorderFactory.createEmptyBorder(2, 2, 2, 2);
             Border lineBorder = BorderFactory.createLineBorder(Color.black);
@@ -2148,17 +2148,10 @@ searchButton1.addActionListener(new java.awt.event.ActionListener() {
                         postIndex = actor.getPosts().indexOf(post);
 
                         if (postIndex != -1) {
-                            PostPopUp frame = new PostPopUp(
-                                    actor.getPosts().get(postIndex).getImage(),
-                                    actor, postIndex,
-                                    actor.getPosts().get(postIndex).getLikes(),
-                                    actor.getPosts().get(postIndex).getCaption(),
-                                    actor.getPosts().get(postIndex).getComments(),
-                                    actor.getPosts().get(postIndex).getHashtags(),
-                                    actor.getPosts().get(postIndex).getTagged(),
-                                    main.getLoggedIn(), false, mainWindow);
-
+                            PostPopUp frame = new PostPopUp(actor,
+                                    main.getLoggedIn(), postIndex, mainWindow);
                             frame.setVisible(true);
+                            mainWindow.setVisible(false);
                         }
                     }
                 });
@@ -2353,18 +2346,18 @@ searchButton1.addActionListener(new java.awt.event.ActionListener() {
     }
 
     /**
-     * Creates a new panel for the user's post
+     * Creates a new panel for the user's Post
      */
     private class UserPanel extends JPanel {
 
         /**
          * Constructor for the UserPanel
          *
-         * @param ii post icon
-         * @param caption cation of the post
-         * @param date date that the post was posted
-         * @param likes number of likes that this post has
-         * @param postIndex the location of this post
+         * @param ii Post icon
+         * @param caption cation of the Post
+         * @param date date that the Post was posted
+         * @param likes number of likes that this Post has
+         * @param postIndex the location of this Post
          * @param lookingAt the user that is being looked at
          */
         public UserPanel(Icon ii, String caption, String date, int likes,
@@ -2407,32 +2400,10 @@ searchButton1.addActionListener(new java.awt.event.ActionListener() {
                     Cursor.HAND_CURSOR));
             pictureLabel.addMouseListener(new MouseAdapter() {
                 public void mouseClicked(MouseEvent e) {
-                    RealProfile user = lookingAt;
-                    boolean liked = false;
-                    for (int i = 0;
-                            i < main.getLoggedIn().getLikedPosts().size();
-                            i++) {
-                        String match
-                                = user.getPosts().get(postIndex).getCaption()
-                                + user.getPosts().get(postIndex).getDate();
-
-                        if (main.getLoggedIn().getLikedPosts().get(i).equals(
-                                match)) {
-                            liked = true;
-                            break;
-                        }
-                    }
-                    PostPopUp frame = new PostPopUp(
-                            user.getPosts().get(postIndex).getImage(),
-                            user, postIndex,
-                            user.getPosts().get(postIndex).getLikes(),
-                            user.getPosts().get(postIndex).getCaption(),
-                            user.getPosts().get(postIndex).getComments(),
-                            user.getPosts().get(postIndex).getHashtags(),
-                            user.getPosts().get(postIndex).getTagged(),
-                            main.getLoggedIn(), liked, mainWindow);
-
+                    PostPopUp frame = new PostPopUp(lookingAt, 
+                            main.getLoggedIn(), postIndex, mainWindow);
                     frame.setVisible(true);
+                    mainWindow.setVisible(false);
                 }
             });
             add(pictureLabel, createGbc(0, 0));
@@ -2470,10 +2441,10 @@ searchButton1.addActionListener(new java.awt.event.ActionListener() {
          * @param method what type of search this is
          * @param searchInput what are they searching
          * @param user the user that is searching
-         * @param postIndex the location of the post if post related
+         * @param postIndex the location of the Post if Post related
          */
         public SearchOutputPanel(String method,
-                String searchInput, RealProfile user, int postIndex) {
+                String searchInput, RealProfile lookingAt, int postIndex) {
             setLayout(new GridBagLayout());
             Border emptyBorder
                     = BorderFactory.createEmptyBorder(2, 2, 2, 2);
@@ -2486,11 +2457,11 @@ searchButton1.addActionListener(new java.awt.event.ActionListener() {
                     || method.equalsIgnoreCase("people tagged")) {
                 JLabel timeLabel = new JLabel();
                 timeLabel.setSize(100, 21);
-                timeLabel.setText(user.getPosts().get(postIndex).getDate());
+                timeLabel.setText(lookingAt.getPosts().get(postIndex).getDate());
                 add(timeLabel, createGbc(3, 0));
 
                 JTextArea captionText = new JTextArea();
-                captionText.setText(user.getPosts().get(postIndex).getCaption());
+                captionText.setText(lookingAt.getPosts().get(postIndex).getCaption());
                 captionText.setLineWrap(true);
                 captionText.setEditable(false);
                 captionText.setSize(120, 120);
@@ -2502,7 +2473,7 @@ searchButton1.addActionListener(new java.awt.event.ActionListener() {
 
                 final JLabel likeLabel = new JLabel();
                 likeLabel.setText("LIKES: " + Integer.toString(
-                        user.getPosts().get(postIndex).getLikes()));
+                        lookingAt.getPosts().get(postIndex).getLikes()));
                 likeLabel.setSize(100, 21);
                 add(likeLabel, createGbc(2, 0));
 
@@ -2510,7 +2481,7 @@ searchButton1.addActionListener(new java.awt.event.ActionListener() {
                 pictureLabel.setSize(120, 120);
                 try {
                     pictureLabel.setIcon(
-                            user.getPosts().get(postIndex).getImage());
+                            lookingAt.getPosts().get(postIndex).getImage());
                 } catch (Exception ex) {
                     ex.printStackTrace();
                 }
@@ -2518,36 +2489,15 @@ searchButton1.addActionListener(new java.awt.event.ActionListener() {
                         Cursor.HAND_CURSOR));
                 pictureLabel.addMouseListener(new MouseAdapter() {
                     public void mouseClicked(MouseEvent e) {
-                        boolean liked = false;
-                        for (int i = 0;
-                                i < main.getLoggedIn().getLikedPosts().size();
-                                i++) {
-                            String match
-                                    = user.getPosts().get(postIndex).getCaption()
-                                    + user.getPosts().get(postIndex).getDate();
-
-                            if (main.getLoggedIn().getLikedPosts().get(i).equals(
-                                    match)) {
-                                liked = true;
-                                break;
-                            }
-                        }
-                        PostPopUp frame = new PostPopUp(
-                                user.getPosts().get(postIndex).getImage(),
-                                user, postIndex,
-                                user.getPosts().get(postIndex).getLikes(),
-                                user.getPosts().get(postIndex).getCaption(),
-                                user.getPosts().get(postIndex).getComments(),
-                                user.getPosts().get(postIndex).getHashtags(),
-                                user.getPosts().get(postIndex).getTagged(),
-                                main.getLoggedIn(), liked, mainWindow);
+                        PostPopUp frame = new PostPopUp(lookingAt,
+                                main.getLoggedIn(), postIndex, mainWindow);
                         frame.setVisible(true);
-                        mainWindow.dispose();
+                        mainWindow.setVisible(false);
                     }
                 });
                 add(pictureLabel, createGbc(0, 0));
             } else if (method.equalsIgnoreCase("username")) {
-                String username = user.getUsername();
+                String username = lookingAt.getUsername();
 
                 JLabel usernameLabel = new JLabel();
                 usernameLabel.setText(username);
@@ -2589,7 +2539,7 @@ searchButton1.addActionListener(new java.awt.event.ActionListener() {
                 JLabel pictureLabel = new JLabel();
                 pictureLabel.setSize(77, 77);
                 try {
-                    pictureLabel.setIcon(user.getProfilePic());
+                    pictureLabel.setIcon(lookingAt.getProfilePic());
                 } catch (Exception ex) {
                     ex.printStackTrace();
                 }

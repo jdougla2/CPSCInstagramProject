@@ -30,7 +30,7 @@ public class RealProfile implements Serializable {
     private String lastName;
     private boolean isPrivate = false;
     private ImageIcon profilePic;
-    private ArrayList<post> posts = new ArrayList<>();
+    private ArrayList<Post> posts = new ArrayList<>();
     private ArrayList<String> likedPosts = new ArrayList<>();
     private ArrayList<Notification> notifications = new ArrayList<>();
     private ArrayList<RealProfile> followers = new ArrayList<>();
@@ -94,7 +94,7 @@ public class RealProfile implements Serializable {
      *
      * @return returns the user's posts
      */
-    public ArrayList<post> getPosts() {
+    public ArrayList<Post> getPosts() {
         return posts;
     }
 
@@ -222,11 +222,11 @@ public class RealProfile implements Serializable {
      * @param r the user that received the action
      * @param date the time that this happened
      * @param notification what the action is
-     * @param post the related post if there is one
-     * @param method whether or not this is post related
+     * @param post the related Post if there is one
+     * @param method whether or not this is Post related
      */
     public void addNotification(RealProfile a, RealProfile r, String date,
-            String notification, post post, String method) {
+            String notification, Post post, String method) {
         notifications.add(new Notification(a, r, date, notification, post,
                 method));
     }
@@ -239,17 +239,17 @@ public class RealProfile implements Serializable {
     }
 
     /**
-     * Adds a post to this users post ArrayList
+     * Adds a Post to this users Post ArrayList
      *
-     * @param caption caption to this post
-     * @param imageLink the picture related to this post
-     * @param comments any comments related to this post
-     * @param hashtags the hash tags related to this post
-     * @param mentions any users that have been tagged in this post
+     * @param caption caption to this Post
+     * @param imageLink the picture related to this Post
+     * @param comments any comments related to this Post
+     * @param hashtags the hash tags related to this Post
+     * @param mentions any users that have been tagged in this Post
      */
     public void addPost(String caption, Icon imageLink, ArrayList comments,
             ArrayList<String> hashtags, ArrayList<String> mentions) {
-        posts.add(new post(caption, comments, mentions, hashtags, imageLink));
+        posts.add(new Post(caption, comments, mentions, hashtags, imageLink));
 
     }
 
@@ -286,18 +286,18 @@ public class RealProfile implements Serializable {
     }
 
     /**
-     * Adds a post to this user's liked posts
+     * Adds a Post to this user's liked posts
      *
-     * @param toAdd the post ID to be add to the likedPosts ArrayList
+     * @param toAdd the Post ID to be add to the likedPosts ArrayList
      */
     public void addLikedPost(String toAdd) {
         likedPosts.add(toAdd);
     }
 
     /**
-     * Removes a post from this user's liked posts
+     * Removes a Post from this user's liked posts
      *
-     * @param toRemove the post to be removed from this user's liked posts
+     * @param toRemove the Post to be removed from this user's liked posts
      */
     public void removeLikedPost(String toRemove) {
         for (int i = 0; i < likedPosts.size(); i++) {

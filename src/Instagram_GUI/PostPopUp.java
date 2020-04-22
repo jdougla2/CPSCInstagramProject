@@ -12,29 +12,20 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 
 /**
- * This class deals with creating the post pop up frame
+ * This class deals with creating the Post pop up frame
  *
  * @author Jose
  */
 public class PostPopUp extends javax.swing.JFrame {
     /**
-     * Constructor for the post pop up class
+     * Constructor for the Post pop up class
      *
-     * @param ii icon of this post
-     * @param lookingAt the user that owns this post
-     * @param postIndex the location of this post
-     * @param likes the number of likes for this post
-     * @param caption caption of this post
-     * @param comments the comments on this post
-     * @param hashTags the hash tags on this post
-     * @param peopleTaged the people tagged on this post
+     * @param lookingAt the user that owns this Post
+     * @param postIndex the location of this Post
      * @param loggedIn the user that is currently loggedIn
-     * @param liked whether or not the loggedIn user has liked this post
+     * @param mainWindow references the main window EagleGram
      */
-    public PostPopUp(Icon ii, RealProfile lookingAt, int postIndex,
-            int likes,
-            String caption, ArrayList<String> comments, ArrayList<String> hashTags,
-            ArrayList<String> peopleTaged, RealProfile loggedIn, boolean liked,
+    public PostPopUp(RealProfile lookingAt, RealProfile loggedIn, int postIndex,
             JFrame mainWindow) {
         initComponents();
         this.setTitle("EagleGram");
@@ -48,9 +39,26 @@ public class PostPopUp extends javax.swing.JFrame {
         } catch (Exception ex) {
             ex.printStackTrace();
         }
+        
+        Post post= lookingAt.getPosts().get(postIndex);
+        Icon postImage = post.getImage();
+        int likes = post.getLikes();
+        String caption = post.getCaption();
+        ArrayList<String> comments = post.getComments();
+        ArrayList<String> hashTags = post.getHashtags();
+        ArrayList<String> peopleTaged = post.getTagged();
+        boolean liked = false;
+        for (int i = 0; i < loggedIn.getLikedPosts().size(); i++) {
+            String match = caption + post.getDate();
 
+            if (loggedIn.getLikedPosts().get(i).equals(match)) {
+                liked = true;
+                break;
+            }
+        }
+        
         this.loggedIn = loggedIn;
-        postPicture.setIcon(ii);
+        postPicture.setIcon(postImage);
         dateLabel.setText(lookingAt.getPosts().get(postIndex).getDate());
         usernameLabel.setText(lookingAt.getUsername());
         likeLabel.setText("LIKES: " + likes);
@@ -331,8 +339,8 @@ contentPanelLayout.setHorizontalGroup(
     }// </editor-fold>//GEN-END:initComponents
 
     /**
-     * Changes the state of the like button and add this post to the loggedIn
-     * user's liked posts, and adds a like to the post
+     * Changes the state of the like button and add this Post to the loggedIn
+ user's liked posts, and adds a like to the Post
      *
      * @param evt when the user clicks the like button
      */
@@ -381,7 +389,7 @@ contentPanelLayout.setHorizontalGroup(
     }//GEN-LAST:event_likeButtonActionPerformed
 
     /**
-     * Adds a comment to this post
+     * Adds a comment to this Post
      *
      * @param evt when the user clicks the add comment button
      */
@@ -452,8 +460,7 @@ contentPanelLayout.setHorizontalGroup(
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new PostPopUp(null, null, 0, 2, "this is a caption",
-                        null, null, null, null, false, null).setVisible(true);
+                new PostPopUp(null, null, 0, null).setVisible(true);
             }
         });
     }

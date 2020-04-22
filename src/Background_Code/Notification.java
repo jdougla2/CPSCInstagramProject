@@ -19,7 +19,7 @@ public class Notification implements Serializable {
     private RealProfile receiver;
     private String date;
     private String notification;
-    private post post;
+    private Post post;
     private String method;
 
     /**
@@ -29,11 +29,11 @@ public class Notification implements Serializable {
      * @param r the user that received the action
      * @param date the date the action happened
      * @param notification the notification of what happened
-     * @param post the post related to this notification if there is one
-     * @param method whether this is post related or not
+     * @param post the Post related to this notification if there is one
+     * @param method whether this is Post related or not
      */
     public Notification(RealProfile a, RealProfile r, String date,
-            String notification, post post, String method) {
+            String notification, Post post, String method) {
         this.actor = a;
         this.receiver = r;
         this.date = date;
@@ -79,16 +79,16 @@ public class Notification implements Serializable {
     }
 
     /**
-     * Gets the post related to this notification
+     * Gets the Post related to this notification
      *
-     * @return returns the related post to this notification
+     * @return returns the related Post to this notification
      */
-    public post getPost() {
+    public Post getPost() {
         return post;
     }
 
     /**
-     * Returns whether or not this is a post related notification
+     * Returns whether or not this is a Post related notification
      *
      * @return returns the method
      */
