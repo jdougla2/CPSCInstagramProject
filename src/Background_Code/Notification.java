@@ -25,17 +25,17 @@ public class Notification implements Serializable {
     /**
      * Constructor of the Notification object
      *
-     * @param a the user that did the action
-     * @param r the user that received the action
+     * @param actor the user that did the action
+     * @param receiver the user that received the action
      * @param date the date the action happened
      * @param notification the notification of what happened
      * @param post the Post related to this notification if there is one
      * @param method whether this is Post related or not
      */
-    public Notification(RealProfile a, RealProfile r, String date,
+    public Notification(RealProfile actor, RealProfile receiver, String date,
             String notification, Post post, String method) {
-        this.actor = a;
-        this.receiver = r;
+        this.actor = actor;
+        this.receiver = receiver;
         this.date = date;
         this.notification = notification;
         this.post = post;

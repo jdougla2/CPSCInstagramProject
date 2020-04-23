@@ -17,19 +17,20 @@ import javax.swing.border.Border;
  * @author Jose
  */
 public class ProfilePopUp extends javax.swing.JFrame {
+
     /**
      * Constructor for the profile pop up frame
      *
      * @param lookingAt user that is being looked at
      * @param current the current user that is logged in
-     * @param privacy the privacy setting for lookAt user
+     * @param mainWindow Main window for EagleGram
      */
     public ProfilePopUp(RealProfile lookingAt, RealProfile current,
             JFrame mainWindow) {
         initComponents();
         this.setTitle("EagleGram");
         this.setLocation(width, height);
-        
+
         try {
             ImageIcon eaglePicture = new ImageIcon(scaleImage(
                     100, 23, ImageIO.read(new File(imagesDir
@@ -55,7 +56,7 @@ public class ProfilePopUp extends javax.swing.JFrame {
                 break;
             }
         }
-        
+
         this.mainWindow = mainWindow;
         this.current = current;
         this.lookingAt = lookingAt;
@@ -356,13 +357,13 @@ followButton.addActionListener(new java.awt.event.ActionListener() {
 
     private void returnButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_returnButtonActionPerformed
         System.out.println(current.getUsername());
-        if (current.getUsername().equalsIgnoreCase("guest")){
+        if (current.getUsername().equalsIgnoreCase("guest")) {
             mainWindow.setVisible(true);
             super.dispose();
-        }else{
+        } else {
             mainWindow.setVisible(true);
             super.dispose();
-        } 
+        }
     }//GEN-LAST:event_returnButtonActionPerformed
 
     /**
@@ -397,7 +398,7 @@ followButton.addActionListener(new java.awt.event.ActionListener() {
         java.awt.EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
-                new ProfilePopUp(null,null,null).setVisible(true);
+                new ProfilePopUp(null, null, null).setVisible(true);
             }
         });
     }
@@ -448,7 +449,7 @@ followButton.addActionListener(new java.awt.event.ActionListener() {
     private JFrame mainWindow;
     private String fileSeparator = System.getProperty("file.separator");
     private String workingDir = System.getProperty("user.dir");
-    private String imagesDir =  workingDir + fileSeparator + "src"
+    private String imagesDir = workingDir + fileSeparator + "src"
             + fileSeparator + "Images" + fileSeparator;
     int width = (Toolkit.getDefaultToolkit().getScreenSize().width / 2) - 262;
     int height = (Toolkit.getDefaultToolkit().getScreenSize().height / 2) - 250;

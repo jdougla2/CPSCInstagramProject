@@ -20,13 +20,6 @@ import javax.swing.ImageIcon;
  */
 public class Login extends javax.swing.JFrame {
 
-    private String fileSeparator = System.getProperty("file.separator");
-    private String workingDir = System.getProperty("user.dir");
-    private String imagesDir =  workingDir + fileSeparator + "src"
-            + fileSeparator + "Images" + fileSeparator;
-    private int width = (Toolkit.getDefaultToolkit().getScreenSize().width / 2) - 150;
-    private int height = (Toolkit.getDefaultToolkit().getScreenSize().height / 2) - 150;
-
     /**
      * Constructor to initiate the login GUI
      */
@@ -259,4 +252,10 @@ public class Login extends javax.swing.JFrame {
     private String password;
     private String username;
     private CurrentProfile main = new CurrentProfile();
+    private String fileSeparator = System.getProperty("file.separator");
+    private String workingDir = System.getProperty("user.dir");
+    private String imagesDir = workingDir + fileSeparator + "src"
+            + fileSeparator + "Images" + fileSeparator;
+    private int width = (Toolkit.getDefaultToolkit().getScreenSize().width / 2) - 150;
+    private int height = (Toolkit.getDefaultToolkit().getScreenSize().height / 2) - 150;
 }

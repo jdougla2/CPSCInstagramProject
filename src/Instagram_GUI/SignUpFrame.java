@@ -15,20 +15,12 @@ import javax.swing.ImageIcon;
  */
 public class SignUpFrame extends javax.swing.JFrame {
 
-    private String fileSeparator = System.getProperty("file.separator");
-    private String workingDir = System.getProperty("user.dir");
-    private String imagesDir =  workingDir + fileSeparator + "src"
-            + fileSeparator + "Images" + fileSeparator;
-    private int width = (Toolkit.getDefaultToolkit().getScreenSize().width / 2) - 150;
-    private int height = (Toolkit.getDefaultToolkit().getScreenSize().height / 2) - 150;
-
     /**
      * Creates a new SignUp frame
      */
     public SignUpFrame() {
         initComponents();
-        //this.setTitle("EagleGram");
-        
+
         this.setLocation(width, height);
         try {
             ImageIcon eaglePicture = new ImageIcon(scaleImage(
@@ -183,7 +175,6 @@ public class SignUpFrame extends javax.swing.JFrame {
      * @param evt when the user clicks the sign up button
      */
     private void signUpButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_signUpButtonActionPerformed
-        // TODO add your handling code here:
         errorMessageLabel.setText(null);
         firstName = fNameText.getText();
         lastName = lNameText.getText();
@@ -227,7 +218,6 @@ public class SignUpFrame extends javax.swing.JFrame {
      * @param evt when the user clicks the return button
      */
     private void returnButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_returnButtonActionPerformed
-        // TODO add your handling code here:
         Login x = new Login();
         x.setVisible(true);
         super.dispose();
@@ -291,4 +281,10 @@ public class SignUpFrame extends javax.swing.JFrame {
     private String password1;
     private String password2;
     private CurrentProfile main = new CurrentProfile();
+    private String fileSeparator = System.getProperty("file.separator");
+    private String workingDir = System.getProperty("user.dir");
+    private String imagesDir = workingDir + fileSeparator + "src"
+            + fileSeparator + "Images" + fileSeparator;
+    private int width = (Toolkit.getDefaultToolkit().getScreenSize().width / 2) - 150;
+    private int height = (Toolkit.getDefaultToolkit().getScreenSize().height / 2) - 150;
 }

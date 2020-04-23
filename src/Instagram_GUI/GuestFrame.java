@@ -18,14 +18,6 @@ import javax.swing.border.Border;
  */
 public class GuestFrame extends javax.swing.JFrame {
 
-    private JFrame mainWindow;
-    private String fileSeparator = System.getProperty("file.separator");
-    private String workingDir = System.getProperty("user.dir");
-    private String imagesDir =  workingDir + fileSeparator + "src"
-            + fileSeparator + "Images" + fileSeparator;
-    private int width = (Toolkit.getDefaultToolkit().getScreenSize().width / 2) - 262;
-    private int height = (Toolkit.getDefaultToolkit().getScreenSize().height / 2) - 250;
-
     /**
      * Creates new form GuestFrame
      */
@@ -267,20 +259,18 @@ public class GuestFrame extends javax.swing.JFrame {
         //add search output
         int postIndex = 0;
 
-        if (parameter.equalsIgnoreCase("Username")){
-            for (int i = 0; i < main.getAllProfiles().size(); i++){
-                if(main.getAllProfiles().get(i).getUsername().toLowerCase(
-                    ).contains(input.toLowerCase())){
+        if (parameter.equalsIgnoreCase("Username")) {
+            for (int i = 0; i < main.getAllProfiles().size(); i++) {
+                if (main.getAllProfiles().get(i).getUsername().toLowerCase().contains(input.toLowerCase())) {
                     RealProfile user = main.getAllProfiles().get(i);
-                    if (!user.getUsername().equalsIgnoreCase("guest")){
+                    if (!user.getUsername().equalsIgnoreCase("guest")) {
                         postIndex = i;
                         searchOutputPanel.add(new SearchOutputPanel(parameter,
-                                    input, user, postIndex));
+                                input, user, postIndex));
                     }
                 }
             }
-        }
-        else if (parameter.equalsIgnoreCase("hash tags")) {
+        } else if (parameter.equalsIgnoreCase("hash tags")) {
             for (int i = 0; i < main.getAllProfiles().size(); i++) {
                 for (int j = 0; j
                         < main.getAllProfiles().get(i).getPosts().size(); j++) {
@@ -387,7 +377,13 @@ public class GuestFrame extends javax.swing.JFrame {
     private javax.swing.JButton signUpButton;
     private javax.swing.JPanel topMenu;
     // End of variables declaration//GEN-END:variables
-
+    private JFrame mainWindow;
+    private String fileSeparator = System.getProperty("file.separator");
+    private String workingDir = System.getProperty("user.dir");
+    private String imagesDir = workingDir + fileSeparator + "src"
+            + fileSeparator + "Images" + fileSeparator;
+    private int width = (Toolkit.getDefaultToolkit().getScreenSize().width / 2) - 262;
+    private int height = (Toolkit.getDefaultToolkit().getScreenSize().height / 2) - 250;
     private CurrentProfile main = new CurrentProfile();
 
     /**
@@ -425,7 +421,7 @@ public class GuestFrame extends javax.swing.JFrame {
          * @param searchInput what the user would like to search for
          * @param user the user that is searching
          * @param postIndex the location of the Post that the user is looking
- for
+         * for
          */
         public SearchOutputPanel(String method,
                 String searchInput, RealProfile lookingAt, int postIndex) {
@@ -481,77 +477,77 @@ public class GuestFrame extends javax.swing.JFrame {
                 });
                 add(pictureLabel, createGbc(0, 0));
             } else if (method.equalsIgnoreCase("username")) {
-                    String username = lookingAt.getUsername();
+                String username = lookingAt.getUsername();
 
-                    JLabel usernameLabel = new JLabel();
-                    usernameLabel.setText(username);
-                    usernameLabel.setSize(100, 21);
-                    usernameLabel.setCursor(Cursor.getPredefinedCursor(
-                            Cursor.HAND_CURSOR));
-                    usernameLabel.addMouseListener(new MouseAdapter() {
-                        public void mouseClicked(MouseEvent e) {
-                            RealProfile current = null;
-                            for (int i = 0; i < main.getAllProfiles().size(); i++) {
-                                if (main.getAllProfiles().get(i).getUsername()
-                                        .equals(username)) {
-                                    current = main.getAllProfiles().get(i);
-                                }
+                JLabel usernameLabel = new JLabel();
+                usernameLabel.setText(username);
+                usernameLabel.setSize(100, 21);
+                usernameLabel.setCursor(Cursor.getPredefinedCursor(
+                        Cursor.HAND_CURSOR));
+                usernameLabel.addMouseListener(new MouseAdapter() {
+                    public void mouseClicked(MouseEvent e) {
+                        RealProfile current = null;
+                        for (int i = 0; i < main.getAllProfiles().size(); i++) {
+                            if (main.getAllProfiles().get(i).getUsername()
+                                    .equals(username)) {
+                                current = main.getAllProfiles().get(i);
                             }
-                            boolean follows = false;
-                            for (int i = 0; i < main.getLoggedIn().getFollowing()
-                                    .size(); i++) {
-                                if (main.getLoggedIn().getFollowing().get(i)
-                                        .getUsername().equals(username)) {
-                                    follows = true;
-                                    break;
-                                }
-                            }
-                            ProfilePopUp popUp = new ProfilePopUp(current,
-                                    main.getLoggedIn(),
-                                    mainWindow);
-                            popUp.setVisible(true);
-                            mainWindow.setVisible(false);
                         }
-                    });
-                    add(usernameLabel, createGbc(1, 0));
-
-                    JLabel pictureLabel = new JLabel();
-                    pictureLabel.setSize(77, 77);
-                    try {
-                        pictureLabel.setIcon(lookingAt.getProfilePic());
-                    } catch (Exception ex) {
-                        ex.printStackTrace();
+                        boolean follows = false;
+                        for (int i = 0; i < main.getLoggedIn().getFollowing()
+                                .size(); i++) {
+                            if (main.getLoggedIn().getFollowing().get(i)
+                                    .getUsername().equals(username)) {
+                                follows = true;
+                                break;
+                            }
+                        }
+                        ProfilePopUp popUp = new ProfilePopUp(current,
+                                main.getLoggedIn(),
+                                mainWindow);
+                        popUp.setVisible(true);
+                        mainWindow.setVisible(false);
                     }
-                    pictureLabel.setCursor(Cursor.getPredefinedCursor(
-                            Cursor.HAND_CURSOR));
-                    pictureLabel.addMouseListener(new MouseAdapter() {
-                        public void mouseClicked(MouseEvent e) {
-                            RealProfile current = null;
-                            for (int i = 0; i < main.getAllProfiles().size(); i++) {
-                                if (main.getAllProfiles().get(i).getUsername()
-                                        .equals(username)) {
-                                    current = main.getAllProfiles().get(i);
-                                }
+                });
+                add(usernameLabel, createGbc(1, 0));
+
+                JLabel pictureLabel = new JLabel();
+                pictureLabel.setSize(77, 77);
+                try {
+                    pictureLabel.setIcon(lookingAt.getProfilePic());
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+                pictureLabel.setCursor(Cursor.getPredefinedCursor(
+                        Cursor.HAND_CURSOR));
+                pictureLabel.addMouseListener(new MouseAdapter() {
+                    public void mouseClicked(MouseEvent e) {
+                        RealProfile current = null;
+                        for (int i = 0; i < main.getAllProfiles().size(); i++) {
+                            if (main.getAllProfiles().get(i).getUsername()
+                                    .equals(username)) {
+                                current = main.getAllProfiles().get(i);
                             }
-                            boolean follows = false;
-                            for (int i = 0; i < main.getLoggedIn().getFollowing()
-                                    .size(); i++) {
-                                System.out.println(main.getLoggedIn().getFollowing()
-                                        .get(i).getUsername());
-                                if (main.getLoggedIn().getFollowing().get(i)
-                                        .getUsername().equals(username)) {
-                                    follows = true;
-                                    break;
-                                }
-                            }
-                            ProfilePopUp popUp = new ProfilePopUp(current,
-                                    main.getLoggedIn(),
-                                    mainWindow);
-                            popUp.setVisible(true);
-                            mainWindow.setVisible(false);
                         }
-                    });
-                    add(pictureLabel, createGbc(0, 0));
+                        boolean follows = false;
+                        for (int i = 0; i < main.getLoggedIn().getFollowing()
+                                .size(); i++) {
+                            System.out.println(main.getLoggedIn().getFollowing()
+                                    .get(i).getUsername());
+                            if (main.getLoggedIn().getFollowing().get(i)
+                                    .getUsername().equals(username)) {
+                                follows = true;
+                                break;
+                            }
+                        }
+                        ProfilePopUp popUp = new ProfilePopUp(current,
+                                main.getLoggedIn(),
+                                mainWindow);
+                        popUp.setVisible(true);
+                        mainWindow.setVisible(false);
+                    }
+                });
+                add(pictureLabel, createGbc(0, 0));
             }
         }
 

@@ -18,16 +18,6 @@ import javax.swing.border.Border;
  */
 public class EagleGram extends javax.swing.JFrame {
 
-    private JFrame mainWindow;
-    private String fileSeparator = System.getProperty("file.separator");
-    private String workingDir = System.getProperty("user.dir");
-    private String imagesDir =  workingDir + fileSeparator + "src"
-            + fileSeparator + "Images" + fileSeparator;
-    private int width = 
-            (Toolkit.getDefaultToolkit().getScreenSize().width / 2) - 269;
-    private int height = 
-            (Toolkit.getDefaultToolkit().getScreenSize().height / 2) - 263;
-
     /**
      * Constructor to the EagleGram class
      *
@@ -1448,20 +1438,18 @@ searchButton1.addActionListener(new java.awt.event.ActionListener() {
         RealProfile user = null;
         int postIndex = 0;
 
-        if (parameter.equalsIgnoreCase("Username")){
-            for (int i = 0; i < main.getAllProfiles().size(); i++){
-                if(main.getAllProfiles().get(i).getUsername().toLowerCase(
-                    ).contains(searchInput.toLowerCase())){
+        if (parameter.equalsIgnoreCase("Username")) {
+            for (int i = 0; i < main.getAllProfiles().size(); i++) {
+                if (main.getAllProfiles().get(i).getUsername().toLowerCase().contains(searchInput.toLowerCase())) {
                     user = main.getAllProfiles().get(i);
-                    if (!user.getUsername().equalsIgnoreCase("guest")){
+                    if (!user.getUsername().equalsIgnoreCase("guest")) {
                         postIndex = i;
                         searchOutputPanel.add(new SearchOutputPanel(parameter,
-                                    searchInput, user, postIndex));
+                                searchInput, user, postIndex));
                     }
                 }
             }
-        }
-        else if (parameter.equalsIgnoreCase("hash tags")) {
+        } else if (parameter.equalsIgnoreCase("hash tags")) {
             for (int i = 0; i < main.getAllProfiles().size(); i++) {
                 for (int j = 0; j
                         < main.getAllProfiles().get(i).getPosts().size(); j++) {
@@ -1559,7 +1547,7 @@ searchButton1.addActionListener(new java.awt.event.ActionListener() {
         messageField.setText("");
         try {
             ImageIcon emptyPicture = new ImageIcon(scaleImage(
-                    120, 120, ImageIO.read(new File(imagesDir 
+                    120, 120, ImageIO.read(new File(imagesDir
                             + "Empty Image.jpg"))));
             dmPhotoLabel.setIcon(emptyPicture);
         } catch (Exception ex) {
@@ -1692,7 +1680,7 @@ searchButton1.addActionListener(new java.awt.event.ActionListener() {
         ImageIcon picture = null;
         try {
             picture = new ImageIcon(scaleImage(
-                    120, 120, ImageIO.read(new File(imagesDir 
+                    120, 120, ImageIO.read(new File(imagesDir
                             + "Empty Image.jpg"))));
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -1742,7 +1730,7 @@ searchButton1.addActionListener(new java.awt.event.ActionListener() {
         for (int i = 0; i < main.getAllProfiles().size(); i++) {
             if (main.getAllProfiles().get(i).getUsername().equals(username)) {
                 if (!main.getAllProfiles().get(i).getUsername()
-                        .equalsIgnoreCase("guest")){
+                        .equalsIgnoreCase("guest")) {
                     realUser = true;
                     user = main.getAllProfiles().get(i);
                     break;
@@ -2020,6 +2008,15 @@ searchButton1.addActionListener(new java.awt.event.ActionListener() {
     private String parameter;
     private Icon icon;
     private CurrentProfile main = new CurrentProfile();
+    private JFrame mainWindow;
+    private String fileSeparator = System.getProperty("file.separator");
+    private String workingDir = System.getProperty("user.dir");
+    private String imagesDir = workingDir + fileSeparator + "src"
+            + fileSeparator + "Images" + fileSeparator;
+    private int width
+            = (Toolkit.getDefaultToolkit().getScreenSize().width / 2) - 269;
+    private int height
+            = (Toolkit.getDefaultToolkit().getScreenSize().height / 2) - 263;
 
     /**
      * Creates a new panel for the user's notifications
@@ -2360,7 +2357,7 @@ searchButton1.addActionListener(new java.awt.event.ActionListener() {
                     Cursor.HAND_CURSOR));
             pictureLabel.addMouseListener(new MouseAdapter() {
                 public void mouseClicked(MouseEvent e) {
-                    PostPopUp frame = new PostPopUp(lookingAt, 
+                    PostPopUp frame = new PostPopUp(lookingAt,
                             main.getLoggedIn(), postIndex, mainWindow);
                     frame.setVisible(true);
                     mainWindow.setVisible(false);
@@ -2502,7 +2499,7 @@ searchButton1.addActionListener(new java.awt.event.ActionListener() {
                             }
                         }
                         ProfilePopUp popUp = new ProfilePopUp(lookingAt,
-                                main.getLoggedIn(),mainWindow);
+                                main.getLoggedIn(), mainWindow);
                         popUp.setVisible(true);
                         mainWindow.setVisible(false);
                     }

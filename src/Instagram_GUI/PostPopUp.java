@@ -17,6 +17,7 @@ import javax.swing.*;
  * @author Jose
  */
 public class PostPopUp extends javax.swing.JFrame {
+
     /**
      * Constructor for the Post pop up class
      *
@@ -30,7 +31,7 @@ public class PostPopUp extends javax.swing.JFrame {
         initComponents();
         this.setTitle("EagleGram");
         this.setLocation(width, height);
-        
+
         try {
             ImageIcon eaglePicture = new ImageIcon(scaleImage(
                     100, 23, ImageIO.read(new File(imagesDir
@@ -39,8 +40,8 @@ public class PostPopUp extends javax.swing.JFrame {
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-        
-        Post post= lookingAt.getPosts().get(postIndex);
+
+        Post post = lookingAt.getPosts().get(postIndex);
         Icon postImage = post.getImage();
         int likes = post.getLikes();
         String caption = post.getCaption();
@@ -56,7 +57,7 @@ public class PostPopUp extends javax.swing.JFrame {
                 break;
             }
         }
-        
+
         this.loggedIn = loggedIn;
         postPicture.setIcon(postImage);
         dateLabel.setText(lookingAt.getPosts().get(postIndex).getDate());
@@ -262,15 +263,15 @@ contentPanelLayout.setHorizontalGroup(
                     .addComponent(dateLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGroup(contentPanelLayout.createSequentialGroup()
                     .addGap(8, 8, 8)
-                    .addGroup(contentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE, false)
-                        .addComponent(likeButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(postPicture, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(contentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(postPicture, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGroup(contentPanelLayout.createSequentialGroup()
                             .addGroup(contentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(usernameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(likeLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(postDiscriptionScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                            .addComponent(postDiscriptionScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(likeButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
             .addGap(18, 18, 18)
             .addGroup(contentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                 .addGroup(contentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -340,7 +341,7 @@ contentPanelLayout.setHorizontalGroup(
 
     /**
      * Changes the state of the like button and add this Post to the loggedIn
- user's liked posts, and adds a like to the Post
+     * user's liked posts, and adds a like to the Post
      *
      * @param evt when the user clicks the like button
      */
@@ -359,7 +360,7 @@ contentPanelLayout.setHorizontalGroup(
             String time = format.format(date);
             lookingAt.addNotification(lookingAt, loggedIn, time,
                     "liked your post:", lookingAt.getPosts().get(postIndex),
-                     "post");
+                    "post");
 
             lookingAt.getPosts().get(postIndex).addLike();
             liked = true;
@@ -380,7 +381,7 @@ contentPanelLayout.setHorizontalGroup(
             if (!lookingAt.getUsername().equals(loggedIn.getUsername())) {
                 lookingAt.addNotification(lookingAt, loggedIn, time,
                         "unliked your post:", lookingAt.getPosts().get(postIndex),
-                         "post");
+                        "post");
             }
 
             main.output();
@@ -417,14 +418,14 @@ contentPanelLayout.setHorizontalGroup(
 
     /**
      * Returns user to the main window
-     * 
-     * @param evt 
+     *
+     * @param evt
      */
     private void returnButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_returnButtonActionPerformed
-        if(loggedIn.getUsername().equalsIgnoreCase("guest")){
+        if (loggedIn.getUsername().equalsIgnoreCase("guest")) {
             mainWindow.setVisible(true);
             super.dispose();
-        }else{
+        } else {
             mainWindow.setVisible(true);
             super.dispose();
         }
@@ -495,7 +496,7 @@ contentPanelLayout.setHorizontalGroup(
     int height = (Toolkit.getDefaultToolkit().getScreenSize().height / 2) - 250;
     private String fileSeparator = System.getProperty("file.separator");
     private String workingDir = System.getProperty("user.dir");
-    private String imagesDir =  workingDir + fileSeparator + "src"
+    private String imagesDir = workingDir + fileSeparator + "src"
             + fileSeparator + "Images" + fileSeparator;
     private boolean liked;
     private int likes;

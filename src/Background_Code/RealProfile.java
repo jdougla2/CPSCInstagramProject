@@ -55,7 +55,7 @@ public class RealProfile implements Serializable {
         this.lastName = lastName;
         try {
             profilePic = new ImageIcon(scaleImage(77, 77, ImageIO.read(
-                    new File(dir + "src" + fileSeparator + "Images" 
+                    new File(dir + "src" + fileSeparator + "Images"
                             + fileSeparator + "ProfilePicture.png"))));
         } catch (Exception e) {
             e.printStackTrace();

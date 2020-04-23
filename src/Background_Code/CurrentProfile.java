@@ -22,9 +22,7 @@ import java.util.Comparator;
  */
 class ComparatorByDate {
 
-    public static Comparator<Post> ComparatorByDate
-            = new Comparator<Post>() {
-
+    public static Comparator<Post> ComparatorByDate = new Comparator<Post>() {
         public int compare(Post post1, Post post2) {
             SimpleDateFormat format = new SimpleDateFormat("MM-dd HH:mm");
             try {
@@ -92,7 +90,7 @@ public class CurrentProfile {
      */
     public void input() {
         try {
-            FileInputStream fileIn = new FileInputStream(dir 
+            FileInputStream fileIn = new FileInputStream(dir
                     + "allprofiles.ser");
             ObjectInputStream in = new ObjectInputStream(fileIn);
             allProfiles = (ArrayList<RealProfile>) in.readObject();

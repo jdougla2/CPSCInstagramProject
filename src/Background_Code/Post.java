@@ -2,9 +2,7 @@ package Background_Code;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.awt.image.BufferedImage;
 import java.io.Serializable;
-import java.net.URL;
 import java.util.Date;
 import javax.swing.Icon;
 
@@ -15,16 +13,14 @@ import javax.swing.Icon;
  */
 public class Post implements Serializable {
 
-    private String caption;
-    private URL link;
-    private BufferedImage image = null;
+    private final String caption;
     private Icon icon = null;
-    private ArrayList<String> comments = new ArrayList<String>();
-    private ArrayList<String> tags = new ArrayList<String>();
-    private ArrayList<String> hashtags = new ArrayList<String>();
-    private SimpleDateFormat format = new SimpleDateFormat("MM-dd HH:mm");
-    private Date date = new Date();
-    private String time = format.format(date);
+    private ArrayList<String> comments = new ArrayList();
+    private ArrayList<String> tags = new ArrayList();
+    private ArrayList<String> hashtags = new ArrayList();
+    private final SimpleDateFormat format = new SimpleDateFormat("MM-dd HH:mm");
+    private final Date date = new Date();
+    private final String time = format.format(date);
     private int likes;
     private static final long serialVersionUID = -8245875722878500126L;
 
