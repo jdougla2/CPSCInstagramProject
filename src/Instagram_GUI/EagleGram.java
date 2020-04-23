@@ -2074,12 +2074,7 @@ searchButton1.addActionListener(new java.awt.event.ActionListener() {
                                 break;
                             }
                         }
-                        ProfilePopUp frame = new ProfilePopUp(
-                                actor.getProfilePic(), actor.getUsername(),
-                                actor.getFirstName(), actor.getLastName(),
-                                actor.getFollowers().size(),
-                                actor.getFollowing().size(),
-                                follows, actor, receiver, actor.getPrivacy(),
+                        ProfilePopUp frame = new ProfilePopUp(actor, receiver,
                                 mainWindow);
                         frame.setVisible(true);
                         mainWindow.setVisible(false);
@@ -2120,12 +2115,7 @@ searchButton1.addActionListener(new java.awt.event.ActionListener() {
                                 break;
                             }
                         }
-                        ProfilePopUp frame = new ProfilePopUp(
-                                receiver.getProfilePic(), receiver.getUsername(),
-                                receiver.getFirstName(), receiver.getLastName(),
-                                receiver.getFollowers().size(),
-                                receiver.getFollowing().size(),
-                                follows, receiver, actor, receiver.getPrivacy(),
+                        ProfilePopUp frame = new ProfilePopUp(receiver, actor,
                                 mainWindow);
                         frame.setVisible(true);
                         mainWindow.setVisible(false);
@@ -2197,7 +2187,7 @@ searchButton1.addActionListener(new java.awt.event.ActionListener() {
          * @param method whether this is an inbox or sents message
          */
         public DmPanel(int dmIndex, String method) {
-            RealProfile user = main.getLoggedIn();
+            RealProfile current = main.getLoggedIn();
             setLayout(new GridBagLayout());
             Border emptyBorder = BorderFactory.createEmptyBorder(2, 2, 2, 2);
             Border lineBorder = BorderFactory.createLineBorder(Color.black);
@@ -2207,7 +2197,7 @@ searchButton1.addActionListener(new java.awt.event.ActionListener() {
                 JLabel pictureLabel = new JLabel();
                 pictureLabel.setSize(120, 120);
                 try {
-                    pictureLabel.setIcon(user.getInbox().get(dmIndex)
+                    pictureLabel.setIcon(current.getInbox().get(dmIndex)
                             .getImageLink());
                 } catch (Exception ex) {
                     ex.printStackTrace();
@@ -2215,7 +2205,7 @@ searchButton1.addActionListener(new java.awt.event.ActionListener() {
                 add(pictureLabel, createGbc(3, 0));
 
                 JTextArea messageLabel = new JTextArea();
-                messageLabel.setText(user.getInbox().get(dmIndex).getMessage());
+                messageLabel.setText(current.getInbox().get(dmIndex).getMessage());
                 messageLabel.setLineWrap(true);
                 messageLabel.setEditable(false);
                 messageLabel.setSize(120, 120);
@@ -2226,31 +2216,16 @@ searchButton1.addActionListener(new java.awt.event.ActionListener() {
                 add(messageLabel, createGbc(1, 0));
 
                 JLabel usernameLabel = new JLabel();
-                usernameLabel.setText(user.getInbox().get(dmIndex)
+                usernameLabel.setText(current.getInbox().get(dmIndex)
                         .getSender().getUsername());
                 usernameLabel.setSize(100, 21);
                 usernameLabel.setCursor(Cursor.getPredefinedCursor(
                         Cursor.HAND_CURSOR));
                 usernameLabel.addMouseListener(new MouseAdapter() {
                     public void mouseClicked(MouseEvent e) {
-                        RealProfile sender = user.getInbox().get(dmIndex)
+                        RealProfile sender = current.getInbox().get(dmIndex)
                                 .getSender();
-                        boolean follows = false;
-                        for (int i = 0; i < main.getLoggedIn().getFollowing()
-                                .size(); i++) {
-                            if (user.getFollowing().get(i)
-                                    .getUsername().equals(sender
-                                            .getUsername())) {
-                                follows = true;
-                                break;
-                            }
-                        }
-                        ProfilePopUp frame = new ProfilePopUp(
-                                sender.getProfilePic(), sender.getUsername(),
-                                sender.getFirstName(), sender.getLastName(),
-                                sender.getFollowers().size(),
-                                sender.getFollowing().size(),
-                                follows, sender, user, sender.getPrivacy(),
+                        ProfilePopUp frame = new ProfilePopUp(sender, current,
                                 mainWindow);
                         frame.setVisible(true);
                         mainWindow.setVisible(false);
@@ -2260,13 +2235,13 @@ searchButton1.addActionListener(new java.awt.event.ActionListener() {
 
                 JLabel timeLabel = new JLabel();
                 timeLabel.setSize(100, 21);
-                timeLabel.setText(user.getInbox().get(dmIndex).getDate());
+                timeLabel.setText(current.getInbox().get(dmIndex).getDate());
                 add(timeLabel, createGbc(4, 0));
             } else if (method.equalsIgnoreCase("sents")) {
                 JLabel pictureLabel = new JLabel();
                 pictureLabel.setSize(120, 120);
                 try {
-                    pictureLabel.setIcon(user.getSents().get(dmIndex)
+                    pictureLabel.setIcon(current.getSents().get(dmIndex)
                             .getImageLink());
                 } catch (Exception ex) {
                     ex.printStackTrace();
@@ -2274,7 +2249,7 @@ searchButton1.addActionListener(new java.awt.event.ActionListener() {
                 add(pictureLabel, createGbc(3, 0));
 
                 JTextArea messageLabel = new JTextArea();
-                messageLabel.setText(user.getSents().get(dmIndex).getMessage());
+                messageLabel.setText(current.getSents().get(dmIndex).getMessage());
                 messageLabel.setLineWrap(true);
                 messageLabel.setEditable(false);
                 messageLabel.setSize(120, 120);
@@ -2285,31 +2260,16 @@ searchButton1.addActionListener(new java.awt.event.ActionListener() {
                 add(messageLabel, createGbc(1, 0));
 
                 JLabel usernameLabel = new JLabel();
-                usernameLabel.setText(user.getSents().get(dmIndex)
+                usernameLabel.setText(current.getSents().get(dmIndex)
                         .getReceiver().getUsername());
                 usernameLabel.setSize(100, 21);
                 usernameLabel.setCursor(Cursor.getPredefinedCursor(
                         Cursor.HAND_CURSOR));
                 usernameLabel.addMouseListener(new MouseAdapter() {
                     public void mouseClicked(MouseEvent e) {
-                        RealProfile reciever = user.getSents().get(dmIndex)
+                        RealProfile reciever = current.getSents().get(dmIndex)
                                 .getReceiver();
-                        boolean follows = false;
-                        for (int i = 0; i < main.getLoggedIn().getFollowing()
-                                .size(); i++) {
-                            if (user.getFollowing().get(i)
-                                    .getUsername().equals(reciever
-                                            .getUsername())) {
-                                follows = true;
-                                break;
-                            }
-                        }
-                        ProfilePopUp frame = new ProfilePopUp(
-                                reciever.getProfilePic(), reciever.getUsername(),
-                                reciever.getFirstName(), reciever.getLastName(),
-                                reciever.getFollowers().size(),
-                                reciever.getFollowing().size(),
-                                follows, reciever, user, reciever.getPrivacy(),
+                        ProfilePopUp frame = new ProfilePopUp(reciever, current,
                                 mainWindow);
                         frame.setVisible(true);
                         mainWindow.setVisible(false);
@@ -2319,7 +2279,7 @@ searchButton1.addActionListener(new java.awt.event.ActionListener() {
 
                 JLabel timeLabel = new JLabel();
                 timeLabel.setSize(100, 21);
-                timeLabel.setText(user.getSents().get(dmIndex).getDate());
+                timeLabel.setText(current.getSents().get(dmIndex).getDate());
                 add(timeLabel, createGbc(4, 0));
             }
         }
@@ -2506,30 +2466,17 @@ searchButton1.addActionListener(new java.awt.event.ActionListener() {
                         Cursor.HAND_CURSOR));
                 usernameLabel.addMouseListener(new MouseAdapter() {
                     public void mouseClicked(MouseEvent e) {
-                        RealProfile current = null;
+                        RealProfile lookingAt = null;
                         for (int i = 0;
                                 i < main.getAllProfiles().size(); i++) {
                             if (main.getAllProfiles().get(i).getUsername()
                                     .equals(username)) {
-                                current = main.getAllProfiles().get(i);
-                            }
-                        }
-                        boolean follows = false;
-                        for (int i = 0; i < main.getLoggedIn().getFollowing()
-                                .size(); i++) {
-                            if (main.getLoggedIn().getFollowing().get(i)
-                                    .getUsername().equals(username)) {
-                                follows = true;
+                                lookingAt = main.getAllProfiles().get(i);
                                 break;
                             }
                         }
-                        ProfilePopUp popUp = new ProfilePopUp(
-                                current.getProfilePic(), current.getUsername(),
-                                current.getFirstName(), current.getLastName(),
-                                current.getFollowers().size(),
-                                current.getFollowing().size(),
-                                follows, current, main.getLoggedIn(),
-                                current.getPrivacy(), mainWindow);
+                        ProfilePopUp popUp = new ProfilePopUp(lookingAt,
+                                main.getLoggedIn(), mainWindow);
                         popUp.setVisible(true);
                         mainWindow.setVisible(false);
                     }
@@ -2547,34 +2494,16 @@ searchButton1.addActionListener(new java.awt.event.ActionListener() {
                         Cursor.HAND_CURSOR));
                 pictureLabel.addMouseListener(new MouseAdapter() {
                     public void mouseClicked(MouseEvent e) {
-                        RealProfile current = null;
+                        RealProfile lookingAt = null;
                         for (int i = 0; i < main.getAllProfiles().size(); i++) {
                             if (main.getAllProfiles().get(i).getUsername()
                                     .equals(username)) {
-                                current = main.getAllProfiles().get(i);
+                                lookingAt = main.getAllProfiles().get(i);
                             }
                         }
-                        boolean follows = false;
-                        for (int i = 0; i < main.getLoggedIn().getFollowing()
-                                .size(); i++) {
-                            System.out.println(main.getLoggedIn().getFollowing()
-                                    .get(i).getUsername());
-                            if (main.getLoggedIn().getFollowing().get(i)
-                                    .getUsername().equals(username)) {
-                                follows = true;
-                                break;
-                            }
-                        }
-                        ProfilePopUp popUp = new ProfilePopUp(
-                                current.getProfilePic(), current.getUsername(),
-                                current.getFirstName(), current.getLastName(),
-                                current.getFollowers().size(),
-                                current.getFollowing().size(),
-                                follows, current, main.getLoggedIn(),
-                                current.getPrivacy(),mainWindow);
+                        ProfilePopUp popUp = new ProfilePopUp(lookingAt,
+                                main.getLoggedIn(),mainWindow);
                         popUp.setVisible(true);
-                        System.out.println("Loged in: "
-                                + main.getLoggedIn().getUsername());
                         mainWindow.setVisible(false);
                     }
                 });

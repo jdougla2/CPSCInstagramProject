@@ -20,20 +20,11 @@ public class ProfilePopUp extends javax.swing.JFrame {
     /**
      * Constructor for the profile pop up frame
      *
-     * @param i profile icon
-     * @param username profile username
-     * @param firstname profile first name
-     * @param lastname profile last name
-     * @param followers profile number of followers
-     * @param following profile number of following
-     * @param follow whether or not the current user is following lookAt user
-     * @param lookAt user that is being looked at
+     * @param lookingAt user that is being looked at
      * @param current the current user that is logged in
      * @param privacy the privacy setting for lookAt user
      */
-    public ProfilePopUp(Icon i, String username, String firstname,
-            String lastname, int followers, int following, boolean follow,
-            RealProfile lookAt, RealProfile current, boolean privacy,
+    public ProfilePopUp(RealProfile lookingAt, RealProfile current,
             JFrame mainWindow) {
         initComponents();
         this.setTitle("EagleGram");
@@ -48,17 +39,34 @@ public class ProfilePopUp extends javax.swing.JFrame {
             ex.printStackTrace();
         }
 
+        Icon profilePic = lookingAt.getProfilePic();
+        String username = lookingAt.getUsername();
+        String firstname = lookingAt.getFirstName();
+        String lastname = lookingAt.getLastName();
+        int followers = lookingAt.getFollowers().size();
+        int following = lookingAt.getFollowing().size();
+        boolean privacy = lookingAt.getPrivacy();
+        boolean follows = false;
+        for (int i = 0; i < current.getFollowing()
+                .size(); i++) {
+            if (current.getFollowing().get(i)
+                    .getUsername().equals(lookingAt.getUsername())) {
+                follows = true;
+                break;
+            }
+        }
+        
         this.mainWindow = mainWindow;
         this.current = current;
-        this.lookAt = lookAt;
+        this.lookingAt = lookingAt;
         this.follow = follow;
 
-        if (current.equals(lookAt)
+        if (current.equals(lookingAt)
                 || current.getUsername().equals(main.getLoggedIn().getUsername())) {
             followButton.setEnabled(false);
         }
 
-        profilePictureLabel.setIcon(i);
+        profilePictureLabel.setIcon(profilePic);
         usernameLabel.setText(username);
         firstNameLabel.setText(firstname);
         lastNameLabel.setText(lastname);
@@ -70,17 +78,17 @@ public class ProfilePopUp extends javax.swing.JFrame {
 
         if (privacy) {
             boolean isFollowed = false;
-            for (int z = 0; z < lookAt.getFollowing().size(); z++) {
-                if (lookAt.getFollowing().get(z).getUsername().equals(
+            for (int z = 0; z < lookingAt.getFollowing().size(); z++) {
+                if (lookingAt.getFollowing().get(z).getUsername().equals(
                         current.getUsername())) {
                     isFollowed = true;
-                    if (lookAt != null) {
-                        for (int j = 0; j < lookAt.getPosts().size(); j++) {
+                    if (lookingAt != null) {
+                        for (int j = 0; j < lookingAt.getPosts().size(); j++) {
                             profilePostsPanel.add(new UserPanel(
-                                    lookAt.getPosts().get(j).getImage(),
-                                    lookAt.getPosts().get(j).getCaption(),
-                                    lookAt.getPosts().get(j).getDate(),
-                                    lookAt.getPosts().get(j).getLikes(),
+                                    lookingAt.getPosts().get(j).getImage(),
+                                    lookingAt.getPosts().get(j).getCaption(),
+                                    lookingAt.getPosts().get(j).getDate(),
+                                    lookingAt.getPosts().get(j).getLikes(),
                                     true));
                             profilePostsPanel.revalidate();
                             profilePostsPanel.repaint();
@@ -111,13 +119,13 @@ public class ProfilePopUp extends javax.swing.JFrame {
             }
 
         } else {
-            if (lookAt != null) {
-                for (int j = 0; j < lookAt.getPosts().size(); j++) {
+            if (lookingAt != null) {
+                for (int j = 0; j < lookingAt.getPosts().size(); j++) {
                     profilePostsPanel.add(new UserPanel(
-                            lookAt.getPosts().get(j).getImage(),
-                            lookAt.getPosts().get(j).getCaption(),
-                            lookAt.getPosts().get(j).getDate(),
-                            lookAt.getPosts().get(j).getLikes(), true));
+                            lookingAt.getPosts().get(j).getImage(),
+                            lookingAt.getPosts().get(j).getCaption(),
+                            lookingAt.getPosts().get(j).getDate(),
+                            lookingAt.getPosts().get(j).getLikes(), true));
                     profilePostsPanel.revalidate();
                     profilePostsPanel.repaint();
                 }
@@ -309,16 +317,16 @@ followButton.addActionListener(new java.awt.event.ActionListener() {
             //add users togeather
             follow = true;
 
-            current.addFollowing(lookAt);
-            lookAt.addFollower(current);
+            current.addFollowing(lookingAt);
+            lookingAt.addFollower(current);
 
-            followersLabel.setText(lookAt.getFollowers().size() + " Followers");
-            followingLabel.setText(lookAt.getFollowing().size() + " Following");
+            followersLabel.setText(lookingAt.getFollowers().size() + " Followers");
+            followingLabel.setText(lookingAt.getFollowing().size() + " Following");
 
             Date date = new Date();
             SimpleDateFormat format = new SimpleDateFormat("MM-dd HH:mm");
             String time = format.format(date);
-            lookAt.addNotification(current, lookAt, time,
+            lookingAt.addNotification(current, lookingAt, time,
                     "followed you", null, "follow");
 
             followButton.setText("unFollow");
@@ -328,16 +336,16 @@ followButton.addActionListener(new java.awt.event.ActionListener() {
             //do stuff
             follow = false;
 
-            current.removeFollowing(lookAt);
-            lookAt.removeFollower(current);
+            current.removeFollowing(lookingAt);
+            lookingAt.removeFollower(current);
 
-            followersLabel.setText(lookAt.getFollowers().size() + " Followers");
-            followingLabel.setText(lookAt.getFollowing().size() + " Following");
+            followersLabel.setText(lookingAt.getFollowers().size() + " Followers");
+            followingLabel.setText(lookingAt.getFollowing().size() + " Following");
 
             Date date = new Date();
             SimpleDateFormat format = new SimpleDateFormat("MM-dd HH:mm");
             String time = format.format(date);
-            lookAt.addNotification(current, lookAt, time,
+            lookingAt.addNotification(current, lookingAt, time,
                     "unfollowed you", null, "follow");
 
             followButton.setText("Follow");
@@ -389,9 +397,7 @@ followButton.addActionListener(new java.awt.event.ActionListener() {
         java.awt.EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
-                new ProfilePopUp(null, "username", "firstname",
-                        "lastname", 0, 0, false, null, null, false,
-                null).setVisible(true);
+                new ProfilePopUp(null,null,null).setVisible(true);
             }
         });
     }
@@ -435,7 +441,7 @@ followButton.addActionListener(new java.awt.event.ActionListener() {
     private javax.swing.JLabel usernameLabel;
     // End of variables declaration//GEN-END:variables
     private CurrentProfile main = new CurrentProfile();
-    private RealProfile lookAt;
+    private RealProfile lookingAt;
     private RealProfile current;
     private boolean follow;
     private static ImageIcon ii;

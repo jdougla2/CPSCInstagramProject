@@ -506,13 +506,9 @@ public class GuestFrame extends javax.swing.JFrame {
                                     break;
                                 }
                             }
-                            ProfilePopUp popUp = new ProfilePopUp(
-                                    current.getProfilePic(), current.getUsername(),
-                                    current.getFirstName(), current.getLastName(),
-                                    current.getFollowers().size(),
-                                    current.getFollowing().size(),
-                                    follows, current, main.getLoggedIn(),
-                                    current.getPrivacy(),mainWindow);
+                            ProfilePopUp popUp = new ProfilePopUp(current,
+                                    main.getLoggedIn(),
+                                    mainWindow);
                             popUp.setVisible(true);
                             mainWindow.setVisible(false);
                         }
@@ -548,13 +544,9 @@ public class GuestFrame extends javax.swing.JFrame {
                                     break;
                                 }
                             }
-                            ProfilePopUp popUp = new ProfilePopUp(
-                                    current.getProfilePic(), current.getUsername(),
-                                    current.getFirstName(), current.getLastName(),
-                                    current.getFollowers().size(),
-                                    current.getFollowing().size(),
-                                    follows, current, main.getLoggedIn(),
-                                    current.getPrivacy(),mainWindow);
+                            ProfilePopUp popUp = new ProfilePopUp(current,
+                                    main.getLoggedIn(),
+                                    mainWindow);
                             popUp.setVisible(true);
                             mainWindow.setVisible(false);
                         }
