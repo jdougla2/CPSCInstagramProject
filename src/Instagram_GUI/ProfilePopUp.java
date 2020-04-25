@@ -78,7 +78,7 @@ public class ProfilePopUp extends javax.swing.JFrame {
 
         for (int j = 0; j < lookingAt.getPosts().size(); j++) {
             profilePostsPanel.add(new UserPanel(lookingAt,
-                    current, j));
+                    current, j, this));
             profilePostsPanel.revalidate();
             profilePostsPanel.repaint();
         }
@@ -395,11 +395,11 @@ followButton.addActionListener(new java.awt.event.ActionListener() {
     private javax.swing.JLabel usernameLabel;
     // End of variables declaration//GEN-END:variables
     private CurrentProfile main = new CurrentProfile();
-    private RealProfile lookingAt;
-    private RealProfile current;
+    private final RealProfile lookingAt;
+    private final RealProfile current;
     private boolean follow;
     private static ImageIcon ii;
-    private JFrame mainWindow;
+    private final JFrame mainWindow;
     private String fileSeparator = System.getProperty("file.separator");
     private String workingDir = System.getProperty("user.dir");
     private String imagesDir = workingDir + fileSeparator + "src"
@@ -420,10 +420,10 @@ followButton.addActionListener(new java.awt.event.ActionListener() {
          * @param lookingAt user that is being viewed 
          * @param current user that is currently logged in
          * @param postIndex post that is being displayed 
+         * @param lastWindow lastWindow that was being viewed
          */
         public UserPanel(RealProfile lookingAt, RealProfile current,
-                int postIndex) {
-            System.out.println(lookingAt.getFollowing());
+                int postIndex, JFrame lastWindow) {
             boolean privacy = lookingAt.getPrivacy();
             boolean isFollowed = false;
             Icon postImage = null;
@@ -479,15 +479,16 @@ followButton.addActionListener(new java.awt.event.ActionListener() {
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
-            if (privacy) {
+            if (!privacy | (privacy && isFollowed)) {
                 pictureLabel.setCursor(Cursor.getPredefinedCursor(
                         Cursor.HAND_CURSOR));
                 pictureLabel.addMouseListener(new MouseAdapter() {
+                    @Override
                     public void mouseClicked(MouseEvent e) {
-                        //PostPopUp frame= new PostPopUp(ii, username, likes, liked,
-                        //      caption, "comments", "hashtags","people");
-
-                        //frame.setVisible(true);
+                        PostPopUp frame= new PostPopUp(lookingAt, current,
+                            postIndex, lastWindow);
+                        frame.setVisible(true);
+                        lastWindow.setVisible(false);
                     }
                 });
             }
@@ -504,7 +505,7 @@ followButton.addActionListener(new java.awt.event.ActionListener() {
             captionScroll.setSize(120, 120);
             add(captionText, createGbc(1, 0));
 
-            if (!privacy) {
+            if (!privacy | (privacy && isFollowed)) {
                 final JLabel likeLabel = new JLabel();
                 likeLabel.setText("LIKES: " + Integer.toString(likes));
                 likeLabel.setSize(100, 21);
