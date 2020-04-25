@@ -46,7 +46,6 @@ public class ProfilePopUp extends javax.swing.JFrame {
         String lastname = lookingAt.getLastName();
         int followers = lookingAt.getFollowers().size();
         int following = lookingAt.getFollowing().size();
-        boolean privacy = lookingAt.getPrivacy();
         boolean follows = false;
         for (int i = 0; i < current.getFollowing()
                 .size(); i++) {
@@ -60,7 +59,7 @@ public class ProfilePopUp extends javax.swing.JFrame {
         this.mainWindow = mainWindow;
         this.current = current;
         this.lookingAt = lookingAt;
-        this.follow = follow;
+        this.follow = follows;
 
         if (current.equals(lookingAt)
                 || current.getUsername().equals(main.getLoggedIn().getUsername())) {
@@ -77,60 +76,11 @@ public class ProfilePopUp extends javax.swing.JFrame {
             followButton.setText("unFollow");
         }
 
-        if (privacy) {
-            boolean isFollowed = false;
-            for (int z = 0; z < lookingAt.getFollowing().size(); z++) {
-                if (lookingAt.getFollowing().get(z).getUsername().equals(
-                        current.getUsername())) {
-                    isFollowed = true;
-                    if (lookingAt != null) {
-                        for (int j = 0; j < lookingAt.getPosts().size(); j++) {
-                            profilePostsPanel.add(new UserPanel(
-                                    lookingAt.getPosts().get(j).getImage(),
-                                    lookingAt.getPosts().get(j).getCaption(),
-                                    lookingAt.getPosts().get(j).getDate(),
-                                    lookingAt.getPosts().get(j).getLikes(),
-                                    true));
-                            profilePostsPanel.revalidate();
-                            profilePostsPanel.repaint();
-                        }
-                    }
-                }
-            }
-            if (!isFollowed) {
-                ImageIcon picture = null;
-                try {
-                    picture = new ImageIcon(scaleImage(
-                            120, 120, ImageIO.read(new File(imagesDir
-                                    + "LockedAccount.png"))));
-                } catch (Exception ex) {
-                    ex.printStackTrace();
-                }
-                profilePostsPanel.add(new UserPanel(
-                        picture,
-                        "This user has a\n"
-                        + "private account.\n"
-                        + "They need to be\n"
-                        + "following you\n"
-                        + "for you to view\n"
-                        + "the account.",
-                        null, 0, false));
-                profilePostsPanel.revalidate();
-                profilePostsPanel.repaint();
-            }
-
-        } else {
-            if (lookingAt != null) {
-                for (int j = 0; j < lookingAt.getPosts().size(); j++) {
-                    profilePostsPanel.add(new UserPanel(
-                            lookingAt.getPosts().get(j).getImage(),
-                            lookingAt.getPosts().get(j).getCaption(),
-                            lookingAt.getPosts().get(j).getDate(),
-                            lookingAt.getPosts().get(j).getLikes(), true));
-                    profilePostsPanel.revalidate();
-                    profilePostsPanel.repaint();
-                }
-            }
+        for (int j = 0; j < lookingAt.getPosts().size(); j++) {
+            profilePostsPanel.add(new UserPanel(lookingAt,
+                    current, j));
+            profilePostsPanel.revalidate();
+            profilePostsPanel.repaint();
         }
     }
 
@@ -312,7 +262,6 @@ followButton.addActionListener(new java.awt.event.ActionListener() {
      * @param evt when the follow button is clicked
      */
     private void followButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_followButtonActionPerformed
-        // TODO add your handling code here:
         if (follow == false) {
 
             //add users togeather
@@ -334,7 +283,7 @@ followButton.addActionListener(new java.awt.event.ActionListener() {
 
             main.output();
         } else {
-            //do stuff
+            //remove friend
             follow = false;
 
             current.removeFollowing(lookingAt);
@@ -355,6 +304,10 @@ followButton.addActionListener(new java.awt.event.ActionListener() {
         }
     }//GEN-LAST:event_followButtonActionPerformed
 
+    /**
+     * Returns user to main EagleGram page
+     * @param evt 
+     */
     private void returnButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_returnButtonActionPerformed
         System.out.println(current.getUsername());
         if (current.getUsername().equalsIgnoreCase("guest")) {
@@ -451,8 +404,10 @@ followButton.addActionListener(new java.awt.event.ActionListener() {
     private String workingDir = System.getProperty("user.dir");
     private String imagesDir = workingDir + fileSeparator + "src"
             + fileSeparator + "Images" + fileSeparator;
-    int width = (Toolkit.getDefaultToolkit().getScreenSize().width / 2) - 262;
-    int height = (Toolkit.getDefaultToolkit().getScreenSize().height / 2) - 250;
+    private int width
+            = (Toolkit.getDefaultToolkit().getScreenSize().width / 2) - 262;
+    private int height
+            = (Toolkit.getDefaultToolkit().getScreenSize().height / 2) - 250;
 
     /**
      * Creates a new panel for the users Post
@@ -462,14 +417,50 @@ followButton.addActionListener(new java.awt.event.ActionListener() {
         /**
          * Constructor for UserPanel
          *
-         * @param ii icon for this Post
-         * @param caption caption for this Post
-         * @param date date this Post was posted
-         * @param likes number of like this Post has
-         * @param privacy privacy setting of the owner of this Post
+         * @param lookingAt user that is being viewed 
+         * @param current user that is currently logged in
+         * @param postIndex post that is being displayed 
          */
-        public UserPanel(Icon ii, String caption, String date, int likes,
-                boolean privacy) {
+        public UserPanel(RealProfile lookingAt, RealProfile current,
+                int postIndex) {
+            System.out.println(lookingAt.getFollowing());
+            boolean privacy = lookingAt.getPrivacy();
+            boolean isFollowed = false;
+            Icon postImage = null;
+            String caption;
+            String date;
+            int likes;
+            for (int i = 0; i < lookingAt.getFollowing().size(); i++) {
+                if (lookingAt.getFollowing().get(i).getUsername().equals(
+                        current.getUsername())) {
+                    isFollowed = true;
+                    break;
+                }
+            }
+
+            if (privacy && !isFollowed) {
+                try {
+                    postImage = new ImageIcon(scaleImage(
+                            120, 120, ImageIO.read(new File(imagesDir
+                                    + "LockedAccount.png"))));
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+                caption = "This user has a\n"
+                        + "private account.\n"
+                        + "They need to be\n"
+                        + "following you\n"
+                        + "for you to view\n"
+                        + "the account.";
+                date = null;
+                likes = 0;
+            } else {
+                postImage = lookingAt.getPosts().get(postIndex).getImage();
+                caption = lookingAt.getPosts().get(postIndex).getCaption();
+                date = lookingAt.getPosts().get(postIndex).getDate();
+                likes = lookingAt.getPosts().get(postIndex).getLikes();
+            }
+
             setLayout(new GridBagLayout());
             Border emptyBorder = BorderFactory.createEmptyBorder(2, 2, 2, 2);
             Border lineBorder = BorderFactory.createLineBorder(Color.black);
@@ -484,7 +475,7 @@ followButton.addActionListener(new java.awt.event.ActionListener() {
             JLabel pictureLabel = new JLabel();
             pictureLabel.setSize(120, 120);
             try {
-                pictureLabel.setIcon(ii);
+                pictureLabel.setIcon(postImage);
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
@@ -513,7 +504,7 @@ followButton.addActionListener(new java.awt.event.ActionListener() {
             captionScroll.setSize(120, 120);
             add(captionText, createGbc(1, 0));
 
-            if (privacy) {
+            if (!privacy) {
                 final JLabel likeLabel = new JLabel();
                 likeLabel.setText("LIKES: " + Integer.toString(likes));
                 likeLabel.setSize(100, 21);

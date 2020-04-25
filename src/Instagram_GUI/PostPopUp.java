@@ -43,17 +43,17 @@ public class PostPopUp extends javax.swing.JFrame {
 
         Post post = lookingAt.getPosts().get(postIndex);
         Icon postImage = post.getImage();
-        int likes = post.getLikes();
+        this.likes = post.getLikes();
         String caption = post.getCaption();
         ArrayList<String> comments = post.getComments();
         ArrayList<String> hashTags = post.getHashtags();
         ArrayList<String> peopleTaged = post.getTagged();
-        boolean liked = false;
+        this.liked = false;
         for (int i = 0; i < loggedIn.getLikedPosts().size(); i++) {
             String match = caption + post.getDate();
 
             if (loggedIn.getLikedPosts().get(i).equals(match)) {
-                liked = true;
+                this.liked = true;
                 break;
             }
         }
@@ -63,8 +63,6 @@ public class PostPopUp extends javax.swing.JFrame {
         dateLabel.setText(lookingAt.getPosts().get(postIndex).getDate());
         usernameLabel.setText(lookingAt.getUsername());
         likeLabel.setText("LIKES: " + likes);
-        this.likes = likes;
-        this.liked = liked;
         this.mainWindow = mainWindow;
 
         this.lookingAt = lookingAt;
@@ -447,22 +445,19 @@ contentPanelLayout.setHorizontalGroup(
                     break;
                 }
             }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(PostPopUp.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(PostPopUp.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(PostPopUp.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(PostPopUp.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException | InstantiationException 
+                | IllegalAccessException 
+                | javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(PostPopUp.class.getName())
+                    .log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new PostPopUp(null, null, 0, null).setVisible(true);
-            }
+        java.awt.EventQueue.invokeLater(() -> {
+            new PostPopUp(null, null, 0, null).setVisible(true);
         });
     }
 
@@ -502,7 +497,7 @@ contentPanelLayout.setHorizontalGroup(
     private int likes;
     private final JFrame mainWindow;
     private CurrentProfile main = new CurrentProfile();
-    private RealProfile lookingAt;
-    private RealProfile loggedIn;
-    private int postIndex;
+    private final RealProfile lookingAt;
+    private final RealProfile loggedIn;
+    private final int postIndex;
 }
